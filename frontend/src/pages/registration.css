@@ -1,4 +1,10 @@
+body{
+    background-image: url("../assets/loginback.avif");
+    background-repeat: no-repeat;
+}
+
 .register {
+    background: white;
     border: 1px solid #ccc;
     padding: 20px;
     border-radius: 10px; /* rounded corners */
