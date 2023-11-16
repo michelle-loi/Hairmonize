@@ -1,28 +1,43 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./login.css"
+import { FaUser, FaLock } from "react-icons/fa";
 
 const login = () => {
     return(
         <div className="container min-vh-100 align-items-center d-flex justify-content-center">
             <form className="login">
                 <h1>Sign In</h1>
-                <div className="mb-3">
-                    <input type="email"  placeholder="Enter Email" className="form-control"/>
+
+                {/* Email field */}
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text icon">
+                            <FaUser />
+                        </span>
+                    </div>
+                    <input type="text"  placeholder="Email" className="form-control"/>
                 </div>
 
-                <div className="mb-3">
-                    <input type="password" placeholder="Enter Password" className="form-control"/>
+                {/* Password field */}
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text icon">
+                            <FaLock />
+                        </span>
+                    </div>
+                    <input type="password" placeholder="Password" className="form-control"/>
                 </div>
 
+                {/* Sign in button */}
                 <div className="signInBut">
                     <button className="btn btn-primary">Sign In</button>
                 </div>
 
+                {/* Register */}
                 <div className="register-link">
                     <p>Don't have an account? <Link to="/registration">Register here</Link></p>
                 </div>
-
             </form>
         </div>
     )
