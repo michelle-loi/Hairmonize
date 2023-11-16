@@ -9,9 +9,6 @@ function App() {
           <Routes>
             <Route path="/" element={<Login/>}/> {/* This routes initially to the login page. For path / means first page write the others as you need*/}
             <Route path="/registration" element={<Registration/>}/>
-
-
-
           </Routes>
         </BrowserRouter>
       </div>
