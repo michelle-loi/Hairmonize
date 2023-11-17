@@ -1,5 +1,7 @@
 # Getting started 
 
+CPSC 471 Final Project
+
 Clone this project from git onto your computer
 
 To run:
