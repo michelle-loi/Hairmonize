@@ -23,6 +23,7 @@ const PageNotFound = () => {
               </Alert>
           </div>
       </div>
+
   )
 }
 

@@ -1,6 +1,10 @@
-/* CSS for Page not found (incorrect url)*/
-
-.Error404{
-    background-image:  url("../assets/loginback.avif");
+.Error404 {
+    background-image: url("../assets/loginback.avif");
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
