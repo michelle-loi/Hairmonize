@@ -9,17 +9,19 @@ const PageNotFound = () => {
     let navigate = useNavigate();
 
   return(
-      <div className="mx-auto mt-5" style={{ maxWidth: '328px' }}>
-          <Alert variant = "secondary" >
-              <Alert.Heading>Error 404: Page Not Found</Alert.Heading>
-              <p>
-                  We are sorry to inform you that the url you requested could not be found. Please click{' '}
-                  <span style={{ cursor: 'pointer', color: 'blue' }} onClick={() => navigate(-1)}>
-            here
-          </span>{' '}
-                  to go back to the previous page.
-              </p>
-          </Alert>
+      <div className="Error404">
+          <div className="mx-auto mt-5" style={{ maxWidth: '328px' }}>
+              <Alert variant = "secondary" >
+                  <Alert.Heading>Error 404: Page Not Found</Alert.Heading>
+                  <p>
+                      We are sorry to inform you that the url you requested could not be found. Please click{' '}
+                      <span style={{ cursor: 'pointer', color: 'blue' }} onClick={() => navigate(-1)}>
+                here
+              </span>{' '}
+                      to go back to the previous page.
+                  </p>
+              </Alert>
+          </div>
       </div>
   )
 }
