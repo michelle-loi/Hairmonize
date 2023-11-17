@@ -3,7 +3,11 @@ import NavigationBar from "../components/navigationBar"
 
 const stylistHome = () => {
     return(
-        <NavigationBar/>
+        <>
+            <NavigationBar/>
+            <h1>Stylist Home</h1>
+        </>
+
     )
 }
 

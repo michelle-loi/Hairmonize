@@ -17,8 +17,8 @@ function App() {
             <Route path="*" element={<PageNotFound />} />
             <Route path="/clientHome" element={<ClientHome/>}/>
             <Route path="/account" element={<Account/>}/>
-            <Route path="/account" element={<AdminHome/>}/>
-            <Route path="/account" element={<StylistHome/>}/>
+            <Route path="/adminHome" element={<AdminHome/>}/>
+            <Route path="/stylistHome" element={<StylistHome/>}/>
           </Routes>
         </BrowserRouter>
       </div>
