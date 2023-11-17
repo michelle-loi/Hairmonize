@@ -1,10 +1,14 @@
 # Getting started 
 
-Clone this somewhere
+Clone this project from git onto your computer
 
-To run open the terminal make sure you are in the frontend side and put:
+To run:
 
-npm start
+1) open the terminal cd to the front end directory
+2) We need to install some dependencies for the react icons, so run npm install react-icons (
+you can read more about it below)
+3) enter command: npm install
+4) enter command: npm start
 
 
 There are a bunch of frameworks we need so:
