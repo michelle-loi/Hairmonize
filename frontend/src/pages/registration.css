@@ -1,6 +1,6 @@
 /*Css for registration page*/
 
-body{
+.registerPage{
     background-image: url("../assets/loginback.avif");
     background-repeat: no-repeat;
 }

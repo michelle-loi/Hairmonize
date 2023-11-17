@@ -1,0 +1,3 @@
+.remove-arrow .dropdown-toggle::after {
+    display: none;
+}
