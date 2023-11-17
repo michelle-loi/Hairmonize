@@ -1,6 +1,6 @@
 /*Css for login page*/
 
-body{
+.loginPage{
     background-image: url("../assets/loginback.avif");
     background-repeat: no-repeat;
 }
