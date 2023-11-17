@@ -16,7 +16,7 @@ const login = () => {
                             <FaUser />
                         </span>
                     </div>
-                    <input type="text"  placeholder="Email" className="form-control"/>
+                    <input required type="text"  placeholder="Email" className="form-control"/>
                 </div>
 
                 {/* Password field */}
@@ -26,7 +26,7 @@ const login = () => {
                             <FaLock />
                         </span>
                     </div>
-                    <input type="password" placeholder="Password" className="form-control"/>
+                    <input required type="password" placeholder="Password" className="form-control"/>
                 </div>
 
                 {/* Sign in button */}

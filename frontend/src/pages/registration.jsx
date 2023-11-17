@@ -25,7 +25,7 @@ const registration = () => {
                             </div>
 
                             {/*Field*/}
-                            <input type="text"  placeholder="First name" className="form-control"/>
+                            <input required type="text"  placeholder="First name" className="form-control"/>
 
                         </div>
 
@@ -55,7 +55,7 @@ const registration = () => {
                             </div>
 
                             {/*Field*/}
-                            <input type="text" placeholder="Last name" className="form-control"/>
+                            <input required type="text" placeholder="Last name" className="form-control"/>
 
                         </div>
 
@@ -70,7 +70,7 @@ const registration = () => {
                             </div>
 
                             {/*Field*/}
-                            <input type="email" placeholder="Email address" className="form-control"/>
+                            <input required type="email" placeholder="Email address" className="form-control"/>
 
                         </div>
 
@@ -107,7 +107,7 @@ const registration = () => {
                             </div>
 
                             {/*Field*/}
-                            <input type="username" placeholder="Username" className="form-control"/>
+                            <input required type="username" placeholder="Username" className="form-control"/>
 
                         </div>
 
@@ -122,7 +122,7 @@ const registration = () => {
                             </div>
 
                             {/*Field*/}
-                            <input type="password" placeholder="Password" className="form-control"/>
+                            <input required type="password" placeholder="Password" className="form-control"/>
 
                         </div>
 
