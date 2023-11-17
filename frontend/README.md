@@ -9,6 +9,7 @@ To run:
 you can read more about it below)
 3) enter command: npm install
 4) enter command: npm start
+5) cd into the backend and run npm i express mysql nodemon
 
 
 In backend make a new file called database.js and inside it put where password is you local password.
