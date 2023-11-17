@@ -10,6 +10,7 @@ you can read more about it below)
 3) enter command: npm install
 4) enter command: npm start
 5) cd into the backend and run npm i express mysql nodemon
+6) npm install react-bootstrap bootstrap
 
 
 In backend make a new file called database.js and inside it put where password is you local password.
@@ -38,6 +39,10 @@ To use it:
 import { the_icon_you_want } from "react-icons/fa";
 
 The icon website is: https://fontawesome.com/icons
+
+
+
+
 
 
 
