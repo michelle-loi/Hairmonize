@@ -1,7 +1,6 @@
 /* CSS for Page not found (incorrect url)*/
 
-body{
-    background-image: url("../assets/loginback.avif");
-    background-repeat: no-repeat;
+.Error404{
+    background-image:  url("../assets/loginback.avif");
 }
 
