@@ -5,6 +5,8 @@ import {useNavigate} from "react-router-dom";
 
 const PageNotFound = () => {
 
+    // Template from react-boostrap alerts: https://react-bootstrap.netlify.app/docs/components/alerts
+
     // implementing the back function via the useNavigate feature of the router.
     let navigate = useNavigate();
 
