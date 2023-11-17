@@ -13,7 +13,7 @@ you can read more about it below)
 6) npm install react-bootstrap bootstrap
 
 
-In backend make a new file called database.js and inside it put where password is you local password.
+In backend make a new file called db.js and inside it put where password is you local password.
 DONT COMMIT THIS UNTIL THE END BECAUSE THEN EVERYONE WILL HAVE PASSWORD PROBLEMS!
 
 import mysql from "mysql"
