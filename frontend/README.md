@@ -11,6 +11,22 @@ you can read more about it below)
 4) enter command: npm start
 
 
+In backend make a new file called database.js and inside it put where password is you local password.
+DONT COMMIT THIS UNTIL THE END BECAUSE THEN EVERYONE WILL HAVE PASSWORD PROBLEMS!
+
+import mysql from "mysql"
+
+// This is the connection to the database
+
+const db = mysql.createConnection({
+host: "local",
+user: "root",
+password:"",
+database: "salondatabase"
+})
+
+
+
 There are a bunch of frameworks we need so:
 
 This is for our icons:
