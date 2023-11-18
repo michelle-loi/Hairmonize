@@ -1,3 +1,59 @@
+/* CSS for the navigation bar */
+/* Keyframes: https://www.youtube.com/watch?app=desktop&v=JXJPbWQmptE */
+
+/* Remove the arrow in the dropdown menu*/
 .remove-arrow .dropdown-toggle::after {
     display: none;
+}
+
+/*Make the account icon white */
+.accountIcon {
+    color: white;
+}
+
+/* Create a grey circle around the icon */
+.circle {
+    width: 2.4rem; /* Make square */
+    height: 2.4rem; /* Make square */
+    border-radius: 50%; /* Make circle */
+    background-color: grey;
+    display: flex; /* center icon */
+    align-items: center; /* vertical alignment */
+    justify-content: center; /* horizontal alignment */
+}
+
+/* Keyframes for home button */
+@keyframes scissorBeat{
+    0%{
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+
+.scissorIcon{
+    font-size: 2.4rem;
+    color: #EEA47F;
+    cursor: pointer;
+}
+
+/* Beat 1 second */
+.scissorIcon:hover{
+    animation: scissorBeat 1s infinite;
+
+}
+
+/* Define box that surrounds home icon */
+.square{
+    width: 2.4rem; /* Make square */
+    height: 2.4rem; /* Make square */
+    border-radius: 95%;
+    background-color: #00539C;
+    display: flex; /* center icon */
+    align-items: center; /* vertical alignment */
+    justify-content: center; /* horizontal alignment */
 }
