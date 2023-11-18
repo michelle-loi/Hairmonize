@@ -1,9 +1,36 @@
-import React from "react";
+import React, {useState} from "react";
 import "./registration.css"
 import {Link} from "react-router-dom";
 import { FaUser,  FaEnvelope, FaPhone, FaLock} from "react-icons/fa";
+import axios from "axios";
 
-const registration = () => {
+const Registration = () => {
+    // states to gather input
+    const [inputs, setInputs] = useState({
+        Username:"",
+        password:"",
+    })
+
+    // function to get input
+    const change = e => {
+        setInputs(prev=> ({...prev, [e.target.name]: e.target.value}))
+    }
+
+    // function to allow submission of the username and password
+    const Submit = async e => {
+        // this prevents the fields from resetting
+        e.preventDefault()
+        // error handle
+        try{
+            const res = await axios.post("/auth/register", inputs)
+            console.log(res)
+        }catch (error){
+            console.log(error)
+        }
+    }
+
+
+
     return(
         <div className="registerPage">
             <div className="container min-vh-100 align-items-center d-flex justify-content-center">
@@ -108,7 +135,7 @@ const registration = () => {
                                 </div>
 
                                 {/*Field*/}
-                                <input required type="username" placeholder="Username" className="form-control"/>
+                                <input required type="username" placeholder="Username" className="form-control" name='Username' onChange={change}/>
 
                             </div>
 
@@ -123,13 +150,13 @@ const registration = () => {
                                 </div>
 
                                 {/*Field*/}
-                                <input required type="password" placeholder="Password" className="form-control"/>
+                                <input required type="password" placeholder="Password" className="form-control" name='password' onChange={change}/>
 
                             </div>
 
                             {/*Submit*/}
                             <div className="submitInfo">
-                                <button className="btn btn-primary">Submit</button>
+                                <button className="btn btn-primary" onClick={Submit}>Submit</button>
                             </div>
 
                             {/*Return*/}
@@ -144,4 +171,4 @@ const registration = () => {
     )
 }
 
-export default registration
+export default Registration
