@@ -1,11 +1,11 @@
-/*Css for login page*/
+/*Css for registration page*/
 
-.loginPage{
-    background-image: url("../assets/loginback.avif");
+.registerPage{
+    background-image: url("../../assets/loginback.avif");
     background-repeat: no-repeat;
 }
 
-.login {
+.registerRow{
     background: white;
     border: 1px solid #ccc;
     padding: 20px;
