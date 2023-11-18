@@ -6,6 +6,7 @@ import ClientHome from "./pages/clientHome"
 import Account from "./pages/account";
 import AdminHome from "./pages/adminHome";
 import StylistHome from "./pages/stylistHome";
+import AccountEdit from "./pages/accountEdit";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/account" element={<Account/>}/>
             <Route path="/adminHome" element={<AdminHome/>}/>
             <Route path="/stylistHome" element={<StylistHome/>}/>
+            <Route path="/accountEdit" element={<AccountEdit/>}/>
           </Routes>
         </BrowserRouter>
       </div>

@@ -8,17 +8,19 @@ import {Button, Col, Container, Form, InputGroup, Row} from "react-bootstrap";
 // https://react-bootstrap.netlify.app/docs/forms/input-group
 // https://react-bootstrap.netlify.app/docs/forms/form-text
 
-const account = () => {
+const accountEdit = () => {
     return(
-        <div className="accountPage">
+        <div className="accountEditPage">
             <NavigationBar/>
 
             <Container fluid>
                 <Row>
-                    <h1>Profile</h1>
+                    <h1>Edit Details</h1>
                 </Row>
 
                 <Row className="justify-content-md-center">
+                    <h6>Fill in the fields below with your new information and click update</h6>
+
                     <Col md="auto">
                         <h4>Personal Information</h4>
                         <Form>
@@ -105,7 +107,8 @@ const account = () => {
                 </Row>
                 <Row className="justify-content-md-center">
                     <Col md="auto">
-                        <Button href="/accountEdit" variant="success" style={{ width: '250px' }}>Edit account details</Button>
+                        <Button href="/account" variant="primary" style={{ width: '250px' }}>Save changes</Button>{' '}
+                        <Button href="/account" variant="danger" style={{ width: '250px' }}>Cancel changes</Button>
                     </Col>
                 </Row>
             </Container>
@@ -113,4 +116,4 @@ const account = () => {
     )
 }
 
-export default account
+export default accountEdit
