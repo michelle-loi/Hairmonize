@@ -1,5 +1,5 @@
 import React from "react";
-import NavigationBar from "../components/clientNavBar";
+import NavigationBar from "../../components/navbar/NavBar";
 import {FaEnvelope, FaLock, FaPhone, FaUser} from "react-icons/fa";
 import {Button, Col, Container, Form, InputGroup, Row} from "react-bootstrap";
 
@@ -13,14 +13,13 @@ const accountEdit = () => {
         <div className="accountEditPage">
             <NavigationBar/>
 
-            <Container fluid>
-                <Row>
+            <Container>
+                <Row className="mt-4">
                     <h1>Edit Details</h1>
+                    <h6>Fill in the fields below with your new information and click update</h6>
                 </Row>
 
-                <Row className="justify-content-md-center">
-                    <h6>Fill in the fields below with your new information and click update</h6>
-
+                <Row className="justify-content-md-center mt-4">
                     <Col md="auto">
                         <h4>Personal Information</h4>
                         <Form>
@@ -105,7 +104,7 @@ const accountEdit = () => {
                         </Form.Group>
                     </Col>
                 </Row>
-                <Row className="justify-content-md-center">
+                <Row className="justify-content-md-center mt-3">
                     <Col md="auto">
                         <Button href="/account" variant="primary" style={{ width: '250px' }}>Save changes</Button>{' '}
                         <Button href="/account" variant="danger" style={{ width: '250px' }}>Cancel changes</Button>

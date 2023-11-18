@@ -1,5 +1,5 @@
 import React from "react";
-import NavigationBar from "../components/clientNavBar";
+import NavigationBar from "../../components/navbar/NavBar";
 import {FaEnvelope, FaLock, FaPhone, FaUser} from "react-icons/fa";
 import {Button, Col, Container, Form, InputGroup, Row} from "react-bootstrap";
 
@@ -13,8 +13,9 @@ const account = () => {
         <div className="accountPage">
             <NavigationBar/>
 
-            <Container fluid>
-                <Row>
+            <Container className="accountPageContainer">
+                {/* Change top and bottom margin */}
+                <Row className="mb-3 mt-4">
                     <h1>Profile</h1>
                 </Row>
 
@@ -103,7 +104,8 @@ const account = () => {
                         </Form.Group>
                     </Col>
                 </Row>
-                <Row className="justify-content-md-center">
+
+                <Row className="justify-content-md-center mt-3">
                     <Col md="auto">
                         <Button href="/accountEdit" variant="success" style={{ width: '250px' }}>Edit account details</Button>
                     </Col>

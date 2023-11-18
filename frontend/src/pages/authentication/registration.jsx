@@ -8,7 +8,7 @@ const registration = () => {
         <div className="registerPage">
             <div className="container min-vh-100 align-items-center d-flex justify-content-center">
 
-                <div className="row">
+                <div className="registerRow row">
 
                     {/* Column for information */}
                     <div className="col">

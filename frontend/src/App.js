@@ -1,12 +1,12 @@
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
-import Login from "./pages/login";
-import Registration from "./pages/registration"
-import PageNotFound from "./pages/pageNotFound";
-import ClientHome from "./pages/clientHome"
-import Account from "./pages/account";
-import AdminHome from "./pages/adminHome";
-import StylistHome from "./pages/stylistHome";
-import AccountEdit from "./pages/accountEdit";
+import Login from "./pages/authentication/login";
+import Registration from "./pages/authentication/registration"
+import PageNotFound from "./pages/error/pageNotFound";
+import ClientHome from "./pages/client/clientHome"
+import Account from "./pages/account/account";
+import AdminHome from "./pages/admin/adminHome";
+import StylistHome from "./pages/stylist/stylistHome";
+import AccountEdit from "./pages/account/accountEdit";
 
 function App() {
   return (
