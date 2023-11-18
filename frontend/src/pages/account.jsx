@@ -1,5 +1,5 @@
 import React from "react";
-import NavigationBar from "../components/navigationBar";
+import NavigationBar from "../components/clientNavBar";
 import {FaEnvelope, FaLock, FaPhone, FaUser} from "react-icons/fa";
 import {Button, Col, Container, Form, InputGroup, Row} from "react-bootstrap";
 

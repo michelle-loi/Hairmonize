@@ -1,5 +1,5 @@
 import React from "react";
-import NavigationBar from "../components/navigationBar"
+import NavigationBar from "../components/clientNavBar"
 
 const clientHome = () => {
     return(

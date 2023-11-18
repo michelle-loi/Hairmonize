@@ -2,14 +2,14 @@ import React from "react";
 import { FaUser } from "react-icons/fa";
 import { LuScissorsSquare } from "react-icons/lu";
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
-import "./navigationBar.css"
+import "./clientnavBar.css"
 
 // Documentation:
 // https://react-bootstrap.netlify.app/docs/components/navbar/
 
 
 // Function for the navigation bar
-const navigationBar = () => {
+const clientNavBar = () => {
     return(
         <Navbar fluid bg="dark-subtle" data-bs-theme="dark" sticky="top" className="navi">
             <Container fluid>
@@ -49,4 +49,4 @@ const navigationBar = () => {
     )
 }
 
-export default navigationBar
+export default clientNavBar
