@@ -100,7 +100,7 @@ const accountEdit = () => {
                                 <InputGroup.Text>
                                     <FaLock />
                                 </InputGroup.Text>
-                                <Form.Control type="text" placeholder="Password" />
+                                <Form.Control type="password" placeholder="Password" />
                             </InputGroup>
                         </Form.Group>
                     </Col>
