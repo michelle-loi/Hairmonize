@@ -2,7 +2,7 @@ import React from "react";
 import NavigationBar from "../../components/navbar/NavBar"
 import {Col, Container, Nav, Row, Tab} from 'react-bootstrap'
 import UpcomingAppointments from "../../components/clienthome/upcomingAppointments";
-import BookAppointments from "../../components/clienthome/bookAppointments";
+import BookAppointments from "../../components/clienthome/BookAppointments";
 
 // https://react-bootstrap.netlify.app/docs/components/tabs/
 
