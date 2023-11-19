@@ -15,6 +15,9 @@ To run:
 3) run in terminal: npm install react-icons
 4) run in terminal: npm add axios
 5) run in terminal: enter command: npm install
+
+---------- STOP HERE: FINISH ALL STEPS FOR THE BACK END AND START IT BEFORE CONTINUING WITH STEP 6 ------------
+
 6) run in terminal: npm start
 
 
