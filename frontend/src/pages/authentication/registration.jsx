@@ -43,6 +43,10 @@ const Registration = () => {
             // saying account is successfully created
             setSuccess(response.data);
 
+
+            /* below is the count down logic, where upon successful creation of an account it will count down before
+            * automatically rerouting the user back to the login page.*/
+
             // make countdown 5 seconds
             let countdown = 5;
 
