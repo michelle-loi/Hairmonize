@@ -5,6 +5,30 @@ CPSC 471 Final Project
 Clone this project from git onto your computer
 
 
+MYSQL SERVER:
+- Before you start the program you must configure your MySQL server authentication properly or else it
+will not be able to communicate with the back end. To do so:
+
+Linux: 
+1) Open a terminal 
+2) Run: Sudo my sql and then log in
+3) Run: ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+        
+    - Replace password with you actual password, but retain the single quote marks.
+
+4) Run: FLUSH PRIVILEGES;
+
+Windows/MacOS
+1) Open mysql work bench or datagrip.
+2) Access your root server, then open a query terminal.
+3) Run: ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+
+    - Replace password with your actual password, but retain the single quote marks.
+
+4) Run: FLUSH PRIVILEGES;
+
+
+
 
 FRONT END:
 
