@@ -1,9 +1,58 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, {useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 import "./login.css"
 import { FaUser, FaLock } from "react-icons/fa";
+import axios from "axios";
 
-const login = () => {
+const Login = () => {
+    // states to gather input
+    const [inputs, setInputs] = useState({
+        Username:"",
+        password:"",
+    })
+
+    // error handling message function
+    const [error, setError] = useState(null)
+
+    // success message function
+    const [success, setSuccess] = useState(null)
+
+
+
+    // create a navigate function from react dom
+    const navigate = useNavigate()
+
+    // function to get input
+    const change = e => {
+        setInputs(prev=> ({...prev, [e.target.name]: e.target.value}))
+    }
+
+    // function to allow submission of the username and password
+    const Submit = async e => {
+        // this prevents the fields from resetting
+        e.preventDefault()
+        // try catch so if there are any errors it will be caught and dealt with appropriately. Most of the time
+        // errors will be users trying to register an already existing username
+        try{
+            // for any submissions send the data to our auth register function
+            const response = await axios.post("/auth/register", inputs)
+
+
+            // Upon successful creation of a username set success message to be displayed - which is the server message
+            // saying account is successfully created
+            setSuccess(response.data);
+
+            // navigate to the appropriate page depending on
+            navigate("/");
+
+        }catch (error){
+            setError(error.response.data);
+        }
+    }
+
+
+
+
     return(
         <div className="loginPage">
             <div className="container min-vh-100 align-items-center d-flex justify-content-center">
@@ -45,4 +94,4 @@ const login = () => {
     )
 }
 
-export default login
+export default Login
