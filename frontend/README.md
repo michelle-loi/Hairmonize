@@ -15,6 +15,9 @@ To run:
 3) run in terminal: npm install react-icons
 4) run in terminal: npm add axios
 5) run in terminal: enter command: npm install
+
+---------- STOP HERE: FINISH ALL STEPS FOR THE BACK END AND START IT BEFORE CONTINUING WITH STEP 6 ------------
+
 6) run in terminal: npm start
 
 
@@ -33,8 +36,8 @@ The icon website is: https://fontawesome.com/icons
 BACKEND
 
 1) cd to back end directory
-2) run in terminal: node add express mysql nodemon
-3) in project directory: Create a new javascript file inside of the backend called database.js:
+2) run in terminal: npm add express mysql nodemon
+3) in project directory: Create a new javascript file inside of the backend called database.js (DO NOT COMMIT TO GIT):
 
 inside of this file you will write:
 
