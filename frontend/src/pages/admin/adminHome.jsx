@@ -4,6 +4,7 @@ import UpcomingAppointments from "../../components/clienthome/upcomingAppointmen
 import BookAppointments from "../../components/clienthome/BookAppointments";
 import NavigationBar from "../../components/navbar/NavBar"
 import ViewEmployee from "../../components/adminHome/viewEmployee";
+import ViewClients from "../../components/adminHome/viewClients";
 
 // https://react-bootstrap.netlify.app/docs/components/tabs/
 
@@ -54,7 +55,7 @@ const adminHome = () => {
 
                             {/* clients page */}
                             <Tab.Pane eventKey="clients">
-                                C
+                                <ViewClients/>
                             </Tab.Pane>
 
                             {/* Accounts page */}
@@ -81,7 +82,7 @@ const adminHome = () => {
                             </Tab.Pane>
 
                             {/* inventory page */}
-                            <Tab.Pane eventKey="clients">
+                            <Tab.Pane eventKey="inventory">
                                 Client
 
                             </Tab.Pane>
