@@ -33,8 +33,8 @@ The icon website is: https://fontawesome.com/icons
 BACKEND
 
 1) cd to back end directory
-2) run in terminal: node add express mysql nodemon
-3) in project directory: Create a new javascript file inside of the backend called database.js:
+2) run in terminal: npm add express mysql nodemon
+3) in project directory: Create a new javascript file inside of the backend called database.js (DO NOT COMMIT TO GIT):
 
 inside of this file you will write:
 
