@@ -1,7 +1,7 @@
 import React from "react";
 import {Col, Nav, Row, Tab} from "react-bootstrap";
 import UpcomingAppointments from "../../components/clienthome/upcomingAppointments";
-import BookAppointments from "../../components/clienthome/bookAppointments";
+import BookAppointments from "../../components/clienthome/BookAppointments";
 import NavigationBar from "../../components/navbar/NavBar"
 import ViewEmployee from "../../components/adminHome/viewEmployee";
 
