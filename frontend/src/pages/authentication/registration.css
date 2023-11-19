@@ -20,3 +20,23 @@
 .icon{
     font-size: 1.5rem !important;
 }
+
+.submitErrorMSG{
+    color: red;
+    margin-top: 10px;
+    position: relative;
+    display: inline-block;
+}
+
+.submitSuccessMSG{
+    color: green;
+    margin-top: 10px;
+    position: relative;
+    display: inline-block;
+}
+
+.submitSuccessCountDownTimer{
+    color: black;
+    position: relative;
+    display: inline-block;
+}

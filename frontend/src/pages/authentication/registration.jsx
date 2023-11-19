@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import "./registration.css"
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { FaUser,  FaEnvelope, FaPhone, FaLock} from "react-icons/fa";
 import axios from "axios";
 
@@ -11,6 +11,18 @@ const Registration = () => {
         password:"",
     })
 
+    // error handling message function
+    const [error, setError] = useState(null)
+
+    // success message function
+    const [success, setSuccess] = useState(null)
+
+    // count down timer message
+    const [time, setTime] = useState(null)
+
+    // create a navigate function from react dom
+    const navigate = useNavigate()
+
     // function to get input
     const change = e => {
         setInputs(prev=> ({...prev, [e.target.name]: e.target.value}))
@@ -20,12 +32,48 @@ const Registration = () => {
     const Submit = async e => {
         // this prevents the fields from resetting
         e.preventDefault()
-        // error handle
+        // try catch so if there are any errors it will be caught and dealt with appropriately. Most of the time
+        // errors will be users trying to register an already existing username
         try{
-            const res = await axios.post("/auth/register", inputs)
-            console.log(res)
+            // for any submissions send the data to our auth register function
+            const response = await axios.post("/auth/register", inputs)
+
+
+            // Upon successful creation of a username set success message to be displayed - which is the server message
+            // saying account is successfully created
+            setSuccess(response.data);
+
+            // make countdown 5 seconds
+            let countdown = 5;
+
+            // set count down timer message
+            setTime(`Redirecting to login page in ${countdown} seconds...`)
+
+            // start count down
+            const countdownInterval = setInterval(() => {
+                countdown--;
+
+                // update count down timer
+                setTime(`Redirecting to login page in ${countdown} seconds...`)
+
+                // Check if the user has manually gone back, if they have no need to count down anymore and end the loop
+                // and stop the countdown
+                window.onpopstate = function (event) {
+                    clearInterval(countdownInterval);
+                };
+
+                // Check if the countdown has reached zero, if it has stop the count down
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+
+                    // After the countdown, navigate to the login page
+                    navigate("/");
+                }
+            }, 1000); // Update every second
+
+
         }catch (error){
-            console.log(error)
+            setError(error.response.data);
         }
     }
 
@@ -154,9 +202,27 @@ const Registration = () => {
 
                             </div>
 
-                            {/*Submit*/}
+                            {/*Submit button, after an account has been successfully created disable the button*/}
+
+                            {!success && (
                             <div className="submitInfo">
                                 <button className="btn btn-primary" onClick={Submit}>Submit</button>
+                            </div>
+                                )}
+
+                            {/*Error message, most of the time this will be for duplicate accounts*/}
+                            <div className="submitErrorMSG">
+                                {error && <p>Error: {error}</p>}
+                            </div>
+
+                            {/*Success message, to be displayed upon successful creation of the account*/}
+                            <div className="submitSuccessMSG">
+                                {success && <p>{success}</p>}
+                            </div>
+
+                            {/*Count down timer message, to be displayed upon successful creation of the account*/}
+                            <div className="submitSuccessCountDownTimer">
+                                {time && <p>{time}</p>}
                             </div>
 
                             {/*Return*/}
