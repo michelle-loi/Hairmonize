@@ -1,15 +1,14 @@
 import React from "react";
-import {Container,Row} from "react-bootstrap";
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import './viewEmployee.css';
 
 const viewEmployee=()=>{
 
-    //DELETE:Anarraywithexampleemployeedatafortesting
+    //DELETE:An array with example employee data for testing
     const employees=[
-        {EID:1,Fname:'John',Mname:'James',Lname:'Doe',Phone:'123-456-7890',Email:'JoneDoe@gmail.com'},
-        {EID:2,Fname:'Jane',Mname:'Allison',Lname:'Doe',Phone:'987-654-3210',Email:'JaneDoe@gmail.com'},
+        {EID:1,Fname:'John',Mname:'William',Lname:'Doe',Phone:'123-456-7890',Email:'JohnDoe@gmail.com', SalaryType: 'A'},
+        {EID:2,Fname:'Jane',Mname:'Allison',Lname:'Doe',Phone:'987-654-3210',Email:'JaneDoe@gmail.com', SalaryType: 'B'},
     ];
 
 
@@ -21,11 +20,12 @@ const viewEmployee=()=>{
                 <thead>
                 <tr>
                     <th>EID</th>
-                    <th>FirstName</th>
-                    <th>MiddleName</th>
-                    <th>LastName</th>
-                    <th>PhoneNumber</th>
-                    <th>EmailAddress</th>
+                    <th>First Name</th>
+                    <th>Middle Name</th>
+                    <th>Last Name</th>
+                    <th>Phone Number</th>
+                    <th>Email Address</th>
+                    <th>Salary Type</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -37,6 +37,7 @@ const viewEmployee=()=>{
                         <td>{employee.Lname}</td>
                         <td>{employee.Phone}</td>
                         <td>{employee.Email}</td>
+                        <td>{employee.SalaryType}</td>
                         <td className="button"><Button variant="danger">Delete</Button>{''}</td>
                         <td className="button"><Button variant="warning">Edit</Button>{''}</td>
                         <td className="button"><Button variant="success">Save</Button>{''}</td>
