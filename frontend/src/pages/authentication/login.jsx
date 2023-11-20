@@ -5,6 +5,7 @@ import { FaUser, FaLock } from "react-icons/fa";
 import axios from "axios";
 
 const Login = () => {
+
     // states to gather input
     const [inputs, setInputs] = useState({
         Username:"",
@@ -13,11 +14,6 @@ const Login = () => {
 
     // error handling message function
     const [error, setError] = useState(null)
-
-    // success message function
-    const [success, setSuccess] = useState(null)
-
-
 
     // create a navigate function from react dom
     const navigate = useNavigate()
@@ -35,15 +31,10 @@ const Login = () => {
         // errors will be users trying to register an already existing username
         try{
             // for any submissions send the data to our auth register function
-            const response = await axios.post("/auth/register", inputs)
+            const response = await axios.post("/auth/login", inputs)
 
-
-            // Upon successful creation of a username set success message to be displayed - which is the server message
-            // saying account is successfully created
-            setSuccess(response.data);
-
-            // navigate to the appropriate page depending on
-            navigate("/");
+            // navigate to the appropriate page depending on login credentials
+            navigate("/clientHome");
 
         }catch (error){
             setError(error.response.data);
@@ -66,7 +57,7 @@ const Login = () => {
                                 <FaUser />
                             </span>
                         </div>
-                        <input required type="text"  placeholder="Email" className="form-control"/>
+                        <input required type="text"  placeholder="Email" className="form-control" name = 'Username' onChange={change}/>
                     </div>
 
                     {/* Password field */}
@@ -76,12 +67,16 @@ const Login = () => {
                                 <FaLock />
                             </span>
                         </div>
-                        <input required type="password" placeholder="Password" className="form-control"/>
+                        <input required type="password" placeholder="Password" className="form-control" name = 'password' onChange={change}/>
                     </div>
 
                     {/* Sign in button */}
                     <div className="signInBut">
-                        <button className="btn btn-primary">Sign In</button>
+                        <button className="btn btn-primary" onClick={Submit}>Sign In</button>
+                    </div>
+
+                    <div className="loginErrorMSG">
+                        {error && <p>Error: {error}</p>}
                     </div>
 
                     {/* Register */}

@@ -1,6 +1,4 @@
-# Getting started 
-
-CPSC 471 Final Project
+# CPSC 471 Final Project: Getting Started
 
 Clone this project from git onto your computer
 
@@ -11,12 +9,12 @@ will not be able to communicate with the back end. To do so:
 
 Linux: 
 1) Open a terminal 
-2) Run: Sudo my sql and then log in
-3) Run: ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+2) Run in terminal: Sudo my sql and then log in
+3) Run in terminal: ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
         
     - Replace password with you actual password, but retain the single quote marks.
 
-4) Run: FLUSH PRIVILEGES;
+4) Run in terminal: FLUSH PRIVILEGES;
 
 Windows/MacOS
 1) Open mysql work bench or datagrip.
@@ -81,5 +79,8 @@ database: "your database name (from data grip or whatever you're using)"
 
 4) run in terminal: npm add bcryptjs
 5) run in terminal: npm add axios
+6) run in terminal: npm add jsonwebtoken
+7) run in terminal: npm add cookie-parser
+8) run in terminal: npm start
 
 

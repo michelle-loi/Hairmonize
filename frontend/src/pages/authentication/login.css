@@ -20,3 +20,11 @@
 .icon{
     font-size: 1.5rem !important;
 }
+
+
+.loginErrorMSG{
+    color: red;
+    margin-top: 10px;
+    position: relative;
+    display: inline-block;
+}
