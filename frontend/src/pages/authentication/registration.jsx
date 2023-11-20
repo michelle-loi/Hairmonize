@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import "./registration.css"
 import {Link, useNavigate} from "react-router-dom";
 import { FaUser,  FaEnvelope, FaPhone, FaLock} from "react-icons/fa";
@@ -28,6 +28,12 @@ const Registration = () => {
         setInputs(prev=> ({...prev, [e.target.name]: e.target.value}))
     }
 
+
+    // Store the countdown interval ID in a ref this allows for us to stop the count down when the user moves away from
+    // the registration page manually
+    const countdownIntervalRef = React.useRef();
+
+
     // function to allow submission of the username and password
     const Submit = async e => {
         // this prevents the fields from resetting
@@ -54,21 +60,16 @@ const Registration = () => {
             setTime(`Redirecting to login page in ${countdown} seconds...`)
 
             // start count down
-            const countdownInterval = setInterval(() => {
+            countdownIntervalRef.current = setInterval(() => {
                 countdown--;
 
                 // update count down timer
                 setTime(`Redirecting to login page in ${countdown} seconds...`)
 
-                // Check if the user has manually gone back, if they have no need to count down anymore and end the loop
-                // and stop the countdown
-                window.onpopstate = function (event) {
-                    clearInterval(countdownInterval);
-                };
 
                 // Check if the countdown has reached zero, if it has stop the count down
                 if (countdown <= 0) {
-                    clearInterval(countdownInterval);
+                    clearInterval(countdownIntervalRef.current);
 
                     // After the countdown, navigate to the login page
                     navigate("/");
@@ -80,6 +81,14 @@ const Registration = () => {
             setError(error.response.data);
         }
     }
+
+    // Use useEffect to clean up the interval when the component is unmounted - allowing us to stop the countdown
+    // if the user navigated away.
+    useEffect(() => {
+        return () => {
+            clearInterval(countdownIntervalRef.current);
+        };
+    }, []);
 
 
 
