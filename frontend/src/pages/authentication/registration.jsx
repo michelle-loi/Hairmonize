@@ -8,7 +8,7 @@ const Registration = () => {
     // states to gather input
     const [inputs, setInputs] = useState({
         Username:"",
-        password:"",
+        Password:"",
     })
 
     // error handling message function
@@ -202,7 +202,7 @@ const Registration = () => {
                                 </div>
 
                                 {/*Field*/}
-                                <input required type="password" placeholder="Password" className="form-control" name='password' onChange={change}/>
+                                <input required type="password" placeholder="Password" className="form-control" name='Password' onChange={change}/>
 
                             </div>
 

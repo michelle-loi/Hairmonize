@@ -15,7 +15,7 @@ export const register = (request, response) => {
 
         //Otherwise we will get the password, hash it and create the new user registration
         const salt = bcrypt.genSaltSync(10);
-        const hash = bcrypt.hashSync(request.body.password, salt);
+        const hash = bcrypt.hashSync(request.body.Password, salt);
 
         // insert the new user into the database (account table)
         const newUser = "INSERT into ACCOUNT(Username, Password) VALUES(?)"
@@ -47,7 +47,7 @@ export const login = (request, response) => {
 
         // if the user does exist check the password next
         const passVerify = bcrypt.compareSync(
-            request.body.password,
+            request.body.Password,
             // here password needs to be uppercase because it is pulling data from the database and password in the database is uppercase
             data[0].Password
         );
@@ -59,7 +59,7 @@ export const login = (request, response) => {
         const token = jwt.sign({Username:data[0].Username}, "jwtkey");
 
         // separating password and other information, this way we do not send the password with the other data
-        const {password, ...other} = data[0]
+        const {Password, ...other} = data[0]
 
         // sending out cookie out to the user
         response.cookie("access_token", token, {

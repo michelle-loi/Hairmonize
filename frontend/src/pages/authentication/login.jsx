@@ -9,7 +9,7 @@ const Login = () => {
     // states to gather input
     const [inputs, setInputs] = useState({
         Username:"",
-        password:"",
+        Password:"",
     })
 
     // error handling message function
@@ -67,7 +67,7 @@ const Login = () => {
                                 <FaLock />
                             </span>
                         </div>
-                        <input required type="password" placeholder="Password" className="form-control" name = 'password' onChange={change}/>
+                        <input required type="password" placeholder="Password" className="form-control" name = 'Password' onChange={change}/>
                     </div>
 
                     {/* Sign in button */}
