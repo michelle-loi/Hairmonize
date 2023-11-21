@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import './viewClient.css';
 import axios from "axios";
 import { Link } from "react-router-dom";
+import AdminHome from "../../pages/admin/adminHome"
 
 
 const ViewEmployees=()=>{
@@ -14,21 +15,90 @@ const ViewEmployees=()=>{
     //     {EID:2,Fname:'Jane',Mname:'Allison',Lname:'Doe',Phone:'987-654-3210',Email:'JaneDoe@gmail.com', SalaryType: 'B'},
     // ];
 
-    const [ddata, setData] = useState([]);
+    const [employeeTable, setEmployeeTable] = useState([]);
 
     useEffect(() => {
         const fetchAllEmployees = async () => {
             try {
-                const res = await axios.get('/viewEmployee');
-                setData(res.data);
+                const res = await axios.get('/viewEmployee/employeeTable');
+                setEmployeeTable(res.data);
             } catch (err) {
                 console.log(err);
             }
         };
         fetchAllEmployees();
+
+
     }, []);
 
-    console.log(ddata);
+    //DELETE: for testing
+    console.log(employeeTable);
+
+    const [emailTable, setEmailTable] = useState([]);
+
+    useEffect(() => {
+        const fetchAllEmails = async () => {
+            try {
+                const res = await axios.get('/viewEmployee/emailTable');
+                setEmailTable(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchAllEmails();
+    }, []);
+
+    //DELETE: for testing
+    console.log(JSON.stringify(emailTable));
+    console.log(emailTable);
+
+
+    const [phoneTable, setPhoneTable] = useState([]);
+
+    useEffect(() => {
+        const fetchAllPhones = async () => {
+            try {
+                const res = await axios.get('/viewEmployee/phoneTable');
+                setPhoneTable(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchAllPhones();
+    }, []);
+
+    //DELETE: for testing
+    console.log(JSON.stringify(phoneTable));
+    console.log(phoneTable);
+
+
+    // let EID = null;
+    //
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             console.log("I got here")
+    //             //console.log(`${EID}`);
+    //             const res = await axios.get(`/viewEmployee/${EID}`);
+    //             setEmail(res.data);
+    //             console.log(email)
+    //             console.log(JSON.stringify(email));
+    //         } catch (err) {
+    //             console.log(err);
+    //         }
+    //     };
+    //     fetchData();
+    // }, [EID]);
+
+
+    // const fetchEmail = async (EID) =>{
+    //     try {
+    //         const res = await axios.get(`/viewEmployee/${EID}`);
+    //         setEmail(res.data);
+    //     } catch (err){
+    //         console.log(err);
+    //     }
+    // }
 
 
 
@@ -40,10 +110,10 @@ const ViewEmployees=()=>{
         };
 
         const handleInputChange = (e, EID, field) => {
-            const updatedData = ddata.map(employee =>
+            const updatedData = employeeTable.map(employee =>
                 employee.EID === EID ? { ...employee, [field]: e.target.value } : employee
             );
-            setData(updatedData);
+            setEmployeeTable(updatedData);
         };
 
         return(
@@ -64,13 +134,20 @@ const ViewEmployees=()=>{
                         <th>First Name</th>
                         <th>Middle Name</th>
                         <th>Last Name</th>
-                        {/*<th>Phone Number</th>*/}
-                        {/*<th>Email Address</th>*/}
+                        <th>Phone Number</th>
+                        <th>Email Address</th>
                         <th>Salary Type</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {ddata.map((employee)=>{
+                    {employeeTable.map((employee)=>{
+
+                        //EID = employee.EID;
+
+                        //fetchEmail(employee.EID);
+
+                        //console.log(email);
+
                         return(
                             <tr key={employee.EID}>
                                 <td>{employee.EID}</td>
@@ -87,8 +164,22 @@ const ViewEmployees=()=>{
                                 </td>
                                 <td>{employee.MName}</td>
                                 <td>{employee.LName}</td>
-                                {/*<td>{employee.Phone}</td>*/}
-                                {/*<td>{employee.Email}</td>*/}
+
+                                <td>
+                                    {phoneTable.map((phone, i)=>{
+                                        return(
+                                            phone.EID === employee.EID && <p key={i}>{phone.Phone}</p>
+                                        )
+                                    })}
+                                </td>
+
+                                <td>
+                                    {emailTable.map((email, i)=>{
+                                        return(
+                                        email.EID === employee.EID && <p key={i}>{email.EMAIL}</p>
+                                        )
+                                    })}
+                                </td>
                                 <td>{employee.SalaryType}</td>
                                 <td className="button"><Button variant="danger">Delete</Button>{''}</td>
                             </tr>
@@ -97,8 +188,6 @@ const ViewEmployees=()=>{
                 </Table>
             </div>
         );
-
-
 }
 
 export default ViewEmployees;

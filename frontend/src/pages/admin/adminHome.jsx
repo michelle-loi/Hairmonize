@@ -13,12 +13,6 @@ import {BrowserRouter, Link, Route, Routes} from 'react-router-dom';
 const adminHome = () => {
     return(
         <>
-            {/*<Routes>*/}
-            {/*    <Route path='/adminhome/employee' element={<ViewEmployee />} />*/}
-            {/*    <Route path='/adminhome/clients' element={<ViewClients />} />*/}
-            {/*    <Route path='/adminhome/accounts' element={<ViewAccounts />} />*/}
-            {/*</Routes>*/}
-
 
         <div className="adminHomePage">
             <NavigationBar/>
