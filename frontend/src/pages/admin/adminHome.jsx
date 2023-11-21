@@ -5,11 +5,21 @@ import BookAppointments from "../../components/clienthome/bookAppointments";
 import NavigationBar from "../../components/navbar/NavBar"
 import ViewEmployee from "../../components/adminHome/viewEmployee";
 import ViewClients from "../../components/adminHome/viewClients";
+import ViewAccounts from "../../components/adminHome/ViewAccounts";
+import {BrowserRouter, Link, Route, Routes} from 'react-router-dom';
 
 // https://react-bootstrap.netlify.app/docs/components/tabs/
 
 const adminHome = () => {
     return(
+        <>
+            {/*<Routes>*/}
+            {/*    <Route path='/adminhome/employee' element={<ViewEmployee />} />*/}
+            {/*    <Route path='/adminhome/clients' element={<ViewClients />} />*/}
+            {/*    <Route path='/adminhome/accounts' element={<ViewAccounts />} />*/}
+            {/*</Routes>*/}
+
+
         <div className="adminHomePage">
             <NavigationBar/>
             <Tab.Container id="sidebar" defaultActiveKey="employees">
@@ -60,7 +70,7 @@ const adminHome = () => {
 
                             {/* Accounts page */}
                             <Tab.Pane eventKey="accounts">
-                                A
+                                <ViewAccounts/>
                             </Tab.Pane>
 
                             {/* Services page */}
@@ -103,6 +113,9 @@ const adminHome = () => {
                 </Row>
             </Tab.Container>
         </div>
+
+
+            </>
 
     )
 }
