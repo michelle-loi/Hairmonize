@@ -19,7 +19,6 @@ const ViewEmployees=()=>{
     useEffect(() => {
         const fetchAllEmployees = async () => {
             try {
-                console.log("I made it here")
                 const res = await axios.get('/viewEmployee');
                 setData(res.data);
             } catch (err) {

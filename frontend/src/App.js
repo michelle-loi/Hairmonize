@@ -7,7 +7,6 @@ import Account from "./pages/account/account";
 import AdminHome from "./pages/admin/adminHome";
 import StylistHome from "./pages/stylist/stylistHome";
 import AccountEdit from "./pages/account/accountEdit";
-import Test from "./components/adminHome/Test";
 
 function App() {
   return (
@@ -22,9 +21,6 @@ function App() {
             <Route path="/adminHome" element={<AdminHome/>}/>
             <Route path="/stylistHome" element={<StylistHome/>}/>
             <Route path="/accountEdit" element={<AccountEdit/>}/>
-
-              <Route path="/test" element={<Test />}/>
-
           </Routes>
         </BrowserRouter>
       </div>

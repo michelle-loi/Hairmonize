@@ -7,15 +7,6 @@ export const getEmployees = (req, res) => {
             console.log(err);
             return res.json(err);
         }
-        //console.log("hi");
         return res.json(data);
-        //return res.json("hello");
-        //return;
-        //return res.status(200).json("New user account has been successfully created!")
     });
 };
-
-// export const getEmployees = (res, req) =>{
-//     //res.json("from the controller")
-//     console.log("from the controller")
-// }
