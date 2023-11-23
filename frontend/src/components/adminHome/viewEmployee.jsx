@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import './viewClient.css';
 import axios from "axios";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import AdminHome from "../../pages/admin/adminHome"
 
 
@@ -16,6 +16,8 @@ const ViewEmployees=()=>{
     // ];
 
     const [employeeTable, setEmployeeTable] = useState([]);
+    const [emailTable, setEmailTable] = useState([]);
+    const [phoneTable, setPhoneTable] = useState([]);
 
     useEffect(() => {
         const fetchAllEmployees = async () => {
@@ -34,7 +36,6 @@ const ViewEmployees=()=>{
     //DELETE: for testing
     console.log(employeeTable);
 
-    const [emailTable, setEmailTable] = useState([]);
 
     useEffect(() => {
         const fetchAllEmails = async () => {
@@ -53,8 +54,6 @@ const ViewEmployees=()=>{
     console.log(emailTable);
 
 
-    const [phoneTable, setPhoneTable] = useState([]);
-
     useEffect(() => {
         const fetchAllPhones = async () => {
             try {
@@ -70,6 +69,17 @@ const ViewEmployees=()=>{
     //DELETE: for testing
     console.log(JSON.stringify(phoneTable));
     console.log(phoneTable);
+
+
+    const handleDelete = async (EID)=>{
+        try {
+            const res = await axios.delete(`/viewEmployee/deleteEmployee/${EID}`);
+            console.log(res.data);
+            window.location.reload(); //THIS RELOADING THE WINDOW IS NEEDED, UNLESS THE SECOND DELETE THROWS A 500 ERROR
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
 
     // let EID = null;
@@ -181,7 +191,7 @@ const ViewEmployees=()=>{
                                     })}
                                 </td>
                                 <td>{employee.SalaryType}</td>
-                                <td className="button"><Button variant="danger">Delete</Button>{''}</td>
+                                <td className="button"><Button onClick={() => handleDelete(employee.EID)} variant="danger">Delete</Button>{''}</td>
                             </tr>
                         )})}
                     </tbody>

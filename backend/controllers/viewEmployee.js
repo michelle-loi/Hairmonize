@@ -7,9 +7,9 @@ export const getEmployees = (req, res) => {
     db.query(q, (err, data) => {
         if (err) {
             console.log(err);
-            return res.json(err);
+            return res.status(500).json(err);
         }
-        return res.json(data);
+        return res.status(200).json(data);
     });
 };
 
@@ -32,5 +32,16 @@ export const getEmployeePhones = (req, res) => {
         if (err) return res.status(500).json(err);
 
         return res.status(200).json(data);
+    });
+};
+
+export const deleteEmployee = (req, res) => {
+    const EID = req.params.id;
+    const q = "DELETE FROM EMPLOYEE WHERE `EID` = ?";
+
+    db.query(q, [EID], (err, data) => {
+        if (err) return res.status(500).json("Error while deleting employee. Employee not deleted.");
+
+        return res.status(200).json("Employee has been deleted.");
     });
 };
