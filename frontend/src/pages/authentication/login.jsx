@@ -30,8 +30,11 @@ const Login = () => {
         // try catch so if there are any errors it will be caught and dealt with appropriately. Most of the time
         // errors will be users trying to register an already existing username
         try{
+            /**
+             * REMOVE LATER
             // for any submissions send the data to our auth register function
             const response = await axios.post("/auth/login", inputs)
+             */
 
             // navigate to the appropriate page depending on login credentials
             navigate("/clientHome");
