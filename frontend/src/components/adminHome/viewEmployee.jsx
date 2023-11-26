@@ -82,6 +82,7 @@ const ViewEmployees=()=>{
     };
 
 
+
     // let EID = null;
     //
     // useEffect(() => {
@@ -191,6 +192,7 @@ const ViewEmployees=()=>{
                                     })}
                                 </td>
                                 <td>{employee.SalaryType}</td>
+                                <td className="button"><Button variant="warning">Edit</Button>{''}</td>
                                 <td className="button"><Button onClick={() => handleDelete(employee.EID)} variant="danger">Delete</Button>{''}</td>
                             </tr>
                         )})}
