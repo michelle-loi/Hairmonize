@@ -8,6 +8,8 @@ import AdminHome from "./pages/admin/adminHome";
 import StylistHome from "./pages/stylist/stylistHome";
 import AccountEdit from "./pages/account/accountEdit";
 
+import EditEmployee from "./components/adminHome/editEmployee";
+
 function App() {
   return (
       <div className="App">
@@ -18,9 +20,11 @@ function App() {
             <Route path="*" element={<PageNotFound />} />
             <Route path="/clientHome" element={<ClientHome/>}/>
             <Route path="/account" element={<Account/>}/>
-            <Route path="/adminHome" element={<AdminHome/>}/>
+            <Route path="/adminHome/*" element={<AdminHome/>}/>
             <Route path="/stylistHome" element={<StylistHome/>}/>
             <Route path="/accountEdit" element={<AccountEdit/>}/>
+
+            <Route path="/adminHome/editEmployee/:id" element={<EditEmployee/>}/>
           </Routes>
         </BrowserRouter>
       </div>

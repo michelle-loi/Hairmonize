@@ -83,6 +83,8 @@ const ViewEmployees=()=>{
 
 
 
+
+
     // let EID = null;
     //
     // useEffect(() => {
@@ -113,30 +115,30 @@ const ViewEmployees=()=>{
 
 
 
-    const [editMode, setEditMode] = useState(false);
-
-
-        const handleEditClick = () => {
-            setEditMode(!editMode);
-        };
-
-        const handleInputChange = (e, EID, field) => {
-            const updatedData = employeeTable.map(employee =>
-                employee.EID === EID ? { ...employee, [field]: e.target.value } : employee
-            );
-            setEmployeeTable(updatedData);
-        };
+    // const [editMode, setEditMode] = useState(false);
+    //
+    //
+    //     const handleEditClick = () => {
+    //         setEditMode(!editMode);
+    //     };
+    //
+    //     const handleInputChange = (e, EID, field) => {
+    //         const updatedData = employeeTable.map(employee =>
+    //             employee.EID === EID ? { ...employee, [field]: e.target.value } : employee
+    //         );
+    //         setEmployeeTable(updatedData);
+    //     };
 
         return(
             <div>
                 <h1 className="mt-3">Employees</h1>
 
 
-                {editMode ? (
-                    <Button variant="success" onClick={handleEditClick}>Save</Button>
-                ) : (
-                    <Button variant="warning" onClick={handleEditClick}>Edit</Button>
-                )}
+                {/*{editMode ? (*/}
+                {/*    <Button variant="success" onClick={handleEditClick}>Save</Button>*/}
+                {/*) : (*/}
+                {/*    <Button variant="warning" onClick={handleEditClick}>Edit</Button>*/}
+                {/*)}*/}
 
                 <Table>
                     <thead>
@@ -162,17 +164,18 @@ const ViewEmployees=()=>{
                         return(
                             <tr key={employee.EID}>
                                 <td>{employee.EID}</td>
-                                <td>
-                                    {editMode ? (
-                                        <input
-                                            type="text"
-                                            value={employee.FName}
-                                            onChange={(e) => handleInputChange(e, employee.EID, 'Fname')}
-                                        />
-                                    ) : (
-                                        employee.FName
-                                    )}
-                                </td>
+                                {/*<td>*/}
+                                {/*    {editMode ? (*/}
+                                {/*        <input*/}
+                                {/*            type="text"*/}
+                                {/*            value={employee.FName}*/}
+                                {/*            onChange={(e) => handleInputChange(e, employee.EID, 'Fname')}*/}
+                                {/*        />*/}
+                                {/*    ) : (*/}
+                                {/*        employee.FName*/}
+                                {/*    )}*/}
+                                {/*</td>*/}
+                                <td>{employee.FName}</td>
                                 <td>{employee.MName}</td>
                                 <td>{employee.LName}</td>
 
@@ -192,7 +195,12 @@ const ViewEmployees=()=>{
                                     })}
                                 </td>
                                 <td>{employee.SalaryType}</td>
-                                <td className="button"><Button variant="warning">Edit</Button>{''}</td>
+
+                                <td>
+                                    <Link className="link" to={`/adminhome/editEmployee/${employee.EID}`}>
+                                        <Button variant="warning">Edit</Button>
+                                    </Link>
+                                </td>
                                 <td className="button"><Button onClick={() => handleDelete(employee.EID)} variant="danger">Delete</Button>{''}</td>
                             </tr>
                         )})}
