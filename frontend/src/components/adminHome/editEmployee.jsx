@@ -90,19 +90,17 @@ const EditEmployee= () => {
     console.log(JSON.stringify(newEmails));
     console.log(newEmails);
 
-    const test = emailsInDB.length;
-    const [nextIndex, setNextIndex] = useState(parseInt(emailsInDB.length, 10));
 
-    console.log(test);
+    const arrayLength = () => emailsInDB.length;
+    const [nextIndex, setNextIndex] = useState(0);
 
     const incrementIndex = () => {
         setNextIndex(nextIndex + 1);
-        console.log(nextIndex);
     };
 
     const handleAddEmail = (e) => {
         e.preventDefault();
-        incrementIndex();
+        (nextIndex === 0) ? setNextIndex(arrayLength() + 1) : incrementIndex();
         console.log(nextIndex);
         const newObject = {
             index: nextIndex,
@@ -126,16 +124,15 @@ const EditEmployee= () => {
 
     const updateEmployee = async () => {
         try {
-            await axios.put(`/viewEmployee/updateEmployee`, newEmployeeInfo);
+            await axios.put(`/viewEmployee/updateEmployee/${EID}`, newEmployeeInfo);
         } catch (err) {
             console.log(err);
         }
     }
 
-    const addEmail = async (EID, EMAIL) => {
+    const addEmail = async (EMAIL) => {
         try{
-            console.log({eid: 2, email: "newEmail"});
-            await axios.post(`/viewEmployee/addEmail`, {eid: 2, email: "newEmail"});
+            await axios.post(`/viewEmployee/addEmail`, {eid: EID, email: EMAIL});
         } catch (err) {
             console.log(err);
         }
@@ -150,16 +147,26 @@ const EditEmployee= () => {
         }
     }
 
-    const handleUpdate = () => {
-        //updateEmployee();
+    const handleEmailDelete = async (index, NEW, OLDEMAIL)=> {
+        try {
+            const res = await axios.delete(`/viewEmployee/deleteEmail`, {data: {eid: EID, oldEmail: OLDEMAIL}});
+            console.log(res.data);
+            //window.location.reload(); //THIS RELOADING THE WINDOW IS NEEDED, UNLESS THE SECOND DELETE THROWS A 500 ERROR
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
-        // newEmails.forEach((email) => {
-        //     email.new === 1 ?
-        //         addEmail(email.EMAIL) : updateEmail(email.EMAIL, email.OLDEMAIL);
-        // })
+    const handleUpdate = () => {
+        updateEmployee();
+
+        newEmails.forEach((email) => {
+            email.new === 1 ?
+                addEmail(email.EMAIL) : updateEmail(email.EMAIL, email.OLDEMAIL);
+        })
 
         //updateEmail("newEmail2", "jamesm10@gmail.com");
-        addEmail(2,"newEmail");
+        //addEmail(2,"newEmail");
 
         navigate('/adminhome');
     }
@@ -231,7 +238,7 @@ const EditEmployee= () => {
                                     />
                                 </Col>
                                 <Col className="d-flex align-items-center">
-                                    <MdDelete />
+                                    <Button onClick={() => handleEmailDelete(email.index, email.new, email.OLDEMAIL)}>DELETE</Button>
                                 </Col>
                             </Row>
                         </>

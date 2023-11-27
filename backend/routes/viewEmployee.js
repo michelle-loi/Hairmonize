@@ -6,7 +6,7 @@ import {
     getEmployeePhones,
     deleteEmployee,
     updateEmployee,
-    getEmail, updateEmail, addEmail
+    getEmail, updateEmail, addEmail, deleteEmail
 } from "../controllers/viewEmployee.js";
 
 const router = express.Router()
@@ -23,5 +23,6 @@ router.put("/updateEmployee/:id", updateEmployee)
 router.get("/getEmail/:id", getEmail)
 router.put("/updateEmail/:id", updateEmail)
 router.post("/addEmail", addEmail)
+router.delete("/deleteEmail", deleteEmail)
 
 export default router;

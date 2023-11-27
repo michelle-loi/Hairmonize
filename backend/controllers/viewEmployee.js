@@ -95,12 +95,22 @@ export const updateEmail = (req, res) => {
 
 export const addEmail = (req, res) => {
     const q =
-        "INSERT INTO EMPLOYEE_EMAIL (`EID`, `EMAIL`) VALUES (?)";
+        "INSERT INTO EMPLOYEE_EMAIL (`EID`, `EMAIL`) VALUES (?, ?)";
     //const eid = req.params.id;
 
     db.query(q, [req.body.eid, req.body.email], (err, data) => {
         if (err) return res.status(500).json("Error while adding email. Email not added.");
 
         return res.status(200).json("Email has been added.");
+    });
+};
+
+export const deleteEmail = (req, res) => {
+    const q = "DELETE FROM EMPLOYEE_EMAIL WHERE `EID` = ? AND `EMAIL` = ?";
+
+    db.query(q, [req.body.eid, req.body.oldEmail], (err, data) => {
+        if (err) return res.status(500).json("Error while deleting email. Email not deleted.");
+
+        return res.status(200).json("Email has been deleted.");
     });
 };
