@@ -11,7 +11,7 @@ import "./navBar.css"
 // Function for the navigation bar
 const navBar = () => {
     return(
-        <Navbar fluid={""} bg="dark-subtle" data-bs-theme="dark" sticky="top" className="navi">
+        <Navbar fluid bg="dark-subtle" data-bs-theme="dark" sticky="top" className="navi">
             <Container fluid={""}>
 
                 {/*Home button*/}

@@ -82,6 +82,7 @@ const EditEmployee= () => {
                 index: index + 1,
                 new: 0,
                 ...email,
+                OLDEMAIL: {...email}.EMAIL,
             }))
         );
     }, [emailsInDB]);
@@ -89,15 +90,25 @@ const EditEmployee= () => {
     console.log(JSON.stringify(newEmails));
     console.log(newEmails);
 
+    const test = emailsInDB.length;
+    const [nextIndex, setNextIndex] = useState(parseInt(emailsInDB.length, 10));
 
-    const [nextIndex, setNextIndex] = useState(emailsInDB.length);
+    console.log(test);
+
+    const incrementIndex = () => {
+        setNextIndex(nextIndex + 1);
+        console.log(nextIndex);
+    };
+
     const handleAddEmail = (e) => {
         e.preventDefault();
-        setNextIndex(nextIndex + 1);
+        incrementIndex();
+        console.log(nextIndex);
         const newObject = {
             index: nextIndex,
             new: 1,
             EMAIL: '',
+            OLDEMAIL: '',
         };
         setNewEmails(oldArray => [...oldArray, newObject]);
     }
@@ -115,24 +126,25 @@ const EditEmployee= () => {
 
     const updateEmployee = async () => {
         try {
-            await axios.put(`/viewEmployee/updateEmployee/${EID}`, newEmployeeInfo);
+            await axios.put(`/viewEmployee/updateEmployee`, newEmployeeInfo);
         } catch (err) {
             console.log(err);
         }
     }
 
-    const addEmail = async (EMAIL) => {
+    const addEmail = async (EID, EMAIL) => {
         try{
-            await axios.post(`/viewEmployee/addEmail`, {EID, EMAIL});
+            console.log({eid: 2, email: "newEmail"});
+            await axios.post(`/viewEmployee/addEmail`, {eid: 2, email: "newEmail"});
         } catch (err) {
             console.log(err);
         }
     }
 
-    const updateEmail = async (EMAIL) => {
+    const updateEmail = async (EMAIL, OLDEMAIL) => {
         try{
             console.log({email: EMAIL});
-            await axios.put(`/viewEmployee/updateEmail/${EID}`, {email: EMAIL});
+            await axios.put(`/viewEmployee/updateEmail/${EID}`, {email: EMAIL, oldEmail: OLDEMAIL});
         } catch (err) {
             console.log(err);
         }
@@ -141,10 +153,13 @@ const EditEmployee= () => {
     const handleUpdate = () => {
         //updateEmployee();
 
-        newEmails.forEach((email) => {
-            email.new === 1 ?
-                addEmail(email.EMAIL) : updateEmail(email.EMAIL);
-        })
+        // newEmails.forEach((email) => {
+        //     email.new === 1 ?
+        //         addEmail(email.EMAIL) : updateEmail(email.EMAIL, email.OLDEMAIL);
+        // })
+
+        //updateEmail("newEmail2", "jamesm10@gmail.com");
+        addEmail(2,"newEmail");
 
         navigate('/adminhome');
     }

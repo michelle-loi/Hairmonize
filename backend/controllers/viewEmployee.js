@@ -83,10 +83,10 @@ export const getEmail = (req, res) => {
 
 export const updateEmail = (req, res) => {
     const q =
-        "UPDATE EMPLOYEE_EMAIL SET `EMAIL` = ? WHERE EID = ? ";
+        "UPDATE EMPLOYEE_EMAIL SET `EMAIL` = ? WHERE EID = ? AND `EMAIL` = ?";
     const EID = req.params.id;
 
-    db.query(q, [req.body.email, EID], (err, data) => {
+    db.query(q, [req.body.email, EID, req.body.oldEmail], (err, data) => {
         if (err) return res.status(500).json("Error while updating email. Email not updated.");
 
         return res.status(200).json("Email has been updated.");
@@ -95,9 +95,10 @@ export const updateEmail = (req, res) => {
 
 export const addEmail = (req, res) => {
     const q =
-        "INSERT INTO EMPLOYEE_EMAIL (EID, EMAIL) VALUES (?)";
+        "INSERT INTO EMPLOYEE_EMAIL (`EID`, `EMAIL`) VALUES (?)";
+    //const eid = req.params.id;
 
-    db.query(q, [req.body.EID, req.body.EMAIL], (err, data) => {
+    db.query(q, [req.body.eid, req.body.email], (err, data) => {
         if (err) return res.status(500).json("Error while adding email. Email not added.");
 
         return res.status(200).json("Email has been added.");
