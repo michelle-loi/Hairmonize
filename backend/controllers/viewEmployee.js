@@ -45,3 +45,27 @@ export const deleteEmployee = (req, res) => {
         return res.status(200).json("Employee has been deleted.");
     });
 };
+
+//Edit employee
+export const getOneEmployee = (req, res) => {
+    const q =
+        "SELECT * FROM EMPLOYEE WHERE EID = ?";
+
+    db.query(q, [req.params.id], (err, data) => {
+        if (err) return res.status(500).json(err);
+
+        return res.status(200).json(data);
+    });
+};
+
+export const updateEmployee = (req, res) => {
+    const q =
+        "UPDATE EMPLOYEE SET `FName` = ?, `MName` = ?, `LName` = ?, `SalaryType` = ? WHERE EID = ? ";
+    const EID = req.params.id;
+
+    db.query(q, [req.body.FName, req.body.MName, req.body.LName, req.body.SalaryType, EID], (err, data) => {
+        if (err) return res.status(500).json("Error while updating employee. Employee not updated.");
+
+        return res.status(200).json("Employee has been updated.");
+    });
+};

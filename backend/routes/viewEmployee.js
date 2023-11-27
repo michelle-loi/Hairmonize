@@ -1,8 +1,12 @@
 import express from "express"
-import {getEmployees} from "../controllers/viewEmployee.js";
-import {getEmployeeEmails} from "../controllers/viewEmployee.js";
-import {getEmployeePhones} from "../controllers/viewEmployee.js";
-import {deleteEmployee} from "../controllers/viewEmployee.js";
+import {
+    getEmployees,
+    getOneEmployee,
+    getEmployeeEmails,
+    getEmployeePhones,
+    deleteEmployee,
+    updateEmployee
+} from "../controllers/viewEmployee.js";
 
 const router = express.Router()
 
@@ -11,5 +15,9 @@ router.get("/employeeTable", getEmployees)
 router.get("/emailTable", getEmployeeEmails)
 router.get("/phoneTable", getEmployeePhones)
 router.delete("/deleteEmployee/:id", deleteEmployee)
+
+//Edit employee
+router.get("/getOneEmployee/:id", getOneEmployee)
+router.put("/updateEmployee/:id", updateEmployee)
 
 export default router;
