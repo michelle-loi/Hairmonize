@@ -45,6 +45,7 @@ const EditEmployee= () => {
     //Employee email
     const [emailsInDB, setEmailsInDB] = useState([]);
     const [newEmails, setNewEmails] = useState([]);
+    const [emailsToDelete, setEmailsToDelete] = useState([])
 
 
     useEffect(() => {
@@ -147,7 +148,21 @@ const EditEmployee= () => {
         }
     }
 
-    const handleEmailDelete = async (index, NEW, OLDEMAIL)=> {
+    const handleEmailDelete =  (index, NEW, OLDEMAIL)=> {
+        setNewEmails((prevArray) => prevArray.filter((email) => email.index !== index));
+
+        //For emails that were already in the db and is now deleted, add the original email addresses of those that the user selected to delete into an arrray.
+        //So when 'Update' is pressed, delete all the emails in array in db.
+        if (NEW === 0){
+            const emailDelete = {
+                OLDEMAIL: OLDEMAIL
+            }
+            const newDeleteEmailArray = [...emailsToDelete, emailDelete];
+            setEmailsToDelete(newDeleteEmailArray);
+        }
+    };
+
+    const deleteEmail = async (OLDEMAIL) => {
         try {
             const res = await axios.delete(`/viewEmployee/deleteEmail`, {data: {eid: EID, oldEmail: OLDEMAIL}});
             console.log(res.data);
@@ -155,18 +170,19 @@ const EditEmployee= () => {
         } catch (err) {
             console.log(err);
         }
-    };
+    }
 
     const handleUpdate = () => {
         updateEmployee();
+
+        emailsToDelete.forEach((email) => {
+            deleteEmail(email.OLDEMAIL);
+        })
 
         newEmails.forEach((email) => {
             email.new === 1 ?
                 addEmail(email.EMAIL) : updateEmail(email.EMAIL, email.OLDEMAIL);
         })
-
-        //updateEmail("newEmail2", "jamesm10@gmail.com");
-        //addEmail(2,"newEmail");
 
         navigate('/adminhome');
     }
@@ -224,13 +240,13 @@ const EditEmployee= () => {
             <Form.Group controlId="Email">
                 <Form.Label>Email</Form.Label>
                 <Button onClick={handleAddEmail} type="success">Add new email</Button>
-                {newEmails.map((email, i)=>{
+                {newEmails.map((email)=>{
                     return(
                         <>
                             <Row>
                                 <Col>
                                     <Form.Control
-                                        key={i}
+                                        key={email.index}
                                         type="text"
                                         placeholder={(email.new === 1) ? "Enter new email" : email.EMAIL}
                                         defaultValue={email.EMAIL}
@@ -238,7 +254,7 @@ const EditEmployee= () => {
                                     />
                                 </Col>
                                 <Col className="d-flex align-items-center">
-                                    <Button onClick={() => handleEmailDelete(email.index, email.new, email.OLDEMAIL)}>DELETE</Button>
+                                    <MdDelete onClick={() => handleEmailDelete(email.index, email.new, email.OLDEMAIL)} />
                                 </Col>
                             </Row>
                         </>
