@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Form, Button } from 'react-bootstrap';
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { MdDelete } from "react-icons/md";
+import { IoIosAddCircleOutline } from "react-icons/io";
+import { IoMdAddCircle } from "react-icons/io";
+
+
+
 
 
 
 const EditEmployee= () => {
 
+    //Employee info
     const location = useLocation();
     const navigate = useNavigate();
     const EID = location.pathname.split("/")[3];
@@ -35,13 +42,111 @@ const EditEmployee= () => {
     console.log(currentEmployeeInfo);
 
 
-    const handleUpdate = async () => {
-        try{
+    //Employee email
+    const [emailsInDB, setEmailsInDB] = useState([]);
+    const [newEmails, setNewEmails] = useState([]);
+
+
+    useEffect(() => {
+        const getEmails = async () => {
+            try {
+                const res = await axios.get(`/viewEmployee/getEmail/${EID}`);
+                setEmailsInDB(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        getEmails();
+    }, []);
+    //DELETE: for testing
+    console.log(JSON.stringify(emailsInDB));
+    console.log(emailsInDB);
+
+
+    // useEffect(() => {
+    //     const setArray= async () => {
+    //         setNewEmails(
+    //             emailsInDB.map((email, index) => ({
+    //                 index: index + 1,
+    //                 new: 0,
+    //                 ...email,
+    //             }))
+    //         );
+    //     }
+    //     setArray();
+    // }, []);
+
+    useEffect(() => {
+        setNewEmails(
+            emailsInDB.map((email, index) => ({
+                index: index + 1,
+                new: 0,
+                ...email,
+            }))
+        );
+    }, [emailsInDB]);
+
+    console.log(JSON.stringify(newEmails));
+    console.log(newEmails);
+
+
+    const [nextIndex, setNextIndex] = useState(emailsInDB.length);
+    const handleAddEmail = (e) => {
+        e.preventDefault();
+        setNextIndex(nextIndex + 1);
+        const newObject = {
+            index: nextIndex,
+            new: 1,
+            EMAIL: '',
+        };
+        setNewEmails(oldArray => [...oldArray, newObject]);
+    }
+
+    console.log(JSON.stringify(newEmails));
+    console.log(newEmails);
+
+    const handleEmailChange = (e, index) => {
+        const updatedData = newEmails.map(email =>
+            email.index === index ? { ...email, EMAIL: e.target.value } : email
+        );
+        setNewEmails(updatedData);
+    };
+
+
+    const updateEmployee = async () => {
+        try {
             await axios.put(`/viewEmployee/updateEmployee/${EID}`, newEmployeeInfo);
-            navigate('/adminhome');
         } catch (err) {
             console.log(err);
         }
+    }
+
+    const addEmail = async (EMAIL) => {
+        try{
+            await axios.post(`/viewEmployee/addEmail`, {EID, EMAIL});
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const updateEmail = async (EMAIL) => {
+        try{
+            console.log({email: EMAIL});
+            await axios.put(`/viewEmployee/updateEmail/${EID}`, {email: EMAIL});
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const handleUpdate = () => {
+        //updateEmployee();
+
+        newEmails.forEach((email) => {
+            email.new === 1 ?
+                addEmail(email.EMAIL) : updateEmail(email.EMAIL);
+        })
+
+        navigate('/adminhome');
     }
 
     const handleCancel = async () => {
@@ -94,15 +199,29 @@ const EditEmployee= () => {
                 />
             </Form.Group>
 
-
-            <Form.Group controlId="EMAIL">
+            <Form.Group controlId="Email">
                 <Form.Label>Email</Form.Label>
-                <Form.Control
-                    type="email"
-                    placeholder="Enter your email"
-                    //value='email'
-                    //onChange={(e) => setEmail(e.target.value)}
-                />
+                <Button onClick={handleAddEmail} type="success">Add new email</Button>
+                {newEmails.map((email, i)=>{
+                    return(
+                        <>
+                            <Row>
+                                <Col>
+                                    <Form.Control
+                                        key={i}
+                                        type="text"
+                                        placeholder={(email.new === 1) ? "Enter new email" : email.EMAIL}
+                                        defaultValue={email.EMAIL}
+                                        onChange={(e) => handleEmailChange(e, email.index)}
+                                    />
+                                </Col>
+                                <Col className="d-flex align-items-center">
+                                    <MdDelete />
+                                </Col>
+                            </Row>
+                        </>
+                    )
+                })}
             </Form.Group>
 
             <Form.Group controlId="Phone">

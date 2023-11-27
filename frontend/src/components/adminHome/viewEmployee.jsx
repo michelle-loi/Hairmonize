@@ -29,8 +29,6 @@ const ViewEmployees=()=>{
             }
         };
         fetchAllEmployees();
-
-
     }, []);
 
     //DELETE: for testing
