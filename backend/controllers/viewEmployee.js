@@ -54,7 +54,6 @@ export const deleteEmployee = (req, res) => {
 // get the employees info based on a given EID
 export const getSpecificEMP = (req, res) => {
     const {EID} = req.body;
-    console.log("Received Parameters:", req.body);
 
     // Make query to get employee's information
     const query = "SELECT * FROM EMPLOYEE WHERE `EID` = ?";
