@@ -35,14 +35,25 @@ const Login = () => {
         // errors will be users trying to register an already existing username
         try{
             // calling our login function in the authContext.js file
-            await login(inputs)
+            const user = await login(inputs)
+
+
 
             // navigate to the appropriate page depending on login credentials
-            navigate("/clientHome");
+            if (user && user.AccountType === 0) {
+                navigate("/stylistHome");
+
+            }else if (user && user.AccountType === 1) {
+                navigate("/clientHome");
+
+            }else if (user && user.AccountType === 2) {
+                navigate("/adminHome");
+            }
 
         }catch (error){
             setError(error.response.data);
         }
+
     }
 
 

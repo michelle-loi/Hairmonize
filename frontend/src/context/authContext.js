@@ -14,6 +14,9 @@ export const AuthContextProvider = ({children}) =>{
         const response = await axios.post("/auth/login", inputs);
         // set user to the local data because we have logged in successfully
         setCurrentUser(response.data);
+
+        // Return the user data from the login function
+        return response.data;
     }
 
     // creating a logout function
