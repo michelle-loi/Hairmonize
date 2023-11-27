@@ -64,19 +64,6 @@ const EditEmployee= () => {
     console.log(emailsInDB);
 
 
-    // useEffect(() => {
-    //     const setArray= async () => {
-    //         setNewEmails(
-    //             emailsInDB.map((email, index) => ({
-    //                 index: index + 1,
-    //                 new: 0,
-    //                 ...email,
-    //             }))
-    //         );
-    //     }
-    //     setArray();
-    // }, []);
-
     useEffect(() => {
         setNewEmails(
             emailsInDB.map((email, index) => ({
@@ -87,7 +74,7 @@ const EditEmployee= () => {
             }))
         );
     }, [emailsInDB]);
-
+    //DELETE: for testing
     console.log(JSON.stringify(newEmails));
     console.log(newEmails);
 
@@ -197,7 +184,7 @@ const EditEmployee= () => {
         <h1>Edit Employee (EID: {EID})</h1>
 
         <Form>
-            <Form.Group controlId="FName">
+            <Form.Group className="mb-3" controlId="FName">
                 <Form.Label>First Name</Form.Label>
                 <Form.Control
                     type="text"
@@ -207,7 +194,7 @@ const EditEmployee= () => {
                 />
             </Form.Group>
 
-            <Form.Group controlId="MName">
+            <Form.Group className="mb-3" controlId="MName">
                 <Form.Label>Middle Name</Form.Label>
                 <Form.Control
                     type="text"
@@ -217,7 +204,7 @@ const EditEmployee= () => {
                 />
             </Form.Group>
 
-            <Form.Group controlId="LName">
+            <Form.Group className="mb-3" controlId="LName">
                 <Form.Label>Last Name</Form.Label>
                 <Form.Control
                     type="text"
@@ -227,7 +214,7 @@ const EditEmployee= () => {
                 />
             </Form.Group>
 
-            <Form.Group controlId="SalaryType">
+            <Form.Group className="mb-3" controlId="SalaryType">
                 <Form.Label>Salary Type</Form.Label>
                 <Form.Control
                     type="text"
@@ -237,14 +224,22 @@ const EditEmployee= () => {
                 />
             </Form.Group>
 
-            <Form.Group controlId="Email">
+            <Form.Group className="mb-3" controlId="Email">
+                {/*<Row>*/}
+                {/*    <Col>*/}
+                {/*        <Form.Label>Email</Form.Label>*/}
+                {/*    </Col>*/}
+                {/*    <Col>*/}
+                {/*        <Button onClick={handleAddEmail} type="success">Add new email</Button>*/}
+                {/*    </Col>*/}
+                {/*</Row>*/}
                 <Form.Label>Email</Form.Label>
-                <Button onClick={handleAddEmail} type="success">Add new email</Button>
+                <Button onClick={handleAddEmail} type="success" size="sm" style={{ margin: '5px 10px' }}>Add new email</Button>
                 {newEmails.map((email)=>{
                     return(
                         <>
                             <Row>
-                                <Col>
+                                <Col xs={10}>
                                     <Form.Control
                                         key={email.index}
                                         type="text"
@@ -262,7 +257,7 @@ const EditEmployee= () => {
                 })}
             </Form.Group>
 
-            <Form.Group controlId="Phone">
+            <Form.Group className="mb-3" controlId="Phone">
                 <Form.Label>Phone</Form.Label>
                 <Form.Control
                     type="phone"
@@ -273,7 +268,7 @@ const EditEmployee= () => {
             </Form.Group>
 
 
-            <Button onClick={handleUpdate} variant="success">
+            <Button onClick={handleUpdate} variant="success" style={{ marginRight: '10px' }}>
                 Update
             </Button>
             <Button onClick={handleCancel} variant="secondary">
