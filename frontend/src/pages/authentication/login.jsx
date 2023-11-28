@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import "./login.css"
 import { FaUser, FaLock } from "react-icons/fa";
 import axios from "axios";
+import {AuthContext} from "../../context/authContext";
 
 const Login = () => {
 
@@ -18,6 +19,9 @@ const Login = () => {
     // create a navigate function from react dom
     const navigate = useNavigate()
 
+    // current user for the login
+    const {login} = useContext(AuthContext);
+
     // function to get input
     const change = e => {
         setInputs(prev=> ({...prev, [e.target.name]: e.target.value}))
@@ -30,18 +34,26 @@ const Login = () => {
         // try catch so if there are any errors it will be caught and dealt with appropriately. Most of the time
         // errors will be users trying to register an already existing username
         try{
-            /**
-             * REMOVE LATER
-            // for any submissions send the data to our auth register function
-            const response = await axios.post("/auth/login", inputs)
-             */
+            // calling our login function in the authContext.js file
+            const user = await login(inputs)
+
+
 
             // navigate to the appropriate page depending on login credentials
-            navigate("/clientHome");
+            if (user && user.AccountType === 0) {
+                navigate("/stylistHome");
+
+            }else if (user && user.AccountType === 1) {
+                navigate("/clientHome");
+
+            }else if (user && user.AccountType === 2) {
+                navigate("/adminHome");
+            }
 
         }catch (error){
             setError(error.response.data);
         }
+
     }
 
 

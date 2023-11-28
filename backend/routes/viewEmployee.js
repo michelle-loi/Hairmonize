@@ -9,6 +9,11 @@ import {
     getEmail, updateEmail, addEmail, deleteEmail,
     getPhone, updatePhone, addPhone, deletePhone
 } from "../controllers/viewEmployee.js";
+import {getEmployees} from "../controllers/viewEmployee.js";
+import {getEmployeeEmails} from "../controllers/viewEmployee.js";
+import {getEmployeePhones} from "../controllers/viewEmployee.js";
+import {deleteEmployee} from "../controllers/viewEmployee.js";
+import {getSpecificEMP} from "../controllers/viewEmployee.js";
 
 const router = express.Router()
 
@@ -17,6 +22,7 @@ router.get("/employeeTable", getEmployees)
 router.get("/emailTable", getEmployeeEmails)
 router.get("/phoneTable", getEmployeePhones)
 router.delete("/deleteEmployee/:id", deleteEmployee)
+router.post("/getSpecificEMP", getSpecificEMP)
 
 //Edit employee
 router.get("/getOneEmployee/:id", getOneEmployee)

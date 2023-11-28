@@ -1,7 +1,7 @@
 import {createContext, useEffect, useState} from "react";
 import axios from "axios";
 
-export const AuthContext = createContext()
+export const AuthContext = createContext();
 
 // pass app components to context provider so users can be authenticated and be provided different types of access
 export const AuthContextProvider = ({children}) =>{
@@ -14,13 +14,17 @@ export const AuthContextProvider = ({children}) =>{
         const response = await axios.post("/auth/login", inputs);
         // set user to the local data because we have logged in successfully
         setCurrentUser(response.data);
+
+        // Return the user data from the login function
+        return response.data;
     }
 
     // creating a logout function
     const logout = async(inputs)=>{
-        const response = await axios.post("/auth/logout", inputs);
         // this time set user to null because we are logging out
         setCurrentUser(null);
+        await axios.post("/auth/logout");
+
     }
 
     // update the local storage each time a different user logs in
