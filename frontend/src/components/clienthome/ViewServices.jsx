@@ -22,7 +22,7 @@ const ViewServices = () => {
     const serviceRowInTable = services.map((service) => (
         <tr key={service.SID}>
             <td>{service.SName}</td>
-            <td>${service.SPrice}</td>
+            <td>${service.SPrice} & up</td>
         </tr>
     ));
 
