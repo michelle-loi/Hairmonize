@@ -114,3 +114,48 @@ export const deleteEmail = (req, res) => {
         return res.status(200).json("Email has been deleted.");
     });
 };
+
+export const getPhone = (req, res) => {
+    const q =
+        "SELECT Phone FROM EMPLOYEE_PHONE WHERE EID = ?";
+
+    db.query(q, [req.params.id], (err, data) => {
+        if (err) return res.status(500).json(err);
+
+        return res.status(200).json(data);
+    });
+};
+
+export const updatePhone = (req, res) => {
+    const q =
+        "UPDATE EMPLOYEE_PHONE SET `Phone` = ? WHERE EID = ? AND `Phone` = ?";
+    const EID = req.params.id;
+
+    db.query(q, [req.body.phone, EID, req.body.oldPhone], (err, data) => {
+        if (err) return res.status(500).json("Error while updating phone. Phone not updated.");
+
+        return res.status(200).json("Phone has been updated.");
+    });
+};
+
+export const addPhone = (req, res) => {
+    const q =
+        "INSERT INTO EMPLOYEE_PHONE (`EID`, `Phone`) VALUES (?, ?)";
+    //const eid = req.params.id;
+
+    db.query(q, [req.body.eid, req.body.phone], (err, data) => {
+        if (err) return res.status(500).json("Error while adding phone. Phone not added.");
+
+        return res.status(200).json("Phone has been added.");
+    });
+};
+
+export const deletePhone = (req, res) => {
+    const q = "DELETE FROM EMPLOYEE_PHONE WHERE `EID` = ? AND `Phone` = ?";
+
+    db.query(q, [req.body.eid, req.body.oldEmail], (err, data) => {
+        if (err) return res.status(500).json("Error while deleting phone. Phone not deleted.");
+
+        return res.status(200).json("Phone has been deleted.");
+    });
+};
