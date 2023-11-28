@@ -1,6 +1,8 @@
 import {db} from "../database.js";
 
 
+
+
 //IMPORTANT: the order has to be (req, res), not (res, req)
 export const getEmployees = (req, res) => {
     const q = "SELECT * FROM EMPLOYEE";
@@ -43,5 +45,22 @@ export const deleteEmployee = (req, res) => {
         if (err) return res.status(500).json("Error while deleting employee. Employee not deleted.");
 
         return res.status(200).json("Employee has been deleted.");
+    });
+};
+
+// These are the functions that will get a particular employee's information
+//--------------------------------------------------------------------------
+
+// get the employees info based on a given EID
+export const getSpecificEMP = (req, res) => {
+    const {EID} = req.body;
+
+    // Make query to get employee's information
+    const query = "SELECT * FROM EMPLOYEE WHERE `EID` = ?";
+
+    db.query(query, [EID], (err, data) => {
+        if (err) return res.status(500).json("Error while searching for employee.");
+
+        return res.status(200).json(data);
     });
 };
