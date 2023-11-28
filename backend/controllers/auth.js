@@ -71,5 +71,8 @@ export const login = (request, response) => {
 };
 
 export const logout = (request, response) => {
-
+    response.clearCookie("access_token",{
+        sameSite:"none",
+        secure:true
+    }).status(200).json("User Logged Out")
 };
