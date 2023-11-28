@@ -16,7 +16,7 @@ const NavBar = () => {
     const {currentUser, logout} = useContext(AuthContext);
 
     return(
-        <Navbar fluid={""} bg="dark-subtle" data-bs-theme="dark" sticky="top" className="navi">
+        <Navbar fluid bg="dark-subtle" data-bs-theme="dark" sticky="top" className="navi">
             <Container fluid={""}>
 
                 {/*Home button*/}
