@@ -3,8 +3,6 @@ import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { MdDelete } from "react-icons/md";
-import { IoIosAddCircleOutline } from "react-icons/io";
-import { IoMdAddCircle } from "react-icons/io";
 
 
 
@@ -168,7 +166,7 @@ const EditEmployee= () => {
 
         newEmails.forEach((email) => {
             email.new === 1 ?
-                addEmail(email.EMAIL) : updateEmail(email.EMAIL, email.OLDEMAIL);
+                ((email.EMAIL ==! '') ? addEmail(email.EMAIL): (console.log("empty email"))) : updateEmail(email.EMAIL, email.OLDEMAIL);
         })
 
         navigate('/adminhome');
@@ -179,11 +177,14 @@ const EditEmployee= () => {
     }
 
     return(
-    <Container>
-
-        <h1>Edit Employee (EID: {EID})</h1>
+    <Container className="d-flex align-items-center justify-content-center vh-100">
 
         <Form>
+            <Form.Label>
+                <h1>Edit Employee (EID: {EID})</h1>
+            </Form.Label>
+
+
             <Form.Group className="mb-3" controlId="FName">
                 <Form.Label>First Name</Form.Label>
                 <Form.Control
