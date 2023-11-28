@@ -116,6 +116,7 @@ const EditEmployee= () => {
 
     const addEmail = async (EMAIL) => {
         try{
+            console.log({email: EMAIL})
             await axios.post(`/viewEmployee/addEmail`, {eid: EID, email: EMAIL});
         } catch (err) {
             console.log(err);
@@ -227,6 +228,7 @@ const EditEmployee= () => {
 
     const addPhone = async (PHONE) => {
         try{
+            console.log({phone: PHONE});
             await axios.post(`/viewEmployee/addPhone`, {eid: EID, phone: PHONE});
         } catch (err) {
             console.log(err);
@@ -277,7 +279,8 @@ const EditEmployee= () => {
 
         newEmails.forEach((email) => {
             email.new === 1 ?
-                ((email.EMAIL ==! '') ? addEmail(email.EMAIL): (console.log("empty email"))) : updateEmail(email.EMAIL, email.OLDEMAIL);
+                ((email.EMAIL.length===0) ? (console.log("empty email")): addEmail(email.EMAIL)) : updateEmail(email.EMAIL, email.OLDEMAIL);
+                //(addEmail(email.EMAIL)) : updateEmail(email.EMAIL, email.OLDEMAIL);
         })
 
         phonesToDelete.forEach((phone) => {
