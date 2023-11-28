@@ -10,7 +10,7 @@ const ViewServices = () => {
     useEffect(() => {
         const fetchServices = async ()=>{
             try{
-                const res = await axios.get("/clienthomeservices/getServices")
+                const res = await axios.get("/clienthomeservices/getServices") // whatever it is called first in route / function name
                 setServices(res.data)
             }catch (err){
                 console.log(err)
