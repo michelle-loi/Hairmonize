@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { MdDelete } from "react-icons/md";
 
 
 
-
-
-
 const EditEmployee= () => {
 
-    //Employee info
+    //**********************EMPLOYEE NAME/SALARYTYPE**************************
     const location = useLocation();
     const navigate = useNavigate();
     const EID = location.pathname.split("/")[3];
@@ -38,9 +35,10 @@ const EditEmployee= () => {
     //DELETE: for testing
     console.log(JSON.stringify(currentEmployeeInfo));
     console.log(currentEmployeeInfo);
+    //*****************************************************************
 
 
-    //Employee email
+    //**********************EMPLOYEE EMAIL**************************
     const [emailsInDB, setEmailsInDB] = useState([]);
     const [newEmails, setNewEmails] = useState([]);
     const [emailsToDelete, setEmailsToDelete] = useState([])
@@ -77,7 +75,7 @@ const EditEmployee= () => {
     console.log(newEmails);
 
 
-    const arrayLength = () => emailsInDB.length;
+    const arrayLengthEmail = () => emailsInDB.length;
     const [nextIndex, setNextIndex] = useState(0);
 
     const incrementIndex = () => {
@@ -86,7 +84,7 @@ const EditEmployee= () => {
 
     const handleAddEmail = (e) => {
         e.preventDefault();
-        (nextIndex === 0) ? setNextIndex(arrayLength() + 1) : incrementIndex();
+        (nextIndex === 0) ? setNextIndex(arrayLengthEmail() + 1) : incrementIndex();
         console.log(nextIndex);
         const newObject = {
             index: nextIndex,
@@ -156,6 +154,119 @@ const EditEmployee= () => {
             console.log(err);
         }
     }
+    //*****************************************************************
+
+
+
+    //**********************EMPLOYEE PHONE**************************
+    const [phonesInDB, setPhoneInDB] = useState([]);
+    const [newPhones, setNewPhones] = useState([]);
+    const [phonesToDelete, setPhonesToDelete] = useState([])
+
+
+    useEffect(() => {
+        const getPhones = async () => {
+            try {
+                const res = await axios.get(`/viewEmployee/getPhone/${EID}`);
+                setPhoneInDB(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        getPhones();
+    }, []);
+    //DELETE: for testing
+    console.log(JSON.stringify(phonesInDB));
+    console.log(phonesInDB);
+
+
+    useEffect(() => {
+        setNewPhones(
+            phonesInDB.map((phone, index) => ({
+                index: index + 1,
+                new: 0,
+                ...phone,
+                OLDPHONE: {...phone}.Phone,
+            }))
+        );
+    }, [phonesInDB]);
+    //DELETE: for testing
+    console.log(JSON.stringify(newPhones));
+    console.log(newPhones);
+
+
+    const arrayLengthPhone = () => phonesInDB.length;
+    const [nextIndexPhone, setNextIndexPhone] = useState(0);
+
+    const incrementPhoneIndex = () => {
+        setNextIndexPhone(nextIndexPhone + 1);
+    };
+
+    const handleAddPhone = (e) => {
+        e.preventDefault();
+        (nextIndexPhone === 0) ? setNextIndexPhone(arrayLengthPhone() + 1) : incrementPhoneIndex();
+        console.log(nextIndexPhone);
+        const newObject = {
+            index: nextIndex,
+            new: 1,
+            Phone: null,
+            OLDPHONE: null,
+        };
+        setNewPhones(oldArray => [...oldArray, newObject]);
+    }
+
+    console.log(JSON.stringify(newPhones));
+    console.log(newPhones);
+
+    const handlePhoneChange = (e, index) => {
+        const updatedData = newPhones.map(phone =>
+            phone.index === index ? { ...phone, Phone: e.target.value } : phone
+        );
+        setNewPhones(updatedData);
+    };
+
+    const addPhone = async (PHONE) => {
+        try{
+            await axios.post(`/viewEmployee/addPhone`, {eid: EID, phone: PHONE});
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const updatePhone = async (PHONE, OLDPHONE) => {
+        try{
+            console.log({phone: PHONE});
+            await axios.put(`/viewEmployee/updatePhone/${EID}`, {phone: PHONE, oldPhone: OLDPHONE});
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const handlePhoneDelete =  (index, NEW, OLDPHONE)=> {
+        setNewPhones((prevArray) => prevArray.filter((phone) => phone.index !== index));
+
+        //For phones that were already in the db and is now deleted, add the original phone number of those that the user selected to delete into an arrray.
+        //So when 'Update' is pressed, delete all the phones in array in db.
+        if (NEW === 0){
+            const phoneDelete = {
+                OLDPHONE: OLDPHONE
+            }
+            const newDeletePhoneArray = [...phonesToDelete, phoneDelete];
+            setPhonesToDelete(newDeletePhoneArray);
+        }
+    };
+
+    const deletePhone = async (OLDPHONE) => {
+        try {
+            const res = await axios.delete(`/viewEmployee/deletePhone`, {data: {eid: EID, oldPhone: OLDPHONE}});
+            console.log(res.data);
+            //window.location.reload(); //THIS RELOADING THE WINDOW IS NEEDED, UNLESS THE SECOND DELETE THROWS A 500 ERROR
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    //*****************************************************************
+
 
     const handleUpdate = () => {
         updateEmployee();
@@ -167,6 +278,15 @@ const EditEmployee= () => {
         newEmails.forEach((email) => {
             email.new === 1 ?
                 ((email.EMAIL ==! '') ? addEmail(email.EMAIL): (console.log("empty email"))) : updateEmail(email.EMAIL, email.OLDEMAIL);
+        })
+
+        phonesToDelete.forEach((phone) => {
+            deletePhone(phone.OLDPHONE);
+        })
+
+        newPhones.forEach((phone) => {
+            phone.new === 1 ?
+                (addPhone(phone.Phone)) : updatePhone(phone.Phone, phone.OLDPHONE);
         })
 
         navigate('/adminhome');
@@ -226,14 +346,6 @@ const EditEmployee= () => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="Email">
-                {/*<Row>*/}
-                {/*    <Col>*/}
-                {/*        <Form.Label>Email</Form.Label>*/}
-                {/*    </Col>*/}
-                {/*    <Col>*/}
-                {/*        <Button onClick={handleAddEmail} type="success">Add new email</Button>*/}
-                {/*    </Col>*/}
-                {/*</Row>*/}
                 <Form.Label>Email</Form.Label>
                 <Button onClick={handleAddEmail} type="success" size="sm" style={{ margin: '5px 10px' }}>Add new email</Button>
                 {newEmails.map((email)=>{
@@ -260,12 +372,27 @@ const EditEmployee= () => {
 
             <Form.Group className="mb-3" controlId="Phone">
                 <Form.Label>Phone</Form.Label>
-                <Form.Control
-                    type="phone"
-                    placeholder="Enter your email"
-                    //value='phone'
-                    //onChange={(e) => setEmail(e.target.value)}
-                />
+                <Button onClick={handleAddPhone} type="success" size="sm" style={{ margin: '5px 10px' }}>Add new phone</Button>
+                {newPhones.map((phone)=>{
+                    return(
+                        <>
+                            <Row>
+                                <Col xs={10}>
+                                    <Form.Control
+                                        key={phone.index}
+                                        type="number"
+                                        placeholder={(phone.new === 1) ? "Enter new phone" : phone.Phone}
+                                        defaultValue={phone.Phone}
+                                        onChange={(e) => handlePhoneChange(e, phone.index)}
+                                    />
+                                </Col>
+                                <Col className="d-flex align-items-center">
+                                    <MdDelete onClick={() => handlePhoneDelete(phone.index, phone.new, phone.OLDPHONE)} />
+                                </Col>
+                            </Row>
+                        </>
+                    )
+                })}
             </Form.Group>
 
 

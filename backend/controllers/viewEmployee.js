@@ -96,7 +96,6 @@ export const updateEmail = (req, res) => {
 export const addEmail = (req, res) => {
     const q =
         "INSERT INTO EMPLOYEE_EMAIL (`EID`, `EMAIL`) VALUES (?, ?)";
-    //const eid = req.params.id;
 
     db.query(q, [req.body.eid, req.body.email], (err, data) => {
         if (err) return res.status(500).json("Error while adding email. Email not added.");
@@ -141,7 +140,6 @@ export const updatePhone = (req, res) => {
 export const addPhone = (req, res) => {
     const q =
         "INSERT INTO EMPLOYEE_PHONE (`EID`, `Phone`) VALUES (?, ?)";
-    //const eid = req.params.id;
 
     db.query(q, [req.body.eid, req.body.phone], (err, data) => {
         if (err) return res.status(500).json("Error while adding phone. Phone not added.");
@@ -153,7 +151,7 @@ export const addPhone = (req, res) => {
 export const deletePhone = (req, res) => {
     const q = "DELETE FROM EMPLOYEE_PHONE WHERE `EID` = ? AND `Phone` = ?";
 
-    db.query(q, [req.body.eid, req.body.oldEmail], (err, data) => {
+    db.query(q, [req.body.eid, req.body.oldPhone], (err, data) => {
         if (err) return res.status(500).json("Error while deleting phone. Phone not deleted.");
 
         return res.status(200).json("Phone has been deleted.");
