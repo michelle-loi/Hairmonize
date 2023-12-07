@@ -1,0 +1,183 @@
+import React, { useState, useEffect } from 'react';
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import {MdDelete} from "react-icons/md";
+
+const AddEmployee = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    //**********************EMPLOYEE INFO**************************
+    const [newEmployeeInfo, setNewEmployeeInfo] = useState({
+        FName:'',
+        MName:'',
+        LName:'',
+        SalaryType:''
+    });
+
+
+    const addEmployee = async () => {
+        try{
+            const response = await axios.post(`/viewEmployee/addEmployee`, {FName: newEmployeeInfo.FName, MName: newEmployeeInfo.MName, LName: newEmployeeInfo.LName, SalaryType: newEmployeeInfo.SalaryType});
+
+            const newlyAddedEID = response.data.eid;
+
+            //DELETE
+            console.log(`Newly added EID: ${newlyAddedEID}`);
+
+            //Trigger adding emails to database
+            newEmails.forEach((email) => {
+                ((email.EMAIL.length===0) ? (console.log("empty email")): addEmail(email.EMAIL, newlyAddedEID));
+            })
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    //*****************************************************************
+
+
+    //**********************EMPLOYEE EMAIL**************************
+    const [newEmails, setNewEmails] = useState([]);
+    const [nextIndex, setNextIndex] = useState(0);
+
+    const incrementIndex = () => {
+        setNextIndex(nextIndex + 1);
+    };
+
+    const handleAddEmail = (e) => {
+        e.preventDefault();
+        incrementIndex();
+        const newObject = {
+            index: nextIndex,
+            EMAIL: '',
+        };
+        setNewEmails(oldArray => [...oldArray, newObject]);
+    };
+
+    const handleEmailChange = (e, index) => {
+        const updatedData = newEmails.map(email =>
+            email.index === index ? { ...email, EMAIL: e.target.value } : email
+        );
+        setNewEmails(updatedData);
+    };
+
+    const handleEmailDelete =  (index)=> {
+        setNewEmails((prevArray) => prevArray.filter((email) => email.index !== index));
+        console.log(JSON.stringify(newEmails));
+        console.log(newEmails);
+    };
+
+    const addEmail = async (EMAIL, EID) => {
+        try{
+            console.log({email: EMAIL})
+            await axios.post(`/viewEmployee/addEmail`, {eid: EID, email: EMAIL});
+            window.location.reload(); //Without this refresh, when when adding employee for the second time, only 1 email will be displayed once back on the employees page
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    //*****************************************************************
+
+
+    //**********************EMPLOYEE PHONE**************************
+
+    //*****************************************************************
+
+
+    //**********************ADDING ACCOUNT**************************
+
+    //*****************************************************************
+
+    const handleAdd = () => {
+        addEmployee();
+
+        navigate('/adminhome');
+    }
+
+
+    return (
+        <Container className="d-flex align-items-center justify-content-center vh-100">
+
+            <Form>
+                <Form.Label>
+                    <h1>Add new employee</h1>
+                </Form.Label>
+
+                <Form.Group className="mb-3" controlId="FName">
+                    <Form.Label>First Name</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter first name..."
+                        //defaultValue={currentEmployeeInfo.FName}
+                        onChange={(e) => setNewEmployeeInfo({...newEmployeeInfo, FName: e.target.value})}
+                    />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="MName">
+                    <Form.Label>Middle Name</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter middle name"
+                        //defaultValue={currentEmployeeInfo.MName}
+                        onChange={(e) => setNewEmployeeInfo({...newEmployeeInfo, MName: e.target.value})}
+                    />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="LName">
+                    <Form.Label>Last Name</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter last name"
+                        //defaultValue={currentEmployeeInfo.LName}
+                        onChange={(e) => setNewEmployeeInfo({...newEmployeeInfo, LName: e.target.value})}
+                    />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="SalaryType">
+                    <Form.Label>Salary Type</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter salary type"
+                        //defaultValue={currentEmployeeInfo.SalaryType}
+                        onChange={(e) => setNewEmployeeInfo({...newEmployeeInfo, SalaryType: e.target.value})}
+                    />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="Email">
+                    <Form.Label>Email</Form.Label>
+                    <Button onClick={handleAddEmail} type="success" size="sm" style={{ margin: '5px 10px' }}>Add new email</Button>
+                    {newEmails.map((email)=>{
+                        return(
+                            <>
+                                <Row>
+                                    <Col xs={10}>
+                                        <Form.Control
+                                            key={email.index}
+                                            type="text"
+                                            placeholder="Enter new email"
+                                            defaultValue={email.EMAIL}
+                                            onChange={(e) => handleEmailChange(e, email.index)}
+                                        />
+                                    </Col>
+                                    <Col className="d-flex align-items-center">
+                                        <MdDelete onClick={() => handleEmailDelete(email.index)} />
+                                    </Col>
+                                </Row>
+                            </>
+                        )
+                    })}
+                </Form.Group>
+
+
+                <Button onClick={handleAdd} variant="success" style={{ marginRight: '10px' }}>
+                    Add
+                </Button>
+
+            </Form>
+
+        </Container>
+    )
+}
+
+export default AddEmployee;

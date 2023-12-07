@@ -1,7 +1,6 @@
 //import React from "react";
 import React, { useState, useEffect } from 'react';
-import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
+import { Container, Form, Button, Row, Col, Table } from 'react-bootstrap';
 import './viewClient.css';
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
@@ -129,7 +128,17 @@ const ViewEmployees=()=>{
 
         return(
             <div>
-                <h1 className="mt-3">Employees</h1>
+
+                <div className="d-flex align-items-center mt-3 justify-content-start">
+                    <h1 className="mt-3">Employees</h1>
+
+                    <Link className="link" to={`/adminhome/addEmployee`}>
+                        <Button variant="success">Add new employee</Button>
+                    </Link>
+                </div>
+
+
+
 
 
                 {/*{editMode ? (*/}
