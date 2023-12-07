@@ -4,6 +4,7 @@ import Table from "react-bootstrap/Table";
 import axios from "axios";
 import "./ViewService.css"
 import { BsTrash3Fill } from "react-icons/bs";
+import { FaEdit } from "react-icons/fa";
 
 const ViewServices = () => {
     const[services, setServices] = useState([])
@@ -37,6 +38,9 @@ const ViewServices = () => {
             <td>
                 <Button className="service-trash-icon" variant="light" onClick={()=>handleDelete(service.SID)}>
                     <BsTrash3Fill/>
+                </Button>
+                <Button className="service-edit-icon " variant="light">
+                    <FaEdit />
                 </Button>
             </td>
             <td>{service.SName}</td>
@@ -90,8 +94,8 @@ const ViewServices = () => {
           <Table className="services-table" responsive="sm">
               <thead>
               <tr>
-                  <th></th>
                   <th className="header">Service</th>
+                  <th></th>
                   <th className="header">Price</th>
               </tr>
               </thead>

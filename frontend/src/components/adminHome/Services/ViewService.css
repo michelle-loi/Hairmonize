@@ -7,10 +7,17 @@
     color: green;
 }
 
-.services-table td:nth-child(1) {
-    width: 2rem; /* Adjust the width as needed */
-}
-
 .service-trash-icon svg{
     color: #ff0000;
+}
+.service-edit-icon svg{
+    color: rgba(11, 54, 220, 0.61);
+}
+
+.services-table td:nth-child(1) {
+    width:7rem;
+}
+
+.services-table td:nth-child(2) {
+    width:20rem;
 }
