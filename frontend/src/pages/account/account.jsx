@@ -32,6 +32,10 @@ const Account = () => {
     // phone number
     const [phoneNumber, setPhoneNumber] = useState("");
 
+    // email
+    const [emailAddress, setEmailAddress] = useState("");
+
+
     useEffect(() => {
 
         const fetchAllEmployees = async () => {
@@ -64,6 +68,18 @@ const Account = () => {
                     if (res2.data.length > 0) {
                         setPhoneNumber(res2.data[0].Phone);
                     }
+
+
+                    // get email address
+
+                    // create post to the back end to get the employee's email table
+                    const res3 = await axios.get(`/viewEmployee/getEmail/${currentUser.EID}`)
+
+                    // if there is data in res 3, set the email address
+                    if (res3.data.length > 0) {
+                        setEmailAddress(res3.data[0].EMAIL);
+                    }
+
                 }
 
 
@@ -190,7 +206,7 @@ const Account = () => {
                                         <FaEnvelope />
                                     </InputGroup.Text>
                                     <InputGroup.Text> Email:</InputGroup.Text>
-                                    <Form.Control type="email" placeholder="Email" />
+                                    <Form.Control type="email" placeholder="Email" value={emailAddress}/>
                                 </InputGroup>
                             </Form.Group>
 
