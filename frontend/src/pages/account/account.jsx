@@ -29,6 +29,9 @@ const Account = () => {
     // account type
     const [accountType, setAccountType] = useState("");
 
+    // phone number
+    const [phoneNumber, setPhoneNumber] = useState("");
+
     useEffect(() => {
 
         const fetchAllEmployees = async () => {
@@ -53,7 +56,17 @@ const Account = () => {
                     }
 
                     // get phone number
+
+                    // create post to the back end to get the employee's phone number table
+                    const res2 = await axios.get(`/viewEmployee/getPhone/${currentUser.EID}`)
+
+                    // if there is data in res 2, set the phone number
+                    if (res2.data.length > 0) {
+                        setPhoneNumber(res2.data[0].Phone);
+                    }
                 }
+
+
 
                 // ----------------------------TO DO ----------------------------
 
@@ -109,6 +122,18 @@ const Account = () => {
 
     }, [currentUser]);
 
+    // function to format the phone number to (###) ###-####. This only works for 10 digit phone numbers!
+    const formatPhoneNumber = (input) => {
+        // Ensure input is a string
+        const phoneNumberString = String(input);
+
+        // format the phone number
+        const match = phoneNumberString.match(/^(\d{3})(\d{3})(\d{4})$/);
+        if (match) {
+            return `(${match[1]}) ${match[2]}-${match[3]}`;
+        }
+        return phoneNumberString;
+    };
 
 
     return(
@@ -179,6 +204,7 @@ const Account = () => {
                                     <Form.Control
                                         type="tel"
                                         placeholder="Phone number"
+                                        value={formatPhoneNumber(phoneNumber)}
                                         pattern="^\(\d{3}\) \d{3}-\d{4}$"
                                     />
                                     <Form.Text id="telphoneInfo">
