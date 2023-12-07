@@ -15,21 +15,18 @@ const AddEmployee = () => {
         LName:'',
         SalaryType:''
     });
-    //const [EIDadded, setEIDAdded] = useState(null);
 
 
     const addEmployee = async () => {
         try{
-            //console.log({phone: PHONE});
             const response = await axios.post(`/viewEmployee/addEmployee`, {FName: newEmployeeInfo.FName, MName: newEmployeeInfo.MName, LName: newEmployeeInfo.LName, SalaryType: newEmployeeInfo.SalaryType});
-            //setEIDAdded(response.data.eid);
+
             const newlyAddedEID = response.data.eid;
-            //
-            // //DELETE
+
+            //DELETE
             console.log(`Newly added EID: ${newlyAddedEID}`);
-            //
-            //setEIDAdded((old) => (newlyAddedEID));
-            //doSetEIDAdded(newlyAddedEID);
+
+            //Trigger adding emails to database
             newEmails.forEach((email) => {
                 ((email.EMAIL.length===0) ? (console.log("empty email")): addEmail(email.EMAIL, newlyAddedEID));
             })
@@ -37,10 +34,6 @@ const AddEmployee = () => {
             console.log(err);
         }
     }
-
-    // const doSetEIDAdded = (EID) => {
-    //     setEIDAdded(EID);
-    // }
     //*****************************************************************
 
 
@@ -74,17 +67,6 @@ const AddEmployee = () => {
         console.log(JSON.stringify(newEmails));
         console.log(newEmails);
     };
-    //
-    // useEffect(() => {
-    //     const initiateAddEmail = async () => {
-    //         console.log("hereeeeeeee222222");
-    //         console.log(EIDadded);
-    //         // newEmails.forEach((email) => {
-    //         //     ((email.EMAIL.length===0) ? (console.log("empty email")): addEmail(email.EMAIL));
-    //         // })
-    //     };
-    //     initiateAddEmail();
-    // }, [EIDadded]);
 
     const addEmail = async (EMAIL, EID) => {
         try{
