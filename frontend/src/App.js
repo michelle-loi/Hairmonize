@@ -9,6 +9,7 @@ import StylistHome from "./pages/stylist/stylistHome";
 import AccountEdit from "./pages/account/accountEdit";
 
 import EditEmployee from "./components/adminHome/editEmployee";
+import AddEmployee from "./components/adminHome/addEmployee";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/accountEdit" element={<AccountEdit/>}/>
 
             <Route path="/adminHome/editEmployee/:id" element={<EditEmployee/>}/>
+            <Route path="/adminHome/addEmployee" element={<AddEmployee/>}/>
           </Routes>
         </BrowserRouter>
       </div>

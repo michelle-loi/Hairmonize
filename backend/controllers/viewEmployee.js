@@ -160,6 +160,19 @@ export const deletePhone = (req, res) => {
     });
 };
 
+export const addEmployee = (req, res) => {
+    const q =
+        "INSERT INTO EMPLOYEE (`FName`, `MName`, `LName`, `SalaryType`) VALUES (?, ?, ?, ?)";
+
+    db.query(q, [req.body.FName, req.body.MName, req.body.LName, req.body.SalaryType], (err, data) => {
+        if (err) return res.status(500).json("Error while adding employee. Employee not added.");
+
+        const lastInsertedEID = data.insertId;
+
+        return res.status(200).json({ message: "Employee has been added.", eid: lastInsertedEID });
+    });
+};
+
 // These are the functions that will get a particular employee's information
 //--------------------------------------------------------------------------
 
