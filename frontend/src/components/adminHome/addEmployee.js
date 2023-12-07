@@ -30,6 +30,11 @@ const AddEmployee = () => {
             newEmails.forEach((email) => {
                 ((email.EMAIL.length===0) ? (console.log("empty email")): addEmail(email.EMAIL, newlyAddedEID));
             })
+
+            //Trigger adding phones to database
+            newPhones.forEach((phone) => {
+                ((phone.Phone.length===0) ? (console.log("empty phone")): addPhone(phone.Phone, newlyAddedEID));
+            })
         } catch (err) {
             console.log(err);
         }
@@ -39,17 +44,17 @@ const AddEmployee = () => {
 
     //**********************EMPLOYEE EMAIL**************************
     const [newEmails, setNewEmails] = useState([]);
-    const [nextIndex, setNextIndex] = useState(0);
+    const [nextIndexEmail, setNextIndexEmail] = useState(0);
 
-    const incrementIndex = () => {
-        setNextIndex(nextIndex + 1);
+    const incrementIndexEmail = () => {
+        setNextIndexEmail(nextIndexEmail + 1);
     };
 
     const handleAddEmail = (e) => {
         e.preventDefault();
-        incrementIndex();
+        incrementIndexEmail();
         const newObject = {
-            index: nextIndex,
+            index: nextIndexEmail,
             EMAIL: '',
         };
         setNewEmails(oldArray => [...oldArray, newObject]);
@@ -64,8 +69,6 @@ const AddEmployee = () => {
 
     const handleEmailDelete =  (index)=> {
         setNewEmails((prevArray) => prevArray.filter((email) => email.index !== index));
-        console.log(JSON.stringify(newEmails));
-        console.log(newEmails);
     };
 
     const addEmail = async (EMAIL, EID) => {
@@ -81,6 +84,43 @@ const AddEmployee = () => {
 
 
     //**********************EMPLOYEE PHONE**************************
+    const [newPhones, setNewPhones] = useState([]);
+    const [nextIndexPhone, setNextIndexPhone] = useState(0);
+
+    const incrementIndexPhone = () => {
+        setNextIndexPhone(nextIndexPhone + 1);
+    };
+
+    const handleAddPhone = (e) => {
+        e.preventDefault();
+        incrementIndexPhone();
+        const newObject = {
+            index: nextIndexPhone,
+            Phone: '',
+        };
+        setNewPhones(oldArray => [...oldArray, newObject]);
+    };
+
+    const handlePhoneChange = (e, index) => {
+        const updatedData = newPhones.map(phone =>
+            phone.index === index ? { ...phone, Phone: e.target.value } : phone
+        );
+        setNewPhones(updatedData);
+    };
+
+    const handlePhoneDelete =  (index)=> {
+        setNewPhones((prevArray) => prevArray.filter((phone) => phone.index !== index));
+    };
+
+    const addPhone = async (Phone, EID) => {
+        try{
+            console.log({phone: Phone})
+            await axios.post(`/viewEmployee/addPhone`, {eid: EID, phone: Phone});
+            window.location.reload(); //Without this refresh, when adding employee for the second time, only 1 phone will be displayed once back on the employees page
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     //*****************************************************************
 
@@ -162,6 +202,31 @@ const AddEmployee = () => {
                                     </Col>
                                     <Col className="d-flex align-items-center">
                                         <MdDelete onClick={() => handleEmailDelete(email.index)} />
+                                    </Col>
+                                </Row>
+                            </>
+                        )
+                    })}
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="Email">
+                    <Form.Label>Phone</Form.Label>
+                    <Button onClick={handleAddPhone} type="success" size="sm" style={{ margin: '5px 10px' }}>Add new phone</Button>
+                    {newPhones.map((phone)=>{
+                        return(
+                            <>
+                                <Row>
+                                    <Col xs={10}>
+                                        <Form.Control
+                                            key={phone.index}
+                                            type="number"
+                                            placeholder="Enter new phone"
+                                            defaultValue={phone.Phone}
+                                            onChange={(e) => handlePhoneChange(e, phone.index)}
+                                        />
+                                    </Col>
+                                    <Col className="d-flex align-items-center">
+                                        <MdDelete onClick={() => handlePhoneDelete(phone.index)} />
                                     </Col>
                                 </Row>
                             </>
