@@ -3,6 +3,7 @@ import NavigationBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import {Col, Nav, Row, Tab} from "react-bootstrap";
 import StylistAppointment from "../../components/stylistHome/StylistAppointment";
+import "./StylistHome.css"
 const stylistHome = () => {
     return(
         <div className="stylistHomePage">

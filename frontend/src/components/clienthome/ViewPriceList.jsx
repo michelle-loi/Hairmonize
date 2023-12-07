@@ -3,14 +3,14 @@ import {Container} from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
 
-const ViewServices = () => {
+const ViewPriceList = () => {
 
     const[services, setServices] = useState([])
 
     useEffect(() => {
         const fetchServices = async ()=>{
             try{
-                const res = await axios.get("/clienthomeservices/getServices") // whatever it is called first in route / function name
+                const res = await axios.get("/clientPriceList/getPrices") // whatever it is called first in route / function name
                 setServices(res.data)
             }catch (err){
                 console.log(err)
@@ -27,8 +27,8 @@ const ViewServices = () => {
     ));
 
     return (
-        <Container fluid>
-            <h1 className="mt-3">Services</h1>
+        <Container className="price-list-page" fluid>
+            <h1 className="mt-3">Price List</h1>
 
             <Table responsive="sm">
                 <thead>
@@ -45,4 +45,4 @@ const ViewServices = () => {
     )
 }
 
-export default ViewServices
+export default ViewPriceList

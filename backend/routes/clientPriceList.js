@@ -1,11 +1,10 @@
 import express from "express";
-import {getServices} from "../controllers/clienthomeservices.js";
-
+import {getPrices} from "../controllers/clientPriceList.js";
 
 const router = express.Router()
 
 // Get the services to show to client
-router.get("/getServices", getServices) // function name
+router.get("/getPrices", getPrices) // function name
 
 
 export default router;
