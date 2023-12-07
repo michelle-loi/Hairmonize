@@ -1,0 +1,16 @@
+/* Services CSS */
+.new-service-error-msg{
+    color: red;
+}
+
+.new-service-success-msg{
+    color: green;
+}
+
+.services-table td:nth-child(1) {
+    width: 2rem; /* Adjust the width as needed */
+}
+
+.service-trash-icon svg{
+    color: #ff0000;
+}

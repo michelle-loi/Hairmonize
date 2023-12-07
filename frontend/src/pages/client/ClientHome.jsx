@@ -3,7 +3,7 @@ import NavigationBar from "../../components/navbar/NavBar"
 import {Col, Container, Nav, Row, Tab} from 'react-bootstrap'
 import UpcomingAppointments from "../../components/clienthome/upcomingAppointments";
 import BookAppointments from "../../components/clienthome/BookAppointments";
-import ViewServices from "../../components/clienthome/ViewServices";
+import ViewPriceList from "../../components/clienthome/ViewPriceList";
 import "./ClientHome.css"
 import Footer from "../../components/footer/Footer";
 // https://react-bootstrap.netlify.app/docs/components/tabs/
@@ -25,7 +25,7 @@ const clientHome = () => {
                                         <Nav.Link eventKey="book">Book Appointments</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="services">View Services</Nav.Link>
+                                        <Nav.Link eventKey="services">Price List</Nav.Link>
                                     </Nav.Item>
                                 </Nav>
                             </div>
@@ -45,7 +45,7 @@ const clientHome = () => {
 
                                 {/* View Services */}
                                 <Tab.Pane eventKey="services">
-                                    <ViewServices/>
+                                    <ViewPriceList/>
                                 </Tab.Pane>
 
                             </Tab.Content>

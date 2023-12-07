@@ -1,6 +1,6 @@
 import {db} from "../database.js";
 
-export const getServices = (req, res)=>{
+export const getPrices = (req, res)=>{
 
     // create query
     const q = "SELECT * FROM SERVICE";
