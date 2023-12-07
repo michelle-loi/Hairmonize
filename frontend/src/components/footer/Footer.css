@@ -1,0 +1,10 @@
+.footer {
+    margin-top: auto; /* place as much margin between the content and the footer if not full */
+    background-color: #2b6777;
+    color: #ffffff;
+    padding: 2rem;
+}
+
+.default-font{
+    font-family: 'Open Sans', sans-serif;
+}

@@ -1,0 +1,20 @@
+.clientHomePage{
+    min-height: 100vh;  /* stretch height of page to the max viewport */
+    display: flex;
+    flex-direction: column;
+}
+
+.client-homepage-content{
+    min-height: 100vh;
+}
+
+/* Back ground color of active pill tab */
+.client-pill-color .nav-pills .nav-link.active {
+    background-color: #2b6777;
+    color: #ffffff;
+}
+
+/* Background color of non-active pills */
+.client-pill-color .nav-pills .nav-link {
+    color: #2b6777;
+}
