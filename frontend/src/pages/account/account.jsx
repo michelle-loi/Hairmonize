@@ -83,9 +83,6 @@ const Account = () => {
                 }
 
 
-
-                // ----------------------------TO DO ----------------------------
-
                 // check if account type is 1 which is customer so fetch customer data
                 if (currentUser && currentUser.AccountType === 1) {
                     // get username
@@ -124,6 +121,29 @@ const Account = () => {
                         setMiddleName(res.data[0].MName);
                         setLastName(res.data[0].LName);
                     }
+
+                    // get phone number
+
+                    // create post to the back end to get the employee's (in this case the admin who is an employee)
+                    // phone number table
+                    const res2 = await axios.get(`/viewEmployee/getPhone/${currentUser.EID}`)
+
+                    // if there is data in res 2, set the phone number
+                    if (res2.data.length > 0) {
+                        setPhoneNumber(res2.data[0].Phone);
+                    }
+
+
+                    // get email address
+
+                    // create post to the back end to get the employee's  (in this case the admin who is an employee) email table
+                    const res3 = await axios.get(`/viewEmployee/getEmail/${currentUser.EID}`)
+
+                    // if there is data in res 3, set the email address
+                    if (res3.data.length > 0) {
+                        setEmailAddress(res3.data[0].EMAIL);
+                    }
+
                 }
 
                 // --------------------------FINISHED------------------------------------------------------
