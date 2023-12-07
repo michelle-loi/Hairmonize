@@ -2,6 +2,7 @@ import express from "express"
 import userRoutes from "./routes/users.js"
 import authRoutes from "./routes/auth.js"
 import viewEmployeeRoutes from "./routes/viewEmployee.js"
+import clienthomeservicesRoutes from "./routes/clienthomeservices.js";
 import profileRoutes from "./routes/profile.js"
 import cookieParser from "cookie-parser"
 
@@ -16,6 +17,7 @@ app.use(cookieParser());
 app.use("/backend/users", userRoutes)
 app.use("/backend/auth", authRoutes)
 app.use("/backend/viewEmployee",viewEmployeeRoutes)
+app.use("/backend/clienthomeservices", clienthomeservicesRoutes) // path to controller, route import
 app.use("/backend/profile", profileRoutes)
 
 // Connect to the database
