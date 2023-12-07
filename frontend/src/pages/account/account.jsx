@@ -29,6 +29,13 @@ const Account = () => {
     // account type
     const [accountType, setAccountType] = useState("");
 
+    // phone number
+    const [phoneNumber, setPhoneNumber] = useState("");
+
+    // email
+    const [emailAddress, setEmailAddress] = useState("");
+
+
     useEffect(() => {
 
         const fetchAllEmployees = async () => {
@@ -40,7 +47,7 @@ const Account = () => {
                     // set account type
                     setAccountType("Employee")
 
-                    // create post to the backend to get the employee table
+                    // create post to the backend to get the employee table (path is indexpath/routes path
                     const res = await axios.post('/viewEmployee/getSpecificEMP', {
                         EID: currentUser.EID
                     });
@@ -53,9 +60,28 @@ const Account = () => {
                     }
 
                     // get phone number
+
+                    // create post to the back end to get the employee's phone number table
+                    const res2 = await axios.get(`/viewEmployee/getPhone/${currentUser.EID}`)
+
+                    // if there is data in res 2, set the phone number
+                    if (res2.data.length > 0) {
+                        setPhoneNumber(res2.data[0].Phone);
+                    }
+
+
+                    // get email address
+
+                    // create post to the back end to get the employee's email table
+                    const res3 = await axios.get(`/viewEmployee/getEmail/${currentUser.EID}`)
+
+                    // if there is data in res 3, set the email address
+                    if (res3.data.length > 0) {
+                        setEmailAddress(res3.data[0].EMAIL);
+                    }
+
                 }
 
-                // ----------------------------TO DO ----------------------------
 
                 // check if account type is 1 which is customer so fetch customer data
                 if (currentUser && currentUser.AccountType === 1) {
@@ -65,15 +91,34 @@ const Account = () => {
                     setAccountType("Customer")
 
                     // create post to the backend to get the employee table
-                    const res = await axios.post('/viewEmployee/getSpecificEMP', {
-                        EID: currentUser.EID
-                    });
+                    const res = await axios.get(`/viewCustomer/getCustomer/${currentUser.CID}`)
 
                     // if there is data set the name
                     if (res.data.length > 0) {
                         setFirstName(res.data[0].FName);
                         setMiddleName(res.data[0].MName);
                         setLastName(res.data[0].LName);
+                    }
+
+                    // get phone number
+
+                    // create post to the back end to get the employee's phone number table
+                    const res2 = await axios.get(`/viewCustomer/getCustomerPhone/${currentUser.CID}`)
+
+                    // if there is data in res 2, set the phone number
+                    if (res2.data.length > 0) {
+                        setPhoneNumber(res2.data[0].Phone);
+                    }
+
+
+                    // get email address
+
+                    // create post to the back end to get the employee's email table
+                    const res3 = await axios.get(`/viewCustomer/getCustomerEmail/${currentUser.CID}`)
+
+                    // if there is data in res 3, set the email address
+                    if (res3.data.length > 0) {
+                        setEmailAddress(res3.data[0].EMAIL);
                     }
                 }
 
@@ -95,6 +140,29 @@ const Account = () => {
                         setMiddleName(res.data[0].MName);
                         setLastName(res.data[0].LName);
                     }
+
+                    // get phone number
+
+                    // create post to the back end to get the employee's (in this case the admin who is an employee)
+                    // phone number table
+                    const res2 = await axios.get(`/viewEmployee/getPhone/${currentUser.EID}`)
+
+                    // if there is data in res 2, set the phone number
+                    if (res2.data.length > 0) {
+                        setPhoneNumber(res2.data[0].Phone);
+                    }
+
+
+                    // get email address
+
+                    // create post to the back end to get the employee's  (in this case the admin who is an employee) email table
+                    const res3 = await axios.get(`/viewEmployee/getEmail/${currentUser.EID}`)
+
+                    // if there is data in res 3, set the email address
+                    if (res3.data.length > 0) {
+                        setEmailAddress(res3.data[0].EMAIL);
+                    }
+
                 }
 
                 // --------------------------FINISHED------------------------------------------------------
@@ -109,6 +177,18 @@ const Account = () => {
 
     }, [currentUser]);
 
+    // function to format the phone number to (###) ###-####. This only works for 10 digit phone numbers!
+    const formatPhoneNumber = (input) => {
+        // Ensure input is a string
+        const phoneNumberString = String(input);
+
+        // format the phone number
+        const match = phoneNumberString.match(/^(\d{3})(\d{3})(\d{4})$/);
+        if (match) {
+            return `(${match[1]}) ${match[2]}-${match[3]}`;
+        }
+        return phoneNumberString;
+    };
 
 
     return(
@@ -165,7 +245,7 @@ const Account = () => {
                                         <FaEnvelope />
                                     </InputGroup.Text>
                                     <InputGroup.Text> Email:</InputGroup.Text>
-                                    <Form.Control type="email" placeholder="Email" />
+                                    <Form.Control type="email" placeholder="Email" value={emailAddress}/>
                                 </InputGroup>
                             </Form.Group>
 
@@ -179,6 +259,7 @@ const Account = () => {
                                     <Form.Control
                                         type="tel"
                                         placeholder="Phone number"
+                                        value={formatPhoneNumber(phoneNumber)}
                                         pattern="^\(\d{3}\) \d{3}-\d{4}$"
                                     />
                                     <Form.Text id="telphoneInfo">

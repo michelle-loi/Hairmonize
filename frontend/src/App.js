@@ -2,7 +2,7 @@ import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import Login from "./pages/authentication/login";
 import Registration from "./pages/authentication/registration"
 import PageNotFound from "./pages/error/pageNotFound";
-import ClientHome from "./pages/client/clientHome"
+import ClientHome from "./pages/client/ClientHome"
 import Account from "./pages/account/account";
 import AdminHome from "./pages/admin/adminHome";
 import StylistHome from "./pages/stylist/stylistHome";

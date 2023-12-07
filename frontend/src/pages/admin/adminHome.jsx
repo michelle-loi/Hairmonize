@@ -1,12 +1,13 @@
 import React from "react";
 import {Col, Nav, Row, Tab} from "react-bootstrap";
 import UpcomingAppointments from "../../components/clienthome/upcomingAppointments";
-import BookAppointments from "../../components/clienthome/bookAppointments";
+import BookAppointments from "../../components/clienthome/BookAppointments";
 import NavigationBar from "../../components/navbar/NavBar"
 import ViewEmployee from "../../components/adminHome/viewEmployee";
 import ViewClients from "../../components/adminHome/viewClients";
 import ViewAccounts from "../../components/adminHome/ViewAccounts";
 import {BrowserRouter, Link, Route, Routes} from 'react-router-dom';
+import ViewServices from "../../components/adminHome/Services/ViewServices";
 
 // https://react-bootstrap.netlify.app/docs/components/tabs/
 
@@ -69,8 +70,7 @@ const adminHome = () => {
 
                             {/* Services page */}
                             <Tab.Pane eventKey="services">
-                                S
-
+                                <ViewServices/>
                             </Tab.Pane>
 
                             {/* Expenses page */}

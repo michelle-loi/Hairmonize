@@ -20,11 +20,29 @@ const NavBar = () => {
             <Container fluid={""}>
 
                 {/*Home button*/}
-                <Navbar.Brand href="/clientHome">
-                    <div className="square">
-                        <LuScissorsSquare className="scissorIcon"/>
-                    </div>
-                </Navbar.Brand>
+                {currentUser?.AccountType === 2 && ( // administrator
+                    <Navbar.Brand href="/adminHome">
+                        <div className="square">
+                            <LuScissorsSquare className="scissorIcon" />
+                        </div>
+                    </Navbar.Brand>
+                )}
+
+                {currentUser?.AccountType === 1 && ( // client
+                    <Navbar.Brand href="/clientHome">
+                        <div className="square">
+                            <LuScissorsSquare className="scissorIcon" />
+                        </div>
+                    </Navbar.Brand>
+                )}
+
+                {currentUser?.AccountType === 0 && ( // employee
+                    <Navbar.Brand href="/stylistHome">
+                        <div className="square">
+                            <LuScissorsSquare className="scissorIcon" />
+                        </div>
+                    </Navbar.Brand>
+                )}
 
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
