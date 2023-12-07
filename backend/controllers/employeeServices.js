@@ -41,8 +41,7 @@ export const deleteService = (req, res) => {
     const q = "DELETE FROM SERVICE WHERE `SID` = ?";
 
     db.query(q, [SID], (err, data) => {
-        if (err) return res.status(500).json("Error occured while trying to delete a service.");
-
+        if (err) return res.status(500).json("Error occurred while trying to delete a service.");
         return res.status(200).json("Service has been deleted.");
     });
 };

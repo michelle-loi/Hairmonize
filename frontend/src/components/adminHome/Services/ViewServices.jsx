@@ -6,9 +6,19 @@ import "./ViewService.css"
 import { BsTrash3Fill } from "react-icons/bs";
 
 const ViewServices = () => {
+    const[services, setServices] = useState([])
+
+    // For deleting services
+    const handleDelete = async (SID)=> {
+        try{
+            console.log(`Deleting service with SID: ${SID}`);
+            await axios.delete(`/employeeServices/deleteService/${SID}`);
+        }catch (err){
+            console.log(err);
+        }
+    }
 
     // Get Services
-    const[services, setServices] = useState([])
     useEffect(() => {
         const fetchServices = async ()=>{
             try{
@@ -25,7 +35,9 @@ const ViewServices = () => {
     const serviceRowInTable = services.map((service) => (
         <tr key={service.SID}>
             <td>
-                <Button className="service-trash-icon"  variant="light"> <BsTrash3Fill /></Button>
+                <Button className="service-trash-icon" variant="light" onClick={()=>handleDelete(service.SID)}>
+                    <BsTrash3Fill/>
+                </Button>
             </td>
             <td>{service.SName}</td>
             <td>${service.SPrice} & up</td>
@@ -34,7 +46,7 @@ const ViewServices = () => {
 
     // Insert into service table
     const [newServices, setNewServices] = useState({
-        //SID:"",
+        SID:"",
         SName:"",
         SPrice:"",
     })
@@ -55,14 +67,12 @@ const ViewServices = () => {
         try{
             const res = await axios.post("/employeeServices/addService", newServices)
             setShow(false); // on success close the submission page
+            window.location.reload();
         }catch (err){
             setNewErr(err.response.data)
             setSubmitClicked(true) // on error show the error
         }
     }
-
-    // For deleting services
-
 
     // Deals with modal to add a service
     // Template from React bootstrap website
