@@ -71,7 +71,6 @@ const ViewServices = () => {
         try{
             const res = await axios.post("/employeeServices/addService", newServices)
             setShow(false); // on success close the submission page
-            window.location.reload();
         }catch (err){
             setNewErr(err.response.data)
             setSubmitClicked(true) // on error show the error
