@@ -40,7 +40,7 @@ const Account = () => {
                     // set account type
                     setAccountType("Employee")
 
-                    // create post to the backend to get the employee table
+                    // create post to the backend to get the employee table (path is indexpath/routes path
                     const res = await axios.post('/viewEmployee/getSpecificEMP', {
                         EID: currentUser.EID
                     });
