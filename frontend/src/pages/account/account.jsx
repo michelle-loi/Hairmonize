@@ -38,7 +38,7 @@ const Account = () => {
 
     useEffect(() => {
 
-        const fetchAllEmployees = async () => {
+        const fetchAll = async () => {
             try {
                 // check if account type is 0 which signals employees, if so fetch employee data
                 if (currentUser && currentUser.AccountType === 0) {
@@ -173,7 +173,7 @@ const Account = () => {
                 console.log(err);
             }
         };
-        fetchAllEmployees();
+        fetchAll();
 
     }, [currentUser]);
 
