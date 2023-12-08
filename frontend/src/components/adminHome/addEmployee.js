@@ -123,13 +123,49 @@ const AddEmployee = () => {
     }
 
     //*****************************************************************
+    const [newUsername, setNewUsername] = useState('');
+    const [newPassword, setNewPassword] = useState('');
 
-
+    const addAccount = async (EID) => {
+        // const accountTypeNum = null;
+        // // if(selectedEmployeetype == 'Admin'){
+        // //     accountTypeNum =
+        // // }
+        //
+        // try{
+        //     // await axios.post(`/viewEmployee/addAccount`, {Username: newUsername, Password: newPassword, CreationDate: , CID: null, EID: EID, AccountType: });
+        //
+        //     const newlyAddedEID = response.data.eid;
+        //
+        //     //DELETE
+        //     console.log(`Newly added EID: ${newlyAddedEID}`);
+        //
+        //     //Trigger adding emails to database
+        //     newEmails.forEach((email) => {
+        //         ((email.EMAIL.length===0) ? (console.log("empty email")): addEmail(email.EMAIL, newlyAddedEID));
+        //     })
+        //
+        //     //Trigger adding phones to database
+        //     newPhones.forEach((phone) => {
+        //         ((phone.Phone.length===0) ? (console.log("empty phone")): addPhone(phone.Phone, newlyAddedEID));
+        //     })
+        // } catch (err) {
+        //     console.log(err);
+        // }
+    }
     //**********************ADDING ACCOUNT**************************
+
 
     //*****************************************************************
 
-    const handleAdd = () => {
+    //**********************ADMIN OR STYLIST**************************
+    const [selectedEmployeetype, setSelectedEmployeeType] = useState('');
+
+
+    //*****************************************************************
+
+    const handleAdd = (e) => {
+        //e.preventDefault();
         addEmployee();
 
         navigate('/adminhome');
@@ -139,17 +175,18 @@ const AddEmployee = () => {
     return (
         <Container className="d-flex align-items-center justify-content-center vh-100">
 
-            <Form>
+            <Form onSubmit={handleAdd}>
                 <Form.Label>
                     <h1>Add new employee</h1>
                 </Form.Label>
+
+                <h3>Personal Information</h3>
 
                 <Form.Group className="mb-3" controlId="FName">
                     <Form.Label>First Name</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Enter first name..."
-                        //defaultValue={currentEmployeeInfo.FName}
+                        placeholder="Enter first name"
                         onChange={(e) => setNewEmployeeInfo({...newEmployeeInfo, FName: e.target.value})}
                     />
                 </Form.Group>
@@ -159,7 +196,6 @@ const AddEmployee = () => {
                     <Form.Control
                         type="text"
                         placeholder="Enter middle name"
-                        //defaultValue={currentEmployeeInfo.MName}
                         onChange={(e) => setNewEmployeeInfo({...newEmployeeInfo, MName: e.target.value})}
                     />
                 </Form.Group>
@@ -169,9 +205,23 @@ const AddEmployee = () => {
                     <Form.Control
                         type="text"
                         placeholder="Enter last name"
-                        //defaultValue={currentEmployeeInfo.LName}
                         onChange={(e) => setNewEmployeeInfo({...newEmployeeInfo, LName: e.target.value})}
                     />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="AccountType">
+                    <Form.Label>Employee Type</Form.Label>
+                    <Form.Control
+                        as="select"
+                        value={selectedEmployeetype}
+                        onChange={(e) => setSelectedEmployeeType(e.target.value)}
+                        required
+                    >
+                        <option value="">Select employee type</option>
+                        <option value="option1">Admin</option>
+                        <option value="option2">Stylist</option>
+                        <option value="option3">Addmin + Stylist</option>
+                    </Form.Control>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="SalaryType">
@@ -179,7 +229,6 @@ const AddEmployee = () => {
                     <Form.Control
                         type="text"
                         placeholder="Enter salary type"
-                        //defaultValue={currentEmployeeInfo.SalaryType}
                         onChange={(e) => setNewEmployeeInfo({...newEmployeeInfo, SalaryType: e.target.value})}
                     />
                 </Form.Group>
@@ -234,9 +283,32 @@ const AddEmployee = () => {
                     })}
                 </Form.Group>
 
+                <h3>Account Information</h3>
+                <h5>Create an account for this employee</h5>
 
-                <Button onClick={handleAdd} variant="success" style={{ marginRight: '10px' }}>
-                    Add
+                <Form.Group className="mb-3" controlId="Username">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter username"
+                        onChange={(e) => setNewUsername(e.target.value)}
+                        required
+                    />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="Password">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter password"
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        required
+                    />
+                </Form.Group>
+
+
+                <Button type="submit" variant="success" style={{ marginRight: '10px' }}>
+                    Add employee
                 </Button>
 
             </Form>

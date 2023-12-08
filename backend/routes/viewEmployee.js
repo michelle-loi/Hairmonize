@@ -8,7 +8,7 @@ import {
     updateEmployee,
     getEmail, updateEmail, addEmail, deleteEmail,
     getPhone, updatePhone, addPhone, deletePhone,
-    addEmployee
+    addEmployee, addAccount
 } from "../controllers/viewEmployee.js";
 
 import {getSpecificEMP} from "../controllers/viewEmployee.js";
@@ -36,5 +36,6 @@ router.delete("/deletePhone", deletePhone)
 
 //Add employee
 router.post("/addEmployee", addEmployee)
+router.post("/addAccount", addAccount)
 
 export default router;
