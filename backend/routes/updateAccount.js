@@ -1,9 +1,12 @@
 import express from "express"
 
-import{updateEmployeeUsername}from "../controllers/updateAccount.js";
+import {updateEmployeeEmail, updateEmployeePhone, updateEmployee, updateEmployeePassword} from "../controllers/updateAccount.js";
 
 const router = express.Router()
 
-router.put("/updateEmployeeUsername/:id", updateEmployeeUsername)
+router.put("/updateEmployeeEmail/:id", updateEmployeeEmail)
+router.put("/updateEmployeePhone/:id", updateEmployeePhone)
+router.put("/updateEmployee/:id", updateEmployee)
+router.put("/updateEmployeePassword/:id", updateEmployeePassword)
 
 export default router
