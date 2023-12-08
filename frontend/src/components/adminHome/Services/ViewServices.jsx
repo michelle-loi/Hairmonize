@@ -113,8 +113,6 @@ const ViewServices = () => {
               </Modal.Header>
               <Modal.Body>
                   <Form>
-                      <Form.Group className="mb-3" controlId="service-price-textarea">
-                      </Form.Group>
                       <Form.Group className="mb-3" controlId="service-name-textarea">
                           <Form.Label>Service Name</Form.Label>
                           <Form.Control
@@ -154,8 +152,8 @@ const ViewServices = () => {
           <Table className="services-table" responsive="sm">
               <thead>
               <tr>
-                  <th className="header">Service</th>
                   <th></th>
+                  <th className="header">Service</th>
                   <th className="header">Price</th>
               </tr>
               </thead>

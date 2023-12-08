@@ -9,7 +9,7 @@
 
 .add-new-transaction-b{
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     padding-right: 2rem;
     margin-bottom: 1rem;
 }

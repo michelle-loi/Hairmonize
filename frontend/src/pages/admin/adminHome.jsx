@@ -9,6 +9,7 @@ import ViewAccounts from "../../components/adminHome/ViewAccounts";
 import {BrowserRouter, Link, Route, Routes} from 'react-router-dom';
 import ViewServices from "../../components/adminHome/Services/ViewServices";
 import ViewTransactions from "../../components/adminHome/Transactions/ViewTransactions";
+import ViewSuppliers from "../../components/adminHome/Suppliers/ViewSuppliers";
 
 // https://react-bootstrap.netlify.app/docs/components/tabs/
 
@@ -82,8 +83,7 @@ const adminHome = () => {
 
                             {/* Suppliers page */}
                             <Tab.Pane eventKey="suppliers">
-                                Sup
-
+                                <ViewSuppliers/>
                             </Tab.Pane>
 
                             {/* inventory page */}
