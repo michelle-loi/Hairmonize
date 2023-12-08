@@ -6,7 +6,7 @@ import clientPriceListRoutes from "./routes/clientPriceList.js";
 import profileRoutes from "./routes/profile.js"
 import viewCustomerRoutes from "./routes/viewCustomer.js"
 import employeeServices from "./routes/employeeServices.js";
-
+import employeeTransactions from "./routes/employeeTransactions.js";
 
 import cookieParser from "cookie-parser"
 
@@ -25,6 +25,7 @@ app.use("/backend/clientPriceList", clientPriceListRoutes) // path to controller
 app.use("/backend/profile", profileRoutes)
 app.use("/backend/viewCustomer", viewCustomerRoutes)
 app.use("/backend/employeeServices", employeeServices)
+app.use("/backend/employeeTransactions", employeeTransactions)
 
 // Connect to the database
 app.listen(8800, ()=>{
