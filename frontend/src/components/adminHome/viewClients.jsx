@@ -99,7 +99,6 @@ const ViewClients=()=>{
                     <th>Email Address</th>
                     <th>EID of Stylist</th>
                     <th></th>
-                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -129,11 +128,6 @@ const ViewClients=()=>{
                             </td>
                             <td>{client.EID}</td>
 
-                            <td>
-                                <Link className="link" to={`/adminhome/editClient/${client.CID}`}>
-                                    <Button variant="warning">Edit</Button>
-                                </Link>
-                            </td>
                             <td><Button onClick={() => handleDelete(client.CID)} variant="danger"><BsTrash3Fill/></Button>{''}</td>
                         </tr>
                     )})}
