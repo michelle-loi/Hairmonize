@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
 import { BsTrash3Fill } from "react-icons/bs";
-import { FaEdit } from "react-icons/fa";
 import {Button, Container, Form, Modal} from "react-bootstrap";
 
 import "./ViewTransactions.css"
@@ -42,9 +41,6 @@ const ViewTransactions = () => {
             <td>
                 <Button className="transaction-trash-icon" variant="light" onClick={()=>handleDelete(transaction.Transaction_ID)}>
                     <BsTrash3Fill/>
-                </Button>
-                <Button className="transaction-edit-icon " variant="light">
-                    <FaEdit />
                 </Button>
             </td>
             <td>{transaction.Transaction_ID}</td>
@@ -120,29 +116,17 @@ const ViewTransactions = () => {
         newTransactions.Amount = '';
         newTransactions.Method_of_payment = '';
     }
+
     const handleShow = () => setShow(true); // to show modal
 
     return(
        <Container className="view-transaction-page" fluid>
            <h1 className="mt-3">Transactions</h1>
 
-           <Table className="transactions-table" responsive="sm">
-               <thead>
-               <tr>
-                   <th></th>
-                   <th className="header">Transaction ID</th>
-                   <th className="header">Date</th>
-                   <th className="header">Time</th>
-                   <th className="header">Amount</th>
-                   <th className="header">Method of Payment</th>
-               </tr>
-               </thead>
-               <tbody>
-               {transactionRowInTable}
-               </tbody>
-           </Table>
-
-           <Button variant="primary" onClick={handleShow}> Add New Transaction </Button>
+           {/* to add transaction*/}
+           <div className="add-new-transaction-b">
+               <Button variant="primary" onClick={handleShow}> Add New Transaction </Button>
+           </div>
            <Modal show={show} onHide={handleClose}>
                <Modal.Header closeButton>
                    <Modal.Title>New Transaction Form</Modal.Title>
@@ -204,6 +188,23 @@ const ViewTransactions = () => {
                    </Button>
                </Modal.Footer>
            </Modal>
+
+           {/* The table for displaying information */}
+           <Table className="transactions-table" responsive="sm">
+               <thead>
+               <tr>
+                   <th></th>
+                   <th className="header">Transaction ID</th>
+                   <th className="header">Date</th>
+                   <th className="header">Time</th>
+                   <th className="header">Amount</th>
+                   <th className="header">Method of Payment</th>
+               </tr>
+               </thead>
+               <tbody>
+               {transactionRowInTable}
+               </tbody>
+           </Table>
        </Container>
     )
 }

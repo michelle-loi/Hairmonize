@@ -21,3 +21,10 @@
 .services-table td:nth-child(2) {
     width:20rem;
 }
+
+.add-new-service-b{
+    display: flex;
+    justify-content: end;
+    padding-right: 2rem;
+    margin-bottom: 1rem;
+}
