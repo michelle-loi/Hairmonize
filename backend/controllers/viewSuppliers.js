@@ -32,10 +32,10 @@ export const addSupplier = (req, res) => {
 };
 
 export const deleteSupplier = (req, res) => {
-    const SID = req.params.id;
+    const SuID = req.params.id;
     const q = "DELETE FROM SUPPLIER WHERE `SuID` = ?";
 
-    db.query(q, [SID], (err, data) => {
+    db.query(q, [SuID], (err, data) => {
         if (err) return res.status(500).json("Error occurred while trying to delete a supplier.");
         return res.status(200).json("Supplier has been deleted.");
     });

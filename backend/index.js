@@ -8,6 +8,7 @@ import viewCustomerRoutes from "./routes/viewCustomer.js"
 import employeeServices from "./routes/employeeServices.js";
 import employeeTransactions from "./routes/employeeTransactions.js";
 import viewSuppliers from "./routes/viewSuppliers.js";
+import viewExpenses from "./routes/viewExpenses.js";
 
 import cookieParser from "cookie-parser"
 
@@ -28,6 +29,7 @@ app.use("/backend/viewCustomer", viewCustomerRoutes)
 app.use("/backend/employeeServices", employeeServices)
 app.use("/backend/employeeTransactions", employeeTransactions)
 app.use("/backend/viewSuppliers", viewSuppliers)
+app.use("/backend/viewExpenses", viewExpenses)
 
 // Connect to the database
 app.listen(8800, ()=>{
