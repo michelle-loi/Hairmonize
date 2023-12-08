@@ -1,12 +1,4 @@
 /* Services CSS */
-.new-service-error-msg{
-    color: red;
-}
-
-.new-service-success-msg{
-    color: green;
-}
-
 .service-trash-icon svg{
     color: #ff0000;
 }
@@ -20,4 +12,10 @@
 
 .services-table td:nth-child(2) {
     width:20rem;
+}
+
+.add-new-service-b{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 2rem;
 }
