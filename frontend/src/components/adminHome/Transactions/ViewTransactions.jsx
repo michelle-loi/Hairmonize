@@ -50,7 +50,7 @@ const ViewTransactions = () => {
             <td>{transaction.Transaction_ID}</td>
             <td>{transaction.Date.split('T')[0]}</td> {/* Only want the date remove the time */}
             <td>{transaction.Time}</td>
-            <td>{transaction.Amount}</td>
+            <td>${transaction.Amount}</td>
             <td>{transaction.Method_of_payment}</td>
         </tr>
     ));
