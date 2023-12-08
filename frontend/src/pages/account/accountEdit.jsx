@@ -51,11 +51,20 @@ const AccountEdit = () => {
         setIsFormChanged(true);
     };
 
+    const updateEmployeeUsername = async () => {
+        try {
+            console.log("Sending data:", { Username: userName });
+            await axios.put(`/updateAccount/updateEmployeeUsername/${currentUser.EID}`, {Username: userName});
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
 
     // function to handle the account save changes, aka upon update clicking save changes it will update the account
     // by default this only works if the fields have been filled out correctly
     const handleSaveChanges = () => {
-
+        updateEmployeeUsername();
     };
 
 
@@ -213,9 +222,9 @@ const AccountEdit = () => {
         // Check if all fields are filled to enable the form submission
         setFormValid(
             firstName.trim() !== "" && lastName.trim() !== "" && emailAddress.trim() !=="" && phoneNumberString.trim() !=="" &&
-            userName.trim() !=="" && password.trim() !== "" && isPhoneNumberValid
+            userName.trim() !=="" && isPhoneNumberValid
         );
-    }, [firstName, lastName, emailAddress, phoneNumber, userName, password]);
+    }, [firstName, lastName, emailAddress, phoneNumber, userName]);
 
 
 
@@ -227,6 +236,7 @@ const AccountEdit = () => {
                 <Row className="mt-4">
                     <h1>Edit Details</h1>
                     <h6>Fill in the required fields below with your new information and click "Save Changes"</h6>
+                    <h6>Optional Fields: Middle Name, Password: (only type into this field if you want to change your password)</h6>
                 </Row>
 
                 <Row className="justify-content-md-center mt-4">
@@ -344,7 +354,7 @@ const AccountEdit = () => {
                                 <InputGroup.Text>
                                     <FaLock />
                                 </InputGroup.Text>
-                                <Form.Control type="password" placeholder="Password"
+                                <Form.Control type="password" placeholder="Password (Unfilled = Retain Old Password)"
                                               onChange={(e) => {
                                                   setPassword(e.target.value);
                                                   handleFieldChange();
@@ -363,7 +373,7 @@ const AccountEdit = () => {
                 </Row>
                 <Row className="justify-content-md-center mt-3">
                     <Col md="auto">
-                        <Button href="/account" variant="primary" style={{ width: '250px' }} onClick={handleSaveChanges} disabled={!formValid}>Save changes</Button>{' '}
+                        <Button variant="primary" style={{ width: '250px' }} onClick={handleSaveChanges} disabled={!formValid}>Save changes</Button>{' '}
                         <Button href="/account" variant="danger" style={{ width: '250px' }}>Cancel changes</Button>
                     </Col>
                 </Row>
