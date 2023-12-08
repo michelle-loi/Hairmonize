@@ -35,6 +35,9 @@ const AddEmployee = () => {
             newPhones.forEach((phone) => {
                 ((phone.Phone.length===0) ? (console.log("empty phone")): addPhone(phone.Phone, newlyAddedEID));
             })
+
+            //Trigger adding account to database
+            addAccount(newlyAddedEID);
         } catch (err) {
             console.log(err);
         }
@@ -127,31 +130,31 @@ const AddEmployee = () => {
     const [newPassword, setNewPassword] = useState('');
 
     const addAccount = async (EID) => {
-        // const accountTypeNum = null;
-        // // if(selectedEmployeetype == 'Admin'){
-        // //     accountTypeNum =
-        // // }
-        //
-        // try{
-        //     // await axios.post(`/viewEmployee/addAccount`, {Username: newUsername, Password: newPassword, CreationDate: , CID: null, EID: EID, AccountType: });
-        //
-        //     const newlyAddedEID = response.data.eid;
-        //
-        //     //DELETE
-        //     console.log(`Newly added EID: ${newlyAddedEID}`);
-        //
-        //     //Trigger adding emails to database
-        //     newEmails.forEach((email) => {
-        //         ((email.EMAIL.length===0) ? (console.log("empty email")): addEmail(email.EMAIL, newlyAddedEID));
-        //     })
-        //
-        //     //Trigger adding phones to database
-        //     newPhones.forEach((phone) => {
-        //         ((phone.Phone.length===0) ? (console.log("empty phone")): addPhone(phone.Phone, newlyAddedEID));
-        //     })
-        // } catch (err) {
-        //     console.log(err);
-        // }
+        let accountTypeNum = null;
+        if(selectedEmployeetype === 'Admin'){
+            accountTypeNum = 2;
+        } else if (selectedEmployeetype === 'Stylist'){
+            accountTypeNum = 0;
+        } else{
+            accountTypeNum = 4;
+        }
+
+        const currentDate = new Date();
+        const partiallyFormattedDate = currentDate.toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+        });
+        const withSpacesFormattedDate = partiallyFormattedDate.replace(/\./g, '-');
+        const withLastDotFormattedDate = withSpacesFormattedDate.replace(/\s/g, '');
+        const mysqlFormattedDate = withLastDotFormattedDate.slice(0, -1);
+        console.log(mysqlFormattedDate);
+
+        try{
+            await axios.post(`/viewEmployee/addAccount`, {Username: newUsername, Password: newPassword, CreationDate: mysqlFormattedDate, CID: null, EID: EID, AccountType: accountTypeNum});
+        } catch (err) {
+            console.log(err);
+        }
     }
     //**********************ADDING ACCOUNT**************************
 
@@ -168,6 +171,10 @@ const AddEmployee = () => {
         //e.preventDefault();
         addEmployee();
 
+        navigate('/adminhome');
+    }
+
+    const handleCancel = async () => {
         navigate('/adminhome');
     }
 
@@ -218,9 +225,9 @@ const AddEmployee = () => {
                         required
                     >
                         <option value="">Select employee type</option>
-                        <option value="option1">Admin</option>
-                        <option value="option2">Stylist</option>
-                        <option value="option3">Addmin + Stylist</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Stylist">Stylist</option>
+                        <option value="Admin + Stylist">Admin + Stylist</option>
                     </Form.Control>
                 </Form.Group>
 
@@ -309,6 +316,9 @@ const AddEmployee = () => {
 
                 <Button type="submit" variant="success" style={{ marginRight: '10px' }}>
                     Add employee
+                </Button>
+                <Button onClick={handleCancel} variant="secondary">
+                    Cancel
                 </Button>
 
             </Form>
