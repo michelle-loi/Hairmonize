@@ -1,5 +1,5 @@
 import express from "express"
-import userRoutes from "./routes/users.js"
+import updateAccountRoutes from "./routes/updateAccount.js"
 import authRoutes from "./routes/auth.js"
 import viewEmployeeRoutes from "./routes/viewEmployee.js"
 import clientPriceListRoutes from "./routes/clientPriceList.js";
@@ -18,7 +18,7 @@ app.use(express.json());
 // using cookie parser to distinguish between the different users
 app.use(cookieParser());
 
-app.use("/backend/users", userRoutes)
+app.use("/backend/updateAccount", updateAccountRoutes)
 app.use("/backend/auth", authRoutes)
 app.use("/backend/viewEmployee",viewEmployeeRoutes)
 app.use("/backend/clientPriceList", clientPriceListRoutes) // path to controller, route import
