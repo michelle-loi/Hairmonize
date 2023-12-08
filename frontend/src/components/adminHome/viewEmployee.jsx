@@ -5,6 +5,7 @@ import './viewClient.css';
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import AdminHome from "../../pages/admin/adminHome"
+import { BsTrash3Fill } from "react-icons/bs";
 
 
 const ViewEmployees=()=>{
@@ -133,7 +134,7 @@ const ViewEmployees=()=>{
                     <h1 className="mt-3">Employees</h1>
 
                     <Link className="link" to={`/adminhome/addEmployee`}>
-                        <Button variant="success">Add new employee</Button>
+                        <Button variant="success" style={{ marginTop: '20px' , marginLeft: '20px'}}>Add new employee</Button>
                     </Link>
                 </div>
 
@@ -157,6 +158,8 @@ const ViewEmployees=()=>{
                         <th>Phone Number</th>
                         <th>Email Address</th>
                         <th>Salary Type</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -208,7 +211,7 @@ const ViewEmployees=()=>{
                                         <Button variant="warning">Edit</Button>
                                     </Link>
                                 </td>
-                                <td className="button"><Button onClick={() => handleDelete(employee.EID)} variant="danger">Delete</Button>{''}</td>
+                                <td><Button onClick={() => handleDelete(employee.EID)} variant="danger"><BsTrash3Fill/></Button>{''}</td>
                             </tr>
                         )})}
                     </tbody>
