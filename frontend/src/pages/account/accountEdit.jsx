@@ -38,8 +38,26 @@ const AccountEdit = () => {
     // to ensure that all fields are filled in before the user can submit their changes
     const [formValid, setFormValid] = useState(false);
 
+    // to ensure that all fields are filled in before the user can submit their changes
+    const [phoneValid, setPhoneValid] = useState(false);
+
     // to detect whenever the form is changed
     const [isFormChanged, setIsFormChanged] = useState(false);
+
+
+    // checks if the fields have been changed
+    const handleFieldChange = () => {
+        // Set the formChanged flag to true
+        setIsFormChanged(true);
+    };
+
+
+    // function to handle the account save changes, aka upon update clicking save changes it will update the account
+    // by default this only works if the fields have been filled out correctly
+    const handleSaveChanges = () => {
+
+    };
+
 
     useEffect(() => {
 
@@ -47,18 +65,120 @@ const AccountEdit = () => {
             try {
                 // check if account type is 0 which signals employees, if so fetch employee data
                 if (currentUser && currentUser.AccountType === 0) {
+                    // get username
+                    setUsername(currentUser.Username);
+
+                    // create post to the backend to get the employee table (path is indexpath/routes path
+                    const res = await axios.post('/viewEmployee/getSpecificEMP', {
+                        EID: currentUser.EID
+                    });
+
+                    // if there is data set the name
+                    if (res.data.length > 0) {
+                        setFirstName(res.data[0].FName);
+                        setMiddleName(res.data[0].MName);
+                        setLastName(res.data[0].LName);
+                    }
+
+                    // get phone number
+
+                    // create post to the back end to get the employee's phone number table
+                    const res2 = await axios.get(`/viewEmployee/getPhone/${currentUser.EID}`)
+
+                    // if there is data in res 2, set the phone number
+                    if (res2.data.length > 0) {
+                        setPhoneNumber(res2.data[0].Phone);
+                    }
+
+
+                    // get email address
+
+                    // create post to the back end to get the employee's email table
+                    const res3 = await axios.get(`/viewEmployee/getEmail/${currentUser.EID}`)
+
+                    // if there is data in res 3, set the email address
+                    if (res3.data.length > 0) {
+                        setEmailAddress(res3.data[0].EMAIL);
+                    }
 
                 }
 
 
                 // check if account type is 1 which is customer so fetch customer data
                 if (currentUser && currentUser.AccountType === 1) {
+                    // get username
+                    setUsername(currentUser.Username);
 
+                    // create post to the backend to get the employee table
+                    const res = await axios.get(`/viewCustomer/getCustomer/${currentUser.CID}`)
+
+                    // if there is data set the name
+                    if (res.data.length > 0) {
+                        setFirstName(res.data[0].FName);
+                        setMiddleName(res.data[0].MName);
+                        setLastName(res.data[0].LName);
+                    }
+
+                    // get phone number
+
+                    // create post to the back end to get the employee's phone number table
+                    const res2 = await axios.get(`/viewCustomer/getCustomerPhone/${currentUser.CID}`)
+
+                    // if there is data in res 2, set the phone number
+                    if (res2.data.length > 0) {
+                        setPhoneNumber(res2.data[0].Phone);
+                    }
+
+
+                    // get email address
+
+                    // create post to the back end to get the employee's email table
+                    const res3 = await axios.get(`/viewCustomer/getCustomerEmail/${currentUser.CID}`)
+
+                    // if there is data in res 3, set the email address
+                    if (res3.data.length > 0) {
+                        setEmailAddress(res3.data[0].EMAIL);
+                    }
                 }
 
                 // check if account type is 2 which signals admins, if so fetch admin data
                 if (currentUser && currentUser.AccountType === 2) {
+                    // get username
+                    setUsername(currentUser.Username);
 
+                    // create post to the backend to get the employee table
+                    const res = await axios.post('/viewEmployee/getSpecificEMP', {
+                        EID: currentUser.EID
+                    });
+
+                    // if there is data set the name
+                    if (res.data.length > 0) {
+                        setFirstName(res.data[0].FName);
+                        setMiddleName(res.data[0].MName);
+                        setLastName(res.data[0].LName);
+                    }
+
+                    // get phone number
+
+                    // create post to the back end to get the employee's (in this case the admin who is an employee)
+                    // phone number table
+                    const res2 = await axios.get(`/viewEmployee/getPhone/${currentUser.EID}`)
+
+                    // if there is data in res 2, set the phone number
+                    if (res2.data.length > 0) {
+                        setPhoneNumber(res2.data[0].Phone);
+                    }
+
+
+                    // get email address
+
+                    // create post to the back end to get the employee's  (in this case the admin who is an employee) email table
+                    const res3 = await axios.get(`/viewEmployee/getEmail/${currentUser.EID}`)
+
+                    // if there is data in res 3, set the email address
+                    if (res3.data.length > 0) {
+                        setEmailAddress(res3.data[0].EMAIL);
+                    }
 
                 }
 
@@ -76,29 +196,26 @@ const AccountEdit = () => {
 
 
     // verifications to ensure that the user has filled in all of the forms before they can submit their new changes
+    // also check if the user enters the phone number in correctly
     useEffect(() => {
+        // Convert phoneNumber to a string before calling trim()
+        const phoneNumberString = String(phoneNumber);
+
+        // check if a valid 10 digit phone number has been entered
+        const isPhoneNumberValid = /^[0-9]{10}$/.test(phoneNumberString);
+
+        if(isPhoneNumberValid){
+            setPhoneValid(true);
+        }else {
+            setPhoneValid(false)
+        }
+
         // Check if all fields are filled to enable the form submission
         setFormValid(
-            firstName.trim() !== "" && lastName.trim() !== "" && emailAddress.trim() !=="" && phoneNumber.trim() !=="" &&
-            userName.trim() !=="" && password.trim() !== ""
+            firstName.trim() !== "" && lastName.trim() !== "" && emailAddress.trim() !=="" && phoneNumberString.trim() !=="" &&
+            userName.trim() !=="" && password.trim() !== "" && isPhoneNumberValid
         );
     }, [firstName, lastName, emailAddress, phoneNumber, userName, password]);
-
-    const handleFieldChange = () => {
-        // Set the formChanged flag to true
-        setIsFormChanged(true);
-    };
-
-    // function to handle the account save changes
-    const handleSaveChanges = () => {
-        if (formValid) {
-
-        } else {
-
-        }
-    };
-
-
 
 
 
@@ -198,7 +315,7 @@ const AccountEdit = () => {
                                         required
                                     />
                                     <Form.Text id="telphoneInfo">
-                                        Your telephone number should be in the for (###) ###-####
+                                        Updated Telephone numbers should be in the format ##########
                                     </Form.Text>
                                 </InputGroup>
                             </Form.Group>
@@ -237,6 +354,10 @@ const AccountEdit = () => {
                         </Form.Group>
                         {isFormChanged && !formValid && (
                             <p style={{ color: "red" }}>Please fill in all fields.</p>
+                        )}
+
+                        {isFormChanged && !phoneValid && (
+                            <p style={{ color: "red" }}>Phone Number Invalid!</p>
                         )}
                     </Col>
                 </Row>

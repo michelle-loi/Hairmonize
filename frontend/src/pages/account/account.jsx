@@ -263,7 +263,7 @@ const Account = () => {
                                         pattern="^\(\d{3}\) \d{3}-\d{4}$"
                                     />
                                     <Form.Text id="telphoneInfo">
-                                        Your telephone number should be in the for (###) ###-####
+                                        Your telephone number should be in the format (###) ###-####
                                     </Form.Text>
                                 </InputGroup>
                             </Form.Group>
