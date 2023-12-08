@@ -97,6 +97,7 @@ const ViewTransactions = () => {
             newTransactions.Time = '';
             newTransactions.Amount = '';
             newTransactions.Method_of_payment = '';
+            setPayment('');
             setShow(false); // on success close the submission page
         }catch (err){
             console.log(err)
@@ -115,6 +116,7 @@ const ViewTransactions = () => {
         newTransactions.Time = '';
         newTransactions.Amount = '';
         newTransactions.Method_of_payment = '';
+        setPayment('');
     }
 
     const handleShow = () => setShow(true); // to show modal
@@ -169,7 +171,7 @@ const ViewTransactions = () => {
                                value={payment}
                                onChange={handleChange}
                            >
-                               <option value="" disabled>Select...</option>
+                               <option value="" >Select...</option>
                                <option value="Cash">Cash</option>
                                <option value="Credit">Credit</option>
                                <option value="Debit">Debit</option>
