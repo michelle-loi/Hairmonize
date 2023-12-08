@@ -38,6 +38,9 @@ const AddEmployee = () => {
 
             //Trigger adding account to database
             addAccount(newlyAddedEID);
+
+            //Trigger adding employee as admin or stylist or both
+            addAdminOrStylist(newlyAddedEID);
         } catch (err) {
             console.log(err);
         }
@@ -126,6 +129,8 @@ const AddEmployee = () => {
     }
 
     //*****************************************************************
+
+    //**********************ADDING ACCOUNT**************************
     const [newUsername, setNewUsername] = useState('');
     const [newPassword, setNewPassword] = useState('');
 
@@ -156,14 +161,28 @@ const AddEmployee = () => {
             console.log(err);
         }
     }
-    //**********************ADDING ACCOUNT**************************
-
-
     //*****************************************************************
 
     //**********************ADMIN OR STYLIST**************************
     const [selectedEmployeetype, setSelectedEmployeeType] = useState('');
 
+    const addAdminOrStylist = async (EID) => {
+        if (selectedEmployeetype === 'Admin' || selectedEmployeetype === 'Admin + Stylist') {
+            try{
+                await axios.post(`/viewEmployee/addAdministrator`, {eid: EID});
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        if (selectedEmployeetype === 'Stylist' || selectedEmployeetype === 'Admin + Stylist'){
+            try{
+                await axios.post(`/viewEmployee/addStylist`, {eid: EID});
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    }
 
     //*****************************************************************
 
@@ -195,6 +214,7 @@ const AddEmployee = () => {
                         type="text"
                         placeholder="Enter first name"
                         onChange={(e) => setNewEmployeeInfo({...newEmployeeInfo, FName: e.target.value})}
+                        required
                     />
                 </Form.Group>
 
