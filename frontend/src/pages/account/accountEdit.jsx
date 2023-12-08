@@ -85,6 +85,43 @@ const AccountEdit = () => {
     }
 
 
+    // function to update cleitn's email in the database
+    const updateClientEmail = async () => {
+        try {
+            await axios.put(`/updateAccount/updateClientEmail/${currentUser.CID}`, {email:emailAddress});
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    // function to update employee's phone number in the database
+    const updateClientPhone = async () => {
+        try {
+            await axios.put(`/updateAccount/updateClientPhone/${currentUser.CID}`, {phone:phoneNumber});
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    // function to update employee's phone number in the database
+    const updateClient = async () => {
+        try {
+            await axios.put(`/updateAccount/updateClient/${currentUser.CID}`, {FName:firstName, MName:middleName, LName:lastName});
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    // function to update employee's password in the database
+    const updateClientPassword = async () => {
+        try {
+            await axios.put(`/updateAccount/updateClientPassword/${currentUser.CID}`, {Password:password});
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+
     // function to handle the account save changes, aka upon update clicking save changes it will update the account
     // by default this only works if the fields have been filled out correctly
     const handleSaveChanges = () => {
@@ -104,7 +141,15 @@ const AccountEdit = () => {
 
         // check if account type is 1 which is customer so update customer data
         if (currentUser && currentUser.AccountType === 1) {
+            updateClientEmail();
+            updateClientPhone();
+            updateClient();
 
+            // update the password only if the field is not empty
+            // Check if the password field is not empty, and update the password
+            if (password.trim() !== "") {
+                updateClientPassword();
+            }
 
         }
 
