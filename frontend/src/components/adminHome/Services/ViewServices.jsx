@@ -5,6 +5,7 @@ import axios from "axios";
 import "./ViewService.css"
 import { BsTrash3Fill } from "react-icons/bs";
 import { FaEdit } from "react-icons/fa";
+import Alert from "react-bootstrap/Alert";
 
 const ViewServices = () => {
     const[services, setServices] = useState([])
@@ -56,10 +57,8 @@ const ViewServices = () => {
     })
 
     // For errors when inserting
-    const [newErr, setNewErr] = useState(null);
-
-    // on click of submit show error if it occurs
-    const [submitClicked, setSubmitClicked] = useState(false);
+    // for showing errors
+    const [error, setError] = useState('');
 
     // for input fields to read them
     const handleChange = e =>{
@@ -68,12 +67,23 @@ const ViewServices = () => {
 
     //  for submitting new service
     const handleSubmit = async e =>{
+        if(newServices.SName === ''){
+            setError('Please enter the service name');
+            return; // do not submit the information
+        } else if(newServices.SPrice === ''){
+            setError('Please enter the service price');
+            return; // do not submit the information
+        }
+
+        setError('');
         try{
             const res = await axios.post("/employeeServices/addService", newServices)
+            // clear the fields for next time
+            newServices.SName = '';
+            newServices.SPrice = ''
             setShow(false); // on success close the submission page
         }catch (err){
-            setNewErr(err.response.data)
-            setSubmitClicked(true) // on error show the error
+            setError('Service already in database and cannot be added again');
         }
     }
 
@@ -83,27 +93,20 @@ const ViewServices = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => {
         setShow(false);
-        setSubmitClicked(false);
+        // clear the fields for next time
+        newServices.SName = '';
+        newServices.SPrice = ''
     }
+
     const handleShow = () => setShow(true);
 
     return(
       <Container className="view-services-page" fluid>
           <h1 className="mt-3">Services</h1>
-          <Table className="services-table" responsive="sm">
-              <thead>
-              <tr>
-                  <th className="header">Service</th>
-                  <th></th>
-                  <th className="header">Price</th>
-              </tr>
-              </thead>
-              <tbody>
-              {serviceRowInTable}
-              </tbody>
-          </Table>
 
-          <Button variant="primary" onClick={handleShow}> Add New Service </Button>
+          <div className="add-new-service-b">
+              <Button variant="primary" onClick={handleShow}> Add New Service </Button>
+          </div>
           <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>
                   <Modal.Title>New Service Form</Modal.Title>
@@ -111,13 +114,6 @@ const ViewServices = () => {
               <Modal.Body>
                   <Form>
                       <Form.Group className="mb-3" controlId="service-price-textarea">
-                          {/*<Form.Label>SID</Form.Label>*/}
-                          {/*<Form.Control*/}
-                          {/*    type='number'*/}
-                          {/*    placeholder='SID'*/}
-                          {/*    name = 'SID'*/}
-                          {/*    onChange={handleChange}*/}
-                          {/*/>*/}
                       </Form.Group>
                       <Form.Group className="mb-3" controlId="service-name-textarea">
                           <Form.Label>Service Name</Form.Label>
@@ -141,11 +137,7 @@ const ViewServices = () => {
                               onChange={handleChange}
                           />
                       </Form.Group>
-                      {submitClicked && (
-                          <div>
-                              {newErr && <p className="new-service-error-msg">{newErr}</p>}
-                          </div>
-                      )}
+                      {error && <Alert variant="danger">{error}</Alert>}
                   </Form>
               </Modal.Body>
               <Modal.Footer>
@@ -157,6 +149,20 @@ const ViewServices = () => {
                   </Button>
               </Modal.Footer>
           </Modal>
+
+          {/* The table to display information */}
+          <Table className="services-table" responsive="sm">
+              <thead>
+              <tr>
+                  <th className="header">Service</th>
+                  <th></th>
+                  <th className="header">Price</th>
+              </tr>
+              </thead>
+              <tbody>
+              {serviceRowInTable}
+              </tbody>
+          </Table>
       </Container>
   )
 }
