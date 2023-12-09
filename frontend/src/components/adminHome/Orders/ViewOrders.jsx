@@ -50,10 +50,10 @@ const ViewOrders = () => {
     ));
 
     // Insert into service table
-    const [newServices, setNewServices] = useState({
-        SID:"",
-        SName:"",
-        SPrice:"",
+    const [newOrders, setNewOrders] = useState({
+        O_ID:"",
+        SuID:"",
+        EID:"",
     })
 
     // For errors when inserting
@@ -62,28 +62,26 @@ const ViewOrders = () => {
 
     // for input fields to read them
     const handleChange = e =>{
-        setNewServices(prev=>({...prev, [e.target.name]: e.target.value}))
+        setNewOrders(prev=>({...prev, [e.target.name]: e.target.value}))
     }
 
     //  for submitting new service
     const handleSubmit = async e =>{
-        if(newServices.SName === ''){
-            setError('Please enter the service name');
-            return; // do not submit the information
-        } else if(newServices.SPrice === ''){
-            setError('Please enter the service price');
+        if(newOrders.SuID === ''){
+            setError('Please enter the supplier ID');
             return; // do not submit the information
         }
 
         setError('');
         try{
-            const res = await axios.post("/employeeServices/addService", newServices)
+            const res = await axios.post("/employeeServices/addService", newOrders)
             // clear the fields for next time
-            newServices.SName = '';
-            newServices.SPrice = ''
+            newOrders.O_ID = '';
+            newOrders.SuID = '';
+            newOrders.E_ID = '';
             setShow(false); // on success close the submission page
         }catch (err){
-            setError('Service already in database and cannot be added again');
+            setError('Order already in database and cannot be added again');
         }
     }
 
@@ -94,32 +92,33 @@ const ViewOrders = () => {
     const handleClose = () => {
         setShow(false);
         // clear the fields for next time
-        newServices.SName = '';
-        newServices.SPrice = ''
+        newOrders.O_ID = '';
+        newOrders.SuID = '';
+        newOrders.E_ID = '';
     }
 
     const handleShow = () => setShow(true);
 
     return(
-        <Container className="view-services-page" fluid>
-            <h1 className="mt-3">Services</h1>
+        <Container className="view-Orders-page" fluid>
+            <h1 className="mt-3">Orders</h1>
 
-            <div className="add-new-service-b">
+            <div className="add-new-order-b">
                 <Button variant="primary" onClick={handleShow}> Add New Service </Button>
             </div>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>New Service Form</Modal.Title>
+                    <Modal.Title>New Order Form</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Group className="mb-3" controlId="service-name-textarea">
-                            <Form.Label>Service Name</Form.Label>
+                        <Form.Group className="mb-3" controlId="order-id-textarea">
+                            <Form.Label>Order ID</Form.Label>
                             <Form.Control
-                                type='text'
-                                placeholder="E.g., Men's Haircut"
+                                type='int'
+                                placeholder="Enter a Order ID"
                                 autoFocus
-                                name = 'SName'
+                                name = 'O_ID'
                                 onChange={handleChange}
                             />
                         </Form.Group>
