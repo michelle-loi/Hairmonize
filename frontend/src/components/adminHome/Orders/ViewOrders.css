@@ -1,12 +1,12 @@
 /* Services CSS */
-.service-trash-icon svg{
+.order-trash-icon svg{
     color: #ff0000;
 }
 .service-edit-icon svg{
     color: rgba(11, 54, 220, 0.61);
 }
 
-.services-table td:nth-child(1) {
+.orders-table td:nth-child(1) {
     width:7rem;
 }
 
@@ -18,4 +18,18 @@
     display: flex;
     justify-content: flex-end;
     padding-right: 2rem;
+}
+
+.order-drop-down-arrow {
+    background-image: url("../../../assets/down-arrow.png");
+    background-position: calc(100% - 12px) 50%;
+    background-size: 12px 12px;
+    background-repeat: no-repeat;
+    border: 1px solid #ced4da;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.order-drop-down-arrow:hover {
+    border-color: #6c757d;
 }

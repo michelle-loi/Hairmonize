@@ -6,8 +6,37 @@ import "./ViewOrders.css"
 import { BsTrash3Fill } from "react-icons/bs";
 import { FaEdit } from "react-icons/fa";
 import Alert from "react-bootstrap/Alert";
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
 
 const ViewOrders = () => {
+    // Suppliers
+    const [suppliers, setSuppliers] = useState([]);
+
+    // supplier selected in the modal
+    const [selectedSupplier, setSelectedSupplier] = useState('');
+
+    // getting list of suppliers
+    useEffect(() => {
+        const getSuppliers = async () => {
+            try {
+                const res = await axios.get('/viewOrders/suppliers');
+                setSuppliers(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        getSuppliers();
+    }, []);
+
+
+    // Handle date change in the date picker
+    const handleDateChange = (date) => {
+        setNewOrders((prev) => ({ ...prev, selectedDate: date }));
+    };
+
+    // Services
     const[services, setServices] = useState([])
 
     // For deleting services
@@ -34,10 +63,10 @@ const ViewOrders = () => {
     }, []);
 
     // Display Services
-    const serviceRowInTable = services.map((service) => (
+    const OrderRowInTable = services.map((service) => (
         <tr key={service.SID}>
             <td>
-                <Button className="service-trash-icon" variant="light" onClick={()=>handleDelete(service.SID)}>
+                <Button className="order-trash-icon" variant="light" onClick={()=>handleDelete(service.SID)}>
                     <BsTrash3Fill/>
                 </Button>
                 <Button className="service-edit-icon " variant="light">
@@ -49,11 +78,12 @@ const ViewOrders = () => {
         </tr>
     ));
 
-    // Insert into service table
+    // Insert into order table
     const [newOrders, setNewOrders] = useState({
         O_ID:"",
         SuID:"",
         EID:"",
+        selectedDate: new Date(),
     })
 
     // For errors when inserting
@@ -65,12 +95,25 @@ const ViewOrders = () => {
         setNewOrders(prev=>({...prev, [e.target.name]: e.target.value}))
     }
 
-    //  for submitting new service
-    const handleSubmit = async e =>{
-        if(newOrders.SuID === ''){
-            setError('Please enter the supplier ID');
-            return; // do not submit the information
+    //  for submitting new order
+    const handleSubmit = async (e) => {
+        if (selectedSupplier === '') {
+            setError('Please select a supplier');
+            return;
         }
+
+        // getting the time and date components
+        const year = newOrders.selectedDate.getFullYear();
+        const month = newOrders.selectedDate.getMonth() + 1;
+        const day = newOrders.selectedDate.getDate();
+        const hours = newOrders.selectedDate.getHours();
+        const minutes = newOrders.selectedDate.getMinutes();
+        const seconds = newOrders.selectedDate.getSeconds();
+
+        // making it SQL compatible so we can insert into the table without issues
+        const FormattedDate = `${year}-${month}-${day}`;
+        const FormattedTime = `${hours}:${minutes}:${seconds}`;
+
 
         setError('');
         try{
@@ -104,7 +147,7 @@ const ViewOrders = () => {
             <h1 className="mt-3">Orders</h1>
 
             <div className="add-new-order-b">
-                <Button variant="primary" onClick={handleShow}> Add New Service </Button>
+                <Button variant="primary" onClick={handleShow}> Add New Order </Button>
             </div>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -112,29 +155,42 @@ const ViewOrders = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Group className="mb-3" controlId="order-id-textarea">
-                            <Form.Label>Order ID</Form.Label>
+                        <Form.Group className="mb-3" controlId="supplier-dropdown">
+                            <Form.Label>Supplier:</Form.Label>
                             <Form.Control
-                                type='int'
-                                placeholder="Enter a Order ID"
-                                autoFocus
-                                name = 'O_ID'
-                                onChange={handleChange}
-                            />
+                                as="select"
+                                name="SuID"
+                                value={selectedSupplier}
+                                onChange={(e) => setSelectedSupplier(e.target.value)}
+                                className="order-drop-down-arrow"
+                            >
+                                <option value="">Select a Supplier</option>
+                                {suppliers.map((supplier) => (
+                                    <option key={supplier.SuID} value={supplier.SuID}>
+                                        {supplier.SName}
+                                    </option>
+                                ))}
+                            </Form.Control>
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="service-price-textarea">
-                            <Form.Label>Service Price</Form.Label>
-                            <Form.Control
-                                type='number'
-                                step='0.01'
-                                min='0'
-                                max='1000'
-                                placeholder='$'
-                                name = 'SPrice'
-                                onChange={handleChange}
+
+                        <Form.Group className="mb-3" controlId="date-picker">
+                            <Form.Label>Select Order Date: </Form.Label>
+                            <DatePicker
+                                selected={newOrders.selectedDate}
+                                onChange={handleDateChange}
+                                showTimeSelect
+                                timeFormat="HH:mm"
+                                timeIntervals={15}
+                                dateFormat="MMMM d, yyyy h:mm aa"
+                                className="form-control"
                             />
                         </Form.Group>
                         {error && <Alert variant="danger">{error}</Alert>}
+
+                        {/* Credit for the down arrow */}
+                        <p style={{ marginTop: '20px', fontSize: '8px', color: '#888', textAlign: 'center' }}>
+                            <a href="https://www.flaticon.com/free-icons/down-arrow" title="down arrow icons">Down arrow icons created by Google - Flaticon</a>
+                        </p>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
@@ -148,16 +204,19 @@ const ViewOrders = () => {
             </Modal>
 
             {/* The table to display information */}
-            <Table className="services-table" responsive="sm">
+            <Table className="orders-table" responsive="sm">
                 <thead>
                 <tr>
                     <th></th>
-                    <th className="header">Service</th>
-                    <th className="header">Price</th>
+                    <th className="header">Order ID</th>
+                    <th className="header">Date</th>
+                    <th className="header">Time</th>
+                    <th className="header">Supplier</th>
+                    <th className="header">Employee ID</th>
                 </tr>
                 </thead>
                 <tbody>
-                {serviceRowInTable}
+                {OrderRowInTable}
                 </tbody>
             </Table>
         </Container>
