@@ -173,6 +173,39 @@ export const addEmployee = (req, res) => {
     });
 };
 
+export const addAccount = (req, res) => {
+    const q =
+        "INSERT INTO ACCOUNT (`Username`, `Password`, `CreationDate`, `CID`, `EID`, `AccountType`) VALUES (?, ?, ?, ?, ?, ?)";
+
+    db.query(q, [req.body.Username, req.body.Password, req.body.CreationDate, req.body.CID, req.body.EID, req.body.AccountType], (err, data) => {
+        if (err) return res.status(500).json("Error while adding account. Account not added.");
+
+        return res.status(200).json("Account has been added.");
+    });
+};
+
+export const addAdministrator = (req, res) => {
+    const q =
+        "INSERT INTO ADMINISTRATOR (`EID`) VALUES (?)";
+
+    db.query(q, [req.body.eid], (err, data) => {
+        if (err) return res.status(500).json("Error while adding as administrator. Administrator not added.");
+
+        return res.status(200).json("Administrator has been added.");
+    });
+};
+
+export const addStylist = (req, res) => {
+    const q =
+        "INSERT INTO Stylist (`EID`) VALUES (?)";
+
+    db.query(q, [req.body.eid], (err, data) => {
+        if (err) return res.status(500).json("Error while adding as stylist. Stylist not added.");
+
+        return res.status(200).json("Stylist has been added.");
+    });
+};
+
 // These are the functions that will get a particular employee's information
 //--------------------------------------------------------------------------
 

@@ -2,6 +2,7 @@ import express from "express"
 import updateAccountRoutes from "./routes/updateAccount.js"
 import authRoutes from "./routes/auth.js"
 import viewEmployeeRoutes from "./routes/viewEmployee.js"
+import viewClientsRoutes from "./routes/viewClients.js"
 import clientPriceListRoutes from "./routes/clientPriceList.js";
 import profileRoutes from "./routes/profile.js"
 import viewCustomerRoutes from "./routes/viewCustomer.js"
@@ -23,6 +24,7 @@ app.use(cookieParser());
 app.use("/backend/updateAccount", updateAccountRoutes)
 app.use("/backend/auth", authRoutes)
 app.use("/backend/viewEmployee",viewEmployeeRoutes)
+app.use("/backend/viewClient",viewClientsRoutes)
 app.use("/backend/clientPriceList", clientPriceListRoutes) // path to controller, route import
 app.use("/backend/profile", profileRoutes)
 app.use("/backend/viewCustomer", viewCustomerRoutes)

@@ -1,41 +1,92 @@
 //import React from "react";
-import React, { useState } from 'react';
-import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
+import React, { useState, useEffect } from 'react';
+import { Container, Form, Button, Row, Col, Table } from 'react-bootstrap';
 import './viewClient.css';
+import axios from "axios";
+import {Link, useNavigate} from "react-router-dom";
+import AdminHome from "../../pages/admin/adminHome"
+import { BsTrash3Fill } from "react-icons/bs";
 
 
 const ViewClients=()=>{
-    //DELETE:An array with example employee data for testing
-    const clients=[
-        {CID:1,Fname:'Bob',Mname:'',Lname:'Smith',Phone:'123-456-7890',Email:'BobSmith@gmail.com', EID: 2},
-        {CID:2,Fname:'Mary',Mname:'Ann',Lname:'Johnson',Phone:'987-654-3210',Email:'MaryAJohnson@gmail.com', EID: 1},
-    ];
 
-    const [editMode, setEditMode] = useState(false);
-    const [data, setData] = useState(clients);
+    const [clientTable, setClientTable] = useState([]);
+    const [emailTable, setEmailTable] = useState([]);
+    const [phoneTable, setPhoneTable] = useState([]);
 
-    const handleEditClick = () => {
-        setEditMode(!editMode);
+    useEffect(() => {
+        const fetchAllClients = async () => {
+            try {
+                const res = await axios.get('/viewClient/ClientTable');
+                setClientTable(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchAllClients();
+    }, []);
+
+    //DELETE: for testing
+    console.log(clientTable);
+
+
+    useEffect(() => {
+        const fetchAllEmails = async () => {
+            try {
+                const res = await axios.get('/viewClient/emailTable');
+                setEmailTable(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchAllEmails();
+    }, []);
+
+    //DELETE: for testing
+    console.log(JSON.stringify(emailTable));
+    console.log(emailTable);
+
+
+    useEffect(() => {
+        const fetchAllPhones = async () => {
+            try {
+                const res = await axios.get('/viewClient/phoneTable');
+                setPhoneTable(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchAllPhones();
+    }, []);
+
+    //DELETE: for testing
+    console.log(JSON.stringify(phoneTable));
+    console.log(phoneTable);
+
+
+    const handleDelete = async (CID)=>{
+        try {
+            const res = await axios.delete(`/viewClient/deleteClient/${CID}`);
+            console.log(res.data);
+            window.location.reload(); //THIS RELOADING THE WINDOW IS NEEDED, UNLESS THE SECOND DELETE THROWS A 500 ERROR
+        } catch (err) {
+            console.log(err);
+        }
     };
 
-    const handleInputChange = (e, CID, field) => {
-        const updatedData = data.map(client =>
-            client.CID === CID ? { ...client, [field]: e.target.value } : client
-        );
-        setData(updatedData);
-    };
+
 
     return(
         <div>
-            <h1 className="mt-3">Clients</h1>
 
+            <div className="d-flex align-items-center mt-3 justify-content-start">
+                <h1 className="mt-3">Clients</h1>
 
-            {editMode ? (
-                <Button variant="success" onClick={handleEditClick}>Save</Button>
-            ) : (
-                <Button variant="warning" onClick={handleEditClick}>Edit</Button>
-            )}
+                <Link className="link" to={`/adminhome/addClient`}>
+                    <Button variant="success" style={{ marginTop: '20px' , marginLeft: '20px'}}>Add new client</Button>
+                </Link>
+            </div>
+
 
             <Table>
                 <thead>
@@ -46,32 +97,40 @@ const ViewClients=()=>{
                     <th>Last Name</th>
                     <th>Phone Number</th>
                     <th>Email Address</th>
-                    <th>EID</th>
+                    <th>EID of Stylist</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                {data.map((client)=>(
-                    <tr key={client.CID}>
-                        <td>{client.CID}</td>
-                        <td>
-                            {editMode ? (
-                                <input
-                                    type="text"
-                                    value={client.Fname}
-                                    onChange={(e) => handleInputChange(e, client.CID, 'Fname')}
-                                />
-                            ) : (
-                                client.Fname
-                            )}
-                        </td>
-                        <td>{client.Mname}</td>
-                        <td>{client.Lname}</td>
-                        <td>{client.Phone}</td>
-                        <td>{client.Email}</td>
-                        <td>{client.EID}</td>
-                        <td className="button"><Button variant="danger">Delete</Button>{''}</td>
-                    </tr>
-                ))}
+                {clientTable.map((client)=>{
+
+                    return(
+                        <tr key={client.CID}>
+                            <td>{client.CID}</td>
+                            <td>{client.FName}</td>
+                            <td>{client.MName}</td>
+                            <td>{client.LName}</td>
+
+                            <td>
+                                {phoneTable.map((phone, i)=>{
+                                    return(
+                                        phone.CID === client.CID && <p key={i}>{phone.Phone}</p>
+                                    )
+                                })}
+                            </td>
+
+                            <td>
+                                {emailTable.map((email, i)=>{
+                                    return(
+                                        email.CID === client.CID && <p key={i}>{email.Email}</p>
+                                    )
+                                })}
+                            </td>
+                            <td>{client.EID}</td>
+
+                            <td><Button onClick={() => handleDelete(client.CID)} variant="danger"><BsTrash3Fill/></Button>{''}</td>
+                        </tr>
+                    )})}
                 </tbody>
             </Table>
         </div>

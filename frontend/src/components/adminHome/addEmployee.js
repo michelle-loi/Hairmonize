@@ -30,6 +30,17 @@ const AddEmployee = () => {
             newEmails.forEach((email) => {
                 ((email.EMAIL.length===0) ? (console.log("empty email")): addEmail(email.EMAIL, newlyAddedEID));
             })
+
+            //Trigger adding phones to database
+            newPhones.forEach((phone) => {
+                ((phone.Phone.length===0) ? (console.log("empty phone")): addPhone(phone.Phone, newlyAddedEID));
+            })
+
+            //Trigger adding account to database
+            addAccount(newlyAddedEID);
+
+            //Trigger adding employee as admin or stylist or both
+            addAdminOrStylist(newlyAddedEID);
         } catch (err) {
             console.log(err);
         }
@@ -39,17 +50,17 @@ const AddEmployee = () => {
 
     //**********************EMPLOYEE EMAIL**************************
     const [newEmails, setNewEmails] = useState([]);
-    const [nextIndex, setNextIndex] = useState(0);
+    const [nextIndexEmail, setNextIndexEmail] = useState(0);
 
-    const incrementIndex = () => {
-        setNextIndex(nextIndex + 1);
+    const incrementIndexEmail = () => {
+        setNextIndexEmail(nextIndexEmail + 1);
     };
 
     const handleAddEmail = (e) => {
         e.preventDefault();
-        incrementIndex();
+        incrementIndexEmail();
         const newObject = {
-            index: nextIndex,
+            index: nextIndexEmail,
             EMAIL: '',
         };
         setNewEmails(oldArray => [...oldArray, newObject]);
@@ -64,8 +75,6 @@ const AddEmployee = () => {
 
     const handleEmailDelete =  (index)=> {
         setNewEmails((prevArray) => prevArray.filter((email) => email.index !== index));
-        console.log(JSON.stringify(newEmails));
-        console.log(newEmails);
     };
 
     const addEmail = async (EMAIL, EID) => {
@@ -81,17 +90,110 @@ const AddEmployee = () => {
 
 
     //**********************EMPLOYEE PHONE**************************
+    const [newPhones, setNewPhones] = useState([]);
+    const [nextIndexPhone, setNextIndexPhone] = useState(0);
+
+    const incrementIndexPhone = () => {
+        setNextIndexPhone(nextIndexPhone + 1);
+    };
+
+    const handleAddPhone = (e) => {
+        e.preventDefault();
+        incrementIndexPhone();
+        const newObject = {
+            index: nextIndexPhone,
+            Phone: '',
+        };
+        setNewPhones(oldArray => [...oldArray, newObject]);
+    };
+
+    const handlePhoneChange = (e, index) => {
+        const updatedData = newPhones.map(phone =>
+            phone.index === index ? { ...phone, Phone: e.target.value } : phone
+        );
+        setNewPhones(updatedData);
+    };
+
+    const handlePhoneDelete =  (index)=> {
+        setNewPhones((prevArray) => prevArray.filter((phone) => phone.index !== index));
+    };
+
+    const addPhone = async (Phone, EID) => {
+        try{
+            console.log({phone: Phone})
+            await axios.post(`/viewEmployee/addPhone`, {eid: EID, phone: Phone});
+            window.location.reload(); //Without this refresh, when adding employee for the second time, only 1 phone will be displayed once back on the employees page
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     //*****************************************************************
-
 
     //**********************ADDING ACCOUNT**************************
+    const [newUsername, setNewUsername] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+
+    const addAccount = async (EID) => {
+        let accountTypeNum = null;
+        if(selectedEmployeetype === 'Admin'){
+            accountTypeNum = 2;
+        } else if (selectedEmployeetype === 'Stylist'){
+            accountTypeNum = 0;
+        } else{
+            accountTypeNum = 4;
+        }
+
+        const currentDate = new Date();
+        const partiallyFormattedDate = currentDate.toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+        });
+        const withSpacesFormattedDate = partiallyFormattedDate.replace(/\./g, '-');
+        const withLastDotFormattedDate = withSpacesFormattedDate.replace(/\s/g, '');
+        const mysqlFormattedDate = withLastDotFormattedDate.slice(0, -1);
+        console.log(mysqlFormattedDate);
+
+        try{
+            await axios.post(`/viewEmployee/addAccount`, {Username: newUsername, Password: newPassword, CreationDate: mysqlFormattedDate, CID: null, EID: EID, AccountType: accountTypeNum});
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    //*****************************************************************
+
+    //**********************ADMIN OR STYLIST**************************
+    const [selectedEmployeetype, setSelectedEmployeeType] = useState('');
+
+    const addAdminOrStylist = async (EID) => {
+        if (selectedEmployeetype === 'Admin' || selectedEmployeetype === 'Admin + Stylist') {
+            try{
+                await axios.post(`/viewEmployee/addAdministrator`, {eid: EID});
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        if (selectedEmployeetype === 'Stylist' || selectedEmployeetype === 'Admin + Stylist'){
+            try{
+                await axios.post(`/viewEmployee/addStylist`, {eid: EID});
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    }
 
     //*****************************************************************
 
-    const handleAdd = () => {
+    const handleAdd = (e) => {
+        //e.preventDefault();
         addEmployee();
 
+        navigate('/adminhome');
+    }
+
+    const handleCancel = async () => {
         navigate('/adminhome');
     }
 
@@ -99,18 +201,20 @@ const AddEmployee = () => {
     return (
         <Container className="d-flex align-items-center justify-content-center vh-100">
 
-            <Form>
+            <Form onSubmit={handleAdd}>
                 <Form.Label>
                     <h1>Add new employee</h1>
                 </Form.Label>
+
+                <h3>Personal Information</h3>
 
                 <Form.Group className="mb-3" controlId="FName">
                     <Form.Label>First Name</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Enter first name..."
-                        //defaultValue={currentEmployeeInfo.FName}
+                        placeholder="Enter first name"
                         onChange={(e) => setNewEmployeeInfo({...newEmployeeInfo, FName: e.target.value})}
+                        required
                     />
                 </Form.Group>
 
@@ -119,7 +223,6 @@ const AddEmployee = () => {
                     <Form.Control
                         type="text"
                         placeholder="Enter middle name"
-                        //defaultValue={currentEmployeeInfo.MName}
                         onChange={(e) => setNewEmployeeInfo({...newEmployeeInfo, MName: e.target.value})}
                     />
                 </Form.Group>
@@ -129,9 +232,23 @@ const AddEmployee = () => {
                     <Form.Control
                         type="text"
                         placeholder="Enter last name"
-                        //defaultValue={currentEmployeeInfo.LName}
                         onChange={(e) => setNewEmployeeInfo({...newEmployeeInfo, LName: e.target.value})}
                     />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="AccountType">
+                    <Form.Label>Employee Type</Form.Label>
+                    <Form.Control
+                        as="select"
+                        value={selectedEmployeetype}
+                        onChange={(e) => setSelectedEmployeeType(e.target.value)}
+                        required
+                    >
+                        <option value="">Select employee type</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Stylist">Stylist</option>
+                        <option value="Admin + Stylist">Admin + Stylist</option>
+                    </Form.Control>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="SalaryType">
@@ -139,7 +256,6 @@ const AddEmployee = () => {
                     <Form.Control
                         type="text"
                         placeholder="Enter salary type"
-                        //defaultValue={currentEmployeeInfo.SalaryType}
                         onChange={(e) => setNewEmployeeInfo({...newEmployeeInfo, SalaryType: e.target.value})}
                     />
                 </Form.Group>
@@ -169,9 +285,60 @@ const AddEmployee = () => {
                     })}
                 </Form.Group>
 
+                <Form.Group className="mb-3" controlId="Email">
+                    <Form.Label>Phone</Form.Label>
+                    <Button onClick={handleAddPhone} type="success" size="sm" style={{ margin: '5px 10px' }}>Add new phone</Button>
+                    {newPhones.map((phone)=>{
+                        return(
+                            <>
+                                <Row>
+                                    <Col xs={10}>
+                                        <Form.Control
+                                            key={phone.index}
+                                            type="number"
+                                            placeholder="Enter new phone"
+                                            defaultValue={phone.Phone}
+                                            onChange={(e) => handlePhoneChange(e, phone.index)}
+                                        />
+                                    </Col>
+                                    <Col className="d-flex align-items-center">
+                                        <MdDelete onClick={() => handlePhoneDelete(phone.index)} />
+                                    </Col>
+                                </Row>
+                            </>
+                        )
+                    })}
+                </Form.Group>
 
-                <Button onClick={handleAdd} variant="success" style={{ marginRight: '10px' }}>
-                    Add
+                <h3>Account Information</h3>
+                <h5>Create an account for this employee</h5>
+
+                <Form.Group className="mb-3" controlId="Username">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter username"
+                        onChange={(e) => setNewUsername(e.target.value)}
+                        required
+                    />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="Password">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter password"
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        required
+                    />
+                </Form.Group>
+
+
+                <Button type="submit" variant="success" style={{ marginRight: '10px' }}>
+                    Add employee
+                </Button>
+                <Button onClick={handleCancel} variant="secondary">
+                    Cancel
                 </Button>
 
             </Form>
