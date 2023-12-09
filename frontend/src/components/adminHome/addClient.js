@@ -127,7 +127,6 @@ const AddClient = () => {
     //**********************SELECTING THEIR STYLIST**************************
     const [stylistsEID, setStylistsEID] = useState([]);
     const [employeeEIDFname, setEmployeeEIDFname] = useState([]);
-    //const [stylistsEIDFname, setStylistsEIDFname] = useState([]);
     const [selectedStylist, setSelectedStylist] = useState('');
 
     useEffect(() => {
@@ -155,53 +154,6 @@ const AddClient = () => {
         fetchAllEmployeeEIDFname();
     }, []);
     //console.log(employeeEIDFname);
-    //
-    // useEffect(() => {
-    //     const createStylistsEIDFname = (stylistsEID, employeeEIDFname) => {
-    //         return stylistsEID.map((stylistEID) => {
-    //             console.log(stylistEID);
-    //             const employeeObject = employeeEIDFname.find((employee) => employee.EID === stylistEID);
-    //
-    //             // if (employeeObject) {
-    //             //     const { EID, FName } = employeeObject;
-    //             //     return { EID, FName };
-    //             //     //return employeeObject;
-    //             // }
-    //             const { EID, FName } = {EID: 1, FName: 'bob'};
-    //             return { EID, FName };
-    //
-    //             //return null;
-    //
-    //             //return "hi";
-    //         })
-    //     };
-    //
-    //     setStylistsEIDFname(createStylistsEIDFname(stylistsEID, employeeEIDFname));
-    // }, []);
-    // console.log(stylistsEIDFname);
-    //
-    // const createStylistsEIDFname = (stylistsEID, employeeEIDFname) => {
-    //     return stylistsEID.map((stylistEID) => {
-    //         console.log(stylistEID);
-    //         const employeeObject = employeeEIDFname.find((employee) => employee.EID === stylistEID.EID);
-    //         console.log(employeeObject)
-    //
-    //         // if (employeeObject) {
-    //         //     const { EID, FName } = employeeObject;
-    //         //     return { EID, FName };
-    //         //     //return employeeObject;
-    //         // }
-    //         // const { EID, FName } = {EID: employeeObject.EID, FName: employeeObject.FName};
-    //         // return { EID, FName };
-    //
-    //         //return null;
-    //
-    //         //return "hi";
-    //     })
-    // };
-    //
-    // const stylistsEIDFname = (createStylistsEIDFname(stylistsEID, employeeEIDFname));
-    // console.log(stylistsEIDFname);
 
     const createStylistsEIDFname = (stylistsEID, employeeEIDFname) => {
         return stylistsEID.map((stylistEID) => {
