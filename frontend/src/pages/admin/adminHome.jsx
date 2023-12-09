@@ -25,13 +25,13 @@ const adminHome = () => {
                     <Col sm={2}>
                         <Nav variant="pills" className="flex-column">
                             <Nav.Item>
-                                <Nav.Link eventKey="employees">View Employees</Nav.Link>
+                                <Nav.Link eventKey="employees">Employees</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="clients">View Clients</Nav.Link>
+                                <Nav.Link eventKey="clients">Clients</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="accounts">View Accounts</Nav.Link>
+                                <Nav.Link eventKey="accounts">Accounts</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
                                 <Nav.Link eventKey="services">Services</Nav.Link>
