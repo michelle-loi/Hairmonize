@@ -141,7 +141,7 @@ const AddEmployee = () => {
         } else if (selectedEmployeetype === 'Stylist'){
             accountTypeNum = 0;
         } else{
-            accountTypeNum = 4;
+            accountTypeNum = 3;
         }
 
         const currentDate = new Date();
@@ -209,7 +209,7 @@ const AddEmployee = () => {
                 <h3>Personal Information</h3>
 
                 <Form.Group className="mb-3" controlId="FName">
-                    <Form.Label>First Name</Form.Label>
+                    <Form.Label>First Name <span style={{ color: 'red'}}>*</span></Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Enter first name"
@@ -228,16 +228,17 @@ const AddEmployee = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="LName">
-                    <Form.Label>Last Name</Form.Label>
+                    <Form.Label>Last Name <span style={{ color: 'red'}}>*</span></Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Enter last name"
                         onChange={(e) => setNewEmployeeInfo({...newEmployeeInfo, LName: e.target.value})}
+                        required
                     />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="AccountType">
-                    <Form.Label>Employee Type</Form.Label>
+                    <Form.Label>Employee Type <span style={{ color: 'red'}}>*</span></Form.Label>
                     <Form.Control
                         as="select"
                         value={selectedEmployeetype}
@@ -314,7 +315,7 @@ const AddEmployee = () => {
                 <h5>Create an account for this employee</h5>
 
                 <Form.Group className="mb-3" controlId="Username">
-                    <Form.Label>Username</Form.Label>
+                    <Form.Label>Username <span style={{ color: 'red'}}>*</span></Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Enter username"
@@ -324,7 +325,7 @@ const AddEmployee = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="Password">
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label>Password <span style={{ color: 'red'}}>*</span></Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Enter password"

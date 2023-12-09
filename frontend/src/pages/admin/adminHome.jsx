@@ -5,7 +5,7 @@ import BookAppointments from "../../components/clienthome/BookAppointments";
 import NavigationBar from "../../components/navbar/NavBar"
 import ViewEmployee from "../../components/adminHome/viewEmployee";
 import ViewClients from "../../components/adminHome/viewClients";
-import ViewAccounts from "../../components/adminHome/ViewAccounts";
+import ViewAccounts from "../../components/adminHome/Accounts/viewAccounts";
 import {BrowserRouter, Link, Route, Routes} from 'react-router-dom';
 import ViewServices from "../../components/adminHome/Services/ViewServices";
 import ViewTransactions from "../../components/adminHome/Transactions/ViewTransactions";

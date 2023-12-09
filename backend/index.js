@@ -10,6 +10,7 @@ import employeeServices from "./routes/employeeServices.js";
 import employeeTransactions from "./routes/employeeTransactions.js";
 import viewSuppliers from "./routes/viewSuppliers.js";
 import viewOrders from "./routes/viewOrders.js"
+import viewAccounts from "./routes/viewAccounts.js"
 
 import cookieParser from "cookie-parser"
 
@@ -32,6 +33,7 @@ app.use("/backend/employeeServices", employeeServices)
 app.use("/backend/employeeTransactions", employeeTransactions)
 app.use("/backend/viewSuppliers", viewSuppliers)
 app.use("/backend/viewOrders", viewOrders)
+app.use("/backend/viewAccounts", viewAccounts)
 
 // Connect to the database
 app.listen(8800, ()=>{

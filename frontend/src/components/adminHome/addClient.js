@@ -198,7 +198,7 @@ const AddClient = () => {
                 <h3>Personal Information</h3>
 
                 <Form.Group className="mb-3" controlId="FName">
-                    <Form.Label>First Name</Form.Label>
+                    <Form.Label>First Name <span style={{ color: 'red'}}>*</span></Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Enter first name"
@@ -217,11 +217,12 @@ const AddClient = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="LName">
-                    <Form.Label>Last Name</Form.Label>
+                    <Form.Label>Last Name <span style={{ color: 'red'}}>*</span></Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Enter last name"
                         onChange={(e) => setNewClientInfo({...newClientInfo, LName: e.target.value})}
+                        required
                     />
                 </Form.Group>
 
@@ -277,7 +278,7 @@ const AddClient = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="Stylist">
-                    <Form.Label>Stylist for Client</Form.Label>
+                    <Form.Label>Stylist for Client <span style={{ color: 'red'}}>*</span></Form.Label>
                     <Form.Control
                         as="select"
                         value={selectedStylist}
