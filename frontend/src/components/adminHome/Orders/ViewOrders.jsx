@@ -1,15 +1,18 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Button, Container, Form, Modal} from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
 import "./ViewOrders.css"
 import { BsTrash3Fill } from "react-icons/bs";
-import { FaEdit } from "react-icons/fa";
 import Alert from "react-bootstrap/Alert";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
+import {AuthContext} from "../../../context/authContext";
 
 const ViewOrders = () => {
+    // get the current user from authentication (this will be our user's local data generated from the token)
+    const {currentUser} = useContext(AuthContext);
+
     // Suppliers
     const [suppliers, setSuppliers] = useState([]);
 
@@ -42,14 +45,17 @@ const ViewOrders = () => {
         setNewOrders((prev) => ({ ...prev, selectedDate: date }));
     };
 
-    // Services
+    // Orders
     const[orders, setOrders] = useState([])
 
     // For deleting orders
-    const handleDelete = async (SID)=> {
+    const handleDelete = async (Order_ID)=> {
         try{
-            console.log(`Deleting service with SID: ${SID}`);
-            await axios.delete(`/employeeServices/deleteService/${SID}`);
+            console.log(`Deleting Order with Order_ID: ${Order_ID}`);
+            await axios.delete(`/viewOrders/deleteOrder/${Order_ID}`);
+
+            // update page after delete
+            setOrders((prevOrders) => prevOrders.filter(order => order.Order_ID !== Order_ID));
         }catch (err){
             console.log(err);
         }
@@ -77,18 +83,18 @@ const ViewOrders = () => {
                 </Button>
             </td>
             <td>{order.Order_ID}</td>
-            <td>{order.Date.split('T')[0]}</td>
+            <td>{order.Date ? order.Date.split('T')[0] : ''}</td>
             <td>{order.Time}</td>
             <td>{order.SuID} / {getSupplierName(order.SuID)}</td>
-            <td>{order.EID} </td>
+            <td>{order.EID}</td>
         </tr>
     ));
 
-    // Insert into order table
+    // For insertion into order table
     const [newOrders, setNewOrders] = useState({
-        Order_ID:"",
         SuID:"",
-        EID:"",
+        // setting current user's EID into EID, we get this from currentUser's auth context aka the login cookie
+        EID: currentUser ? currentUser.EID : "",
         selectedDate: new Date(),
     })
 
@@ -96,43 +102,50 @@ const ViewOrders = () => {
     // for showing errors
     const [error, setError] = useState('');
 
-    // for input fields to read them
-    const handleChange = e =>{
-        setNewOrders(prev=>({...prev, [e.target.name]: e.target.value}))
-    }
+    // updates order info base on input fields in the form
+    const handleChange = (e) => {
+        const { name, value } = e.target;
 
-    //  for submitting new order
+        setNewOrders((prev) => ({ ...prev, [name]: value }));
+    };
+
+
     const handleSubmit = async (e) => {
         if (selectedSupplier === '') {
             setError('Please select a supplier');
             return;
         }
 
-        // getting the time and date components
-        const year = newOrders.selectedDate.getFullYear();
-        const month = newOrders.selectedDate.getMonth() + 1;
-        const day = newOrders.selectedDate.getDate();
-        const hours = newOrders.selectedDate.getHours();
-        const minutes = newOrders.selectedDate.getMinutes();
-        const seconds = newOrders.selectedDate.getSeconds();
-
-        // making it SQL compatible so we can insert into the table without issues
-        const FormattedDate = `${year}-${month}-${day}`;
-        const FormattedTime = `${hours}:${minutes}:${seconds}`;
-
-
         setError('');
-        try{
-            const res = await axios.post("/employeeServices/addService", newOrders)
-            // clear the fields for next time
-            newOrders.Order_ID = '';
-            newOrders.SuID = '';
-            newOrders.E_ID = '';
-            setShow(false); // on success close the submission page
-        }catch (err){
-            setError('Order already in database and cannot be added again');
+        try {
+            // Add the new order
+            const res = await axios.post("/viewOrders/addOrder", newOrders);
+
+            // Update the local state with the new order
+            setOrders((prevOrders) => [...prevOrders, res.data]);
+
+            // Clear the selected supplier after successful submission
+            setSelectedSupplier('');
+
+            // Clear the fields for next time
+            setNewOrders({
+                SuID: "",
+                EID: currentUser ? currentUser.EID : "",
+                selectedDate: new Date(),
+            });
+
+            // Close the submission page
+            setShow(false);
+
+            // Fetch updated orders from the server and update the state so the table shows latest and most up to date orders
+            const updatedOrders = await axios.get("/viewOrders/getOrders");
+            setOrders(updatedOrders.data);
+        } catch (err) {
+            console.error('Error adding order:', err);
+            setError('Error could not add order');
         }
-    }
+    };
+
 
     // Deals with modal to add a service
     // Template from React bootstrap website
@@ -140,13 +153,16 @@ const ViewOrders = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => {
         setShow(false);
+        // Clear the selected supplier
+        setSelectedSupplier("");
         // clear the fields for next time
         newOrders.Order_ID = '';
         newOrders.SuID = '';
         newOrders.E_ID = '';
     }
 
-    const handleShow = () => setShow(true);
+    const handleShow = () =>
+        setShow(true);
 
     return(
         <Container className="view-Orders-page" fluid>
@@ -167,7 +183,10 @@ const ViewOrders = () => {
                                 as="select"
                                 name="SuID"
                                 value={selectedSupplier}
-                                onChange={(e) => setSelectedSupplier(e.target.value)}
+                                onChange={(e) => {
+                                    setSelectedSupplier(e.target.value);
+                                    handleChange(e);
+                                }}
                                 className="order-drop-down-arrow"
                             >
                                 <option value="">Select a Supplier</option>

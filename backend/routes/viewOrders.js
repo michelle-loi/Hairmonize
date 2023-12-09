@@ -1,7 +1,6 @@
 import express from "express";
 import {
-    getOrders,
-
+    getOrders, deleteOrder, addOrder
 } from "../controllers/viewOrders.js";
 
 import { getSuppliers } from '../controllers/viewSuppliers.js';
@@ -9,8 +8,10 @@ import { getSuppliers } from '../controllers/viewSuppliers.js';
 
 const router = express.Router()
 
-// Get the orders
+// Order functions
 router.get("/getOrders", getOrders);
+router.post("/addOrder", addOrder);
+router.delete("/deleteOrder/:id", deleteOrder);
 
 
 
