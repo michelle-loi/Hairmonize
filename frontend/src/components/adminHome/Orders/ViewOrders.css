@@ -2,9 +2,6 @@
 .order-trash-icon svg{
     color: #ff0000;
 }
-.service-edit-icon svg{
-    color: rgba(11, 54, 220, 0.61);
-}
 
 .orders-table td:nth-child(1) {
     width:7rem;

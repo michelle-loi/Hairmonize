@@ -30,6 +30,12 @@ const ViewOrders = () => {
         getSuppliers();
     }, []);
 
+    // Extracting supplier name
+    const getSupplierName = (suID) => {
+        const supplier = suppliers.find((supplier) => supplier.SuID === suID);
+        return supplier ? supplier.SName : 'Unknown Supplier';
+    };
+
 
     // Handle date change in the date picker
     const handleDateChange = (date) => {
@@ -37,9 +43,9 @@ const ViewOrders = () => {
     };
 
     // Services
-    const[services, setServices] = useState([])
+    const[orders, setOrders] = useState([])
 
-    // For deleting services
+    // For deleting orders
     const handleDelete = async (SID)=> {
         try{
             console.log(`Deleting service with SID: ${SID}`);
@@ -49,38 +55,38 @@ const ViewOrders = () => {
         }
     }
 
-    // Get Services
+    // Get all orders
     useEffect(() => {
-        const fetchServices = async ()=>{
+        const fetchOrders = async ()=>{
             try{
-                const res = await axios.get("/employeeServices/getServices") // whatever it is called first in route / function name
-                setServices(res.data)
+                const res = await axios.get("/viewOrders/getOrders")
+                setOrders(res.data)
             }catch (err){
                 console.log(err)
             }
         }
-        fetchServices();
+        fetchOrders();
     }, []);
 
-    // Display Services
-    const OrderRowInTable = services.map((service) => (
-        <tr key={service.SID}>
+    // Display Orders
+    const OrderRowInTable = orders.map((order) => (
+        <tr key={order.Order_ID}>
             <td>
-                <Button className="order-trash-icon" variant="light" onClick={()=>handleDelete(service.SID)}>
+                <Button className="order-trash-icon" variant="light" onClick={()=>handleDelete(order.Order_ID)}>
                     <BsTrash3Fill/>
                 </Button>
-                <Button className="service-edit-icon " variant="light">
-                    <FaEdit />
-                </Button>
             </td>
-            <td>{service.SName}</td>
-            <td>${service.SPrice} & up</td>
+            <td>{order.Order_ID}</td>
+            <td>{order.Date.split('T')[0]}</td>
+            <td>{order.Time}</td>
+            <td>{order.SuID} / {getSupplierName(order.SuID)}</td>
+            <td>{order.EID} </td>
         </tr>
     ));
 
     // Insert into order table
     const [newOrders, setNewOrders] = useState({
-        O_ID:"",
+        Order_ID:"",
         SuID:"",
         EID:"",
         selectedDate: new Date(),
@@ -119,7 +125,7 @@ const ViewOrders = () => {
         try{
             const res = await axios.post("/employeeServices/addService", newOrders)
             // clear the fields for next time
-            newOrders.O_ID = '';
+            newOrders.Order_ID = '';
             newOrders.SuID = '';
             newOrders.E_ID = '';
             setShow(false); // on success close the submission page
@@ -135,7 +141,7 @@ const ViewOrders = () => {
     const handleClose = () => {
         setShow(false);
         // clear the fields for next time
-        newOrders.O_ID = '';
+        newOrders.Order_ID = '';
         newOrders.SuID = '';
         newOrders.E_ID = '';
     }
@@ -211,7 +217,7 @@ const ViewOrders = () => {
                     <th className="header">Order ID</th>
                     <th className="header">Date</th>
                     <th className="header">Time</th>
-                    <th className="header">Supplier</th>
+                    <th className="header">Supplier ID / Supplier Name</th>
                     <th className="header">Employee ID</th>
                 </tr>
                 </thead>
