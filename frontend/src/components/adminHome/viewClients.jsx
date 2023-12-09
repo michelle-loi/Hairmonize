@@ -13,6 +13,8 @@ const ViewClients=()=>{
     const [clientTable, setClientTable] = useState([]);
     const [emailTable, setEmailTable] = useState([]);
     const [phoneTable, setPhoneTable] = useState([]);
+    const [employeeEIDFname, setEmployeeEIDFname] = useState([]);
+
 
     useEffect(() => {
         const fetchAllClients = async () => {
@@ -63,6 +65,19 @@ const ViewClients=()=>{
     console.log(JSON.stringify(phoneTable));
     console.log(phoneTable);
 
+    useEffect(() => {
+        const fetchAllEmployeeEIDFname = async () => {
+            try {
+                const res = await axios.get('/viewClient/getEmployeeEIDFname');
+                setEmployeeEIDFname(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchAllEmployeeEIDFname();
+    }, []);
+    //console.log(employeeEIDFname);
+
 
     const handleDelete = async (CID)=>{
         try {
@@ -97,7 +112,7 @@ const ViewClients=()=>{
                     <th>Last Name</th>
                     <th>Phone Number</th>
                     <th>Email Address</th>
-                    <th>EID of Stylist</th>
+                    <th>Stylist</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -126,7 +141,14 @@ const ViewClients=()=>{
                                     )
                                 })}
                             </td>
-                            <td>{client.EID}</td>
+
+                            <td>
+                                {employeeEIDFname.map((employee, i)=>{
+                                    return(
+                                        employee.EID === client.EID && <p key={i}>EID: {client.EID}<br></br>First name: {employee.FName}</p>
+                                    )
+                                })}
+                            </td>
 
                             <td><Button onClick={() => handleDelete(client.CID)} variant="danger"><BsTrash3Fill/></Button>{''}</td>
                         </tr>
