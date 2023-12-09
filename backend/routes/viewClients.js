@@ -4,6 +4,11 @@ import {
     getClientEmails,
     getClientPhones,
     deleteClient,
+    addClient,
+    addEmail,
+    addPhone,
+    getStylistEID,
+    getEmployeeEIDFname
 } from "../controllers/viewClients.js";
 
 
@@ -16,9 +21,11 @@ router.get("/phoneTable", getClientPhones)
 router.delete("/deleteClient/:id", deleteClient)
 
 //Add employee
-// router.post("/addEmployee", addEmployee)
-// router.post("/addAccount", addAccount)
-// router.post("/addAdministrator", addAdministrator)
-// router.post("/addStylist", addStylist)
+router.post("/addClient", addClient)
+router.post("/addEmail", addEmail)
+router.post("/addPhone", addPhone)
+router.get("/getStylistEID", getStylistEID)
+router.get("/getEmployeeEIDFname", getEmployeeEIDFname)
+
 
 export default router;
