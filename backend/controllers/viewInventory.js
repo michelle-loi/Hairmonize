@@ -44,3 +44,14 @@ export const updateProduct = (req, res) => {
         return res.status(200).json("Product has been updated.");
     });
 };
+
+export const addProduct = (req, res) => {
+    const q =
+        "INSERT INTO INVENTORY (`Product_name`, `Price`, `Quantity`, `Is_Merchandise`, `Is_Supply`) VALUES (?, ?, ?, ?, ?)";
+
+    db.query(q, [req.body.Product_name, req.body.Price, req.body.Quantity, req.body.Is_Merchandise, req.body.Is_Supply], (err, data) => {
+        if (err) return res.status(500).json("Error while adding product. Product not added.");
+
+        return res.status(200).json("Product has been added.");
+    });
+};

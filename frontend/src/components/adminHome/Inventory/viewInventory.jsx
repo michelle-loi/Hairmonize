@@ -50,7 +50,7 @@ const ViewInventory=()=>{
             <div className="d-flex align-items-center mt-3 justify-content-start">
                 <h1 className="mt-3">Inventory</h1>
 
-                <Link className="link" to={`/adminhome/addAccount`}>
+                <Link className="link" to={`/adminhome/addInventory`}>
                     <Button variant="success" style={{ marginTop: '20px' , marginLeft: '20px'}}>Add new product</Button>
                 </Link>
             </div>
