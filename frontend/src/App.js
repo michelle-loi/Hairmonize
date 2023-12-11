@@ -12,6 +12,7 @@ import EditEmployee from "./components/adminHome/editEmployee";
 import AddEmployee from "./components/adminHome/addEmployee";
 import AddClient from "./components/adminHome/addClient";
 import AddAccount from "./components/adminHome/Accounts/addAccount"
+import EditInventory from "./components/adminHome/Inventory/editInventory"
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
             <Route path="/adminHome/addEmployee" element={<AddEmployee/>}/>
             <Route path="/adminHome/addClient" element={<AddClient/>}/>
             <Route path="adminHome/addAccount" element={<AddAccount/>}/>
+            <Route path="/adminHome/editInventory/:id" element={<EditInventory/>}/>
+
           </Routes>
         </BrowserRouter>
       </div>

@@ -302,7 +302,7 @@ const EditEmployee= () => {
     return(
     <Container className="d-flex align-items-center justify-content-center vh-100">
 
-        <Form>
+        <Form onSubmit={handleUpdate}>
             <Form.Label>
                 <h1>Edit Employee (EID: {EID})</h1>
             </Form.Label>
@@ -315,6 +315,7 @@ const EditEmployee= () => {
                     placeholder={currentEmployeeInfo.FName}
                     defaultValue={currentEmployeeInfo.FName}
                     onChange={(e) => setNewEmployeeInfo({...newEmployeeInfo, FName: e.target.value})}
+                    required
                 />
             </Form.Group>
 
@@ -335,6 +336,7 @@ const EditEmployee= () => {
                     placeholder={currentEmployeeInfo.LName}
                     defaultValue={currentEmployeeInfo.LName}
                     onChange={(e) => setNewEmployeeInfo({...newEmployeeInfo, LName: e.target.value})}
+                    required
                 />
             </Form.Group>
 
@@ -399,7 +401,7 @@ const EditEmployee= () => {
             </Form.Group>
 
 
-            <Button onClick={handleUpdate} variant="success" style={{ marginRight: '10px' }}>
+            <Button type="submit" variant="success" style={{ marginRight: '10px' }}>
                 Update
             </Button>
             <Button onClick={handleCancel} variant="secondary">
