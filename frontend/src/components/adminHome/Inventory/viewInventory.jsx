@@ -4,6 +4,8 @@ import { Container, Form, Button, Row, Col, Table, Modal } from 'react-bootstrap
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import { BsTrash3Fill } from "react-icons/bs";
+import { FaEdit } from "react-icons/fa";
+
 
 
 const ViewInventory=()=>{
@@ -91,7 +93,7 @@ const ViewInventory=()=>{
 
                             <td>
                                 <Link className="link" to={`/adminhome/editInventory/${item.Product_code}`}>
-                                    <Button variant="warning">Edit</Button>
+                                    <Button variant="warning"><FaEdit /></Button>
                                 </Link>
                             </td>
 

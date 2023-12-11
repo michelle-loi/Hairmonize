@@ -71,28 +71,7 @@ const EditInventory= () => {
     }
     //*****************************************************************
 
-    //**********************IS_MERCHANDISE/IS_SUPPLY**************************
-    // const [merchandiseChecked, setMerchandiseChecked] = useState(false);
-    // const [supplyChecked, setSupplyChecked] = useState(false);
-    // const isAtLeastOneChecked = merchandiseChecked || supplyChecked;
 
-    //const [merchSupp, setMerchSupp] = useState('');
-
-    // const handleMerchSuppChange = (event) => {
-    //     setMerchSupp(event.target.value);
-    //
-    //     if (event.target.value === 'Merchandise & Supply'){
-    //         setNewProductInfo({...newProductInfo, Is_Merchandise: 1});
-    //         setNewProductInfo({...newProductInfo, Is_Supply: 1});
-    //     } else if (event.target.value === 'Merchandise'){
-    //         setNewProductInfo({...newProductInfo, Is_Merchandise: 1});
-    //         setNewProductInfo({...newProductInfo, Is_Supply: 0});
-    //     } else if (event.target.value === 'Supply'){
-    //         setNewProductInfo({...newProductInfo, Is_Merchandise: 0});
-    //         setNewProductInfo({...newProductInfo, Is_Supply: 1});
-    //     }
-    //     console.log(newProductInfo);
-    // }
 
 
     //*****************************************************************
