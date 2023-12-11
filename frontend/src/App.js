@@ -11,6 +11,9 @@ import AccountEdit from "./pages/account/accountEdit";
 import EditEmployee from "./components/adminHome/editEmployee";
 import AddEmployee from "./components/adminHome/addEmployee";
 import AddClient from "./components/adminHome/addClient";
+import AddAccount from "./components/adminHome/Accounts/addAccount"
+import EditInventory from "./components/adminHome/Inventory/editInventory"
+import AddInventory from "./components/adminHome/Inventory/addInventory";
 
 function App() {
   return (
@@ -29,6 +32,10 @@ function App() {
             <Route path="/adminHome/editEmployee/:id" element={<EditEmployee/>}/>
             <Route path="/adminHome/addEmployee" element={<AddEmployee/>}/>
             <Route path="/adminHome/addClient" element={<AddClient/>}/>
+            <Route path="adminHome/addAccount" element={<AddAccount/>}/>
+            <Route path="/adminHome/editInventory/:id" element={<EditInventory/>}/>
+            <Route path="/adminHome/addInventory" element={<AddInventory/>}/>
+
           </Routes>
         </BrowserRouter>
       </div>

@@ -11,6 +11,7 @@ import ViewServices from "../../components/adminHome/Services/ViewServices";
 import ViewTransactions from "../../components/adminHome/Transactions/ViewTransactions";
 import ViewSuppliers from "../../components/adminHome/Suppliers/ViewSuppliers";
 import ViewOrders from "../../components/adminHome/Orders/ViewOrders";
+import ViewInventory from "../../components/adminHome/Inventory/viewInventory"
 
 // https://react-bootstrap.netlify.app/docs/components/tabs/
 
@@ -95,7 +96,7 @@ const adminHome = () => {
 
                             {/* inventory page */}
                             <Tab.Pane eventKey="inventory">
-                                Client
+                                <ViewInventory/>
 
                             </Tab.Pane>
 

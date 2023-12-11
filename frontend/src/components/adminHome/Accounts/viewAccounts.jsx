@@ -59,7 +59,7 @@ const ViewAccounts=()=>{
             <div className="d-flex align-items-center mt-3 justify-content-start">
                 <h1 className="mt-3">Accounts</h1>
 
-                <Link className="link" to={`/adminhome/addClient`}>
+                <Link className="link" to={`/adminhome/addAccount`}>
                     <Button variant="success" style={{ marginTop: '20px' , marginLeft: '20px'}}>Add new account for client</Button>
                 </Link>
             </div>

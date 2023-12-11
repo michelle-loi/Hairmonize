@@ -13,7 +13,7 @@ const ViewClients=()=>{
     const [clientTable, setClientTable] = useState([]);
     const [emailTable, setEmailTable] = useState([]);
     const [phoneTable, setPhoneTable] = useState([]);
-    const [employeeEIDFname, setEmployeeEIDFname] = useState([]);
+    const [employeeEIDName, setEmployeeEIDName] = useState([]);
 
 
     useEffect(() => {
@@ -66,15 +66,15 @@ const ViewClients=()=>{
     console.log(phoneTable);
 
     useEffect(() => {
-        const fetchAllEmployeeEIDFname = async () => {
+        const fetchAllEmployeeEIDName = async () => {
             try {
-                const res = await axios.get('/viewClient/getEmployeeEIDFname');
-                setEmployeeEIDFname(res.data);
+                const res = await axios.get('/viewClient/getEmployeeEIDName');
+                setEmployeeEIDName(res.data);
             } catch (err) {
                 console.log(err);
             }
         };
-        fetchAllEmployeeEIDFname();
+        fetchAllEmployeeEIDName();
     }, []);
     //console.log(employeeEIDFname);
 
@@ -143,9 +143,9 @@ const ViewClients=()=>{
                             </td>
 
                             <td>
-                                {employeeEIDFname.map((employee, i)=>{
+                                {employeeEIDName.map((employee, i)=>{
                                     return(
-                                        employee.EID === client.EID && <p key={i}>EID: {client.EID}<br></br>First name: {employee.FName}</p>
+                                        employee.EID === client.EID && <p key={i}>EID: {client.EID}<br></br>Name: {employee.FName} {employee.MName} {employee.LName}</p>
                                     )
                                 })}
                             </td>

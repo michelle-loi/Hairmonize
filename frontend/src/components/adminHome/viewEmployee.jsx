@@ -6,6 +6,8 @@ import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import AdminHome from "../../pages/admin/adminHome"
 import { BsTrash3Fill } from "react-icons/bs";
+import {FaEdit} from "react-icons/fa";
+
 
 
 const ViewEmployees=()=>{
@@ -208,7 +210,7 @@ const ViewEmployees=()=>{
 
                                 <td>
                                     <Link className="link" to={`/adminhome/editEmployee/${employee.EID}`}>
-                                        <Button variant="warning">Edit</Button>
+                                        <Button variant="warning"><FaEdit /></Button>
                                     </Link>
                                 </td>
                                 <td><Button onClick={() => handleDelete(employee.EID)} variant="danger"><BsTrash3Fill/></Button>{''}</td>

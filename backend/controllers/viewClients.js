@@ -93,8 +93,8 @@ export const getStylistEID = (req, res) => {
     });
 };
 
-export const getEmployeeEIDFname = (req, res) => {
-    const q = "SELECT EID, FName FROM EMPLOYEE";
+export const getEmployeeEIDName = (req, res) => {
+    const q = "SELECT EID, FName, MName, LName FROM EMPLOYEE";
     db.query(q, (err, data) => {
         if (err) {
             console.log(err);

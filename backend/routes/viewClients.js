@@ -8,7 +8,7 @@ import {
     addEmail,
     addPhone,
     getStylistEID,
-    getEmployeeEIDFname
+    getEmployeeEIDName
 } from "../controllers/viewClients.js";
 
 
@@ -25,7 +25,7 @@ router.post("/addClient", addClient)
 router.post("/addEmail", addEmail)
 router.post("/addPhone", addPhone)
 router.get("/getStylistEID", getStylistEID)
-router.get("/getEmployeeEIDFname", getEmployeeEIDFname)
+router.get("/getEmployeeEIDName", getEmployeeEIDName)
 
 
 export default router;
