@@ -126,7 +126,7 @@ const AddClient = () => {
 
     //**********************SELECTING THEIR STYLIST**************************
     const [stylistsEID, setStylistsEID] = useState([]);
-    const [employeeEIDFname, setEmployeeEIDFname] = useState([]);
+    const [employeeEIDName, setEmployeeEIDName] = useState([]);
     const [selectedStylist, setSelectedStylist] = useState('');
 
     useEffect(() => {
@@ -145,31 +145,31 @@ const AddClient = () => {
     useEffect(() => {
         const fetchAllEmployeeEIDFname = async () => {
             try {
-                const res = await axios.get('/viewClient/getEmployeeEIDFname');
-                setEmployeeEIDFname(res.data);
+                const res = await axios.get('/viewClient/getEmployeeEIDName');
+                setEmployeeEIDName(res.data);
             } catch (err) {
                 console.log(err);
             }
         };
         fetchAllEmployeeEIDFname();
     }, []);
-    //console.log(employeeEIDFname);
+    //console.log(employeeEIDName);
 
-    const createStylistsEIDFname = (stylistsEID, employeeEIDFname) => {
+    const createStylistsEIDName = (stylistsEID, employeeEIDName) => {
         return stylistsEID.map((stylistEID) => {
-            const employeeObject = employeeEIDFname.find((employee) => employee.EID === stylistEID.EID);
+            const employeeObject = employeeEIDName.find((employee) => employee.EID === stylistEID.EID);
 
             if (employeeObject) {
-                const { EID, FName } = employeeObject;
-                return { EID, FName };
+                const { EID, FName, MName, LName } = employeeObject;
+                return { EID, FName, MName, LName };
             }
 
             return null;
         }).filter(Boolean);
     };
 
-    const stylistsEIDFname = createStylistsEIDFname(stylistsEID, employeeEIDFname);
-    //console.log(stylistsEIDFname);
+    const stylistsEIDName = createStylistsEIDName(stylistsEID, employeeEIDName);
+    //console.log(stylistsEIDName);
 
     // //*****************************************************************
 
@@ -286,9 +286,9 @@ const AddClient = () => {
                         required
                     >
                         <option value=''>Select stylist</option>
-                        {stylistsEIDFname.map((stylist, i)=>{
+                        {stylistsEIDName.map((stylist, i)=>{
                             return(
-                                <option value={stylist.EID}>{stylist.FName}</option>
+                                <option value={stylist.EID}>{stylist.FName} {stylist.MName} {stylist.LName} (EID: {stylist.EID})</option>
                             )
                         })}
                     </Form.Control>
