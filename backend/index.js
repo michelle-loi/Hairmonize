@@ -12,6 +12,7 @@ import viewSuppliers from "./routes/viewSuppliers.js";
 import viewOrders from "./routes/viewOrders.js"
 import viewAccounts from "./routes/viewAccounts.js"
 import viewInventory from "./routes/viewInventory.js";
+import clientAppointment from "./routes/clientAppointment.js";
 
 import cookieParser from "cookie-parser"
 
@@ -36,6 +37,7 @@ app.use("/backend/viewSuppliers", viewSuppliers)
 app.use("/backend/viewOrders", viewOrders)
 app.use("/backend/viewAccounts", viewAccounts)
 app.use("/backend/viewInventory", viewInventory)
+app.use("/backend/clientAppointment", clientAppointment)
 
 // Connect to the database
 app.listen(8800, ()=>{
