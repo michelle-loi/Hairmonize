@@ -47,13 +47,13 @@ const UpcomingAppointments = () => {
             <Container>
                 <h1 className="mt-3">Upcoming Appointments</h1>
 
-                <Table>
+                <Table responsive="sm">
                     <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Service</th>
-                        <th></th>
+                        <th className="header">Date</th>
+                        <th className="header">Time</th>
+                        <th className="header">Service</th>
+                        <th className="header"></th>
                     </tr>
                     </thead>
 

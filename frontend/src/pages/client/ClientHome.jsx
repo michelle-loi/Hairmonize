@@ -4,6 +4,7 @@ import {Col, Container, Nav, Row, Tab} from 'react-bootstrap'
 import UpcomingAppointments from "../../components/clienthome/upcomingAppointments";
 import BookAppointments from "../../components/clienthome/BookAppointments";
 import ViewPriceList from "../../components/clienthome/ViewPriceList";
+import ViewMerchandise from "../../components/clienthome/ViewMerchandise"
 import "./ClientHome.css"
 import Footer from "../../components/footer/Footer";
 // https://react-bootstrap.netlify.app/docs/components/tabs/
@@ -25,7 +26,10 @@ const clientHome = () => {
                                         <Nav.Link eventKey="book">Book Appointments</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="services">Price List</Nav.Link>
+                                        <Nav.Link eventKey="services">Service Prices</Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link eventKey="merchandise">Merchandise for Sale</Nav.Link>
                                     </Nav.Item>
                                 </Nav>
                             </div>
@@ -46,6 +50,11 @@ const clientHome = () => {
                                 {/* View Services */}
                                 <Tab.Pane eventKey="services">
                                     <ViewPriceList/>
+                                </Tab.Pane>
+
+                                {/* View Merchandise */}
+                                <Tab.Pane eventKey="merchandise">
+                                    <ViewMerchandise/>
                                 </Tab.Pane>
 
                             </Tab.Content>

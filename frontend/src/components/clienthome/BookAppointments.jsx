@@ -154,7 +154,7 @@ const BookAppointments = () => {
 
     return (
         <Container>
-            <h1 className="mt-3">Book an appointment with your stylist</h1>
+            <h1 className="mt-3">Book an Appointment with your Stylist</h1>
 
             <Form onSubmit={handleBook}>
                 <Form.Group className="mb-3">
