@@ -65,7 +65,7 @@ const ViewExpenses = () => {
         Time:"",
         Amount:"",
         Description:"",
-        EID:currentUser.EID,
+        EID:"",
     })
 
     // for showing errors
@@ -89,6 +89,7 @@ const ViewExpenses = () => {
         setError('');
 
         try{
+            newExpenses.EID = currentUser.EID;
             const res = await axios.post("/viewExpenses/addExpense", newExpenses)
             // clear the fields for next time
             newExpenses.Date = '';
