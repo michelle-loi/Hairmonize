@@ -13,11 +13,19 @@ const ViewOrders = () => {
     // get the current user from authentication (this will be our user's local data generated from the token)
     const {currentUser} = useContext(AuthContext);
 
+    // Orders
+    const[orders, setOrders] = useState([])
+
     // Suppliers
     const [suppliers, setSuppliers] = useState([]);
 
     // supplier selected in the modal
     const [selectedSupplier, setSelectedSupplier] = useState('');
+
+    // holds the selected inventory. We are using an array so the user can select multiple inventory items
+    const [selectedInventory, setSelectedInventory] = useState([]);
+
+
 
     // getting list of suppliers
     useEffect(() => {
@@ -40,13 +48,55 @@ const ViewOrders = () => {
     };
 
 
+    // Inventory stuff
+
+    // getting all of the inventory items to be displayed from out database
+    const [inventory, setInventory] = useState([]);
+
+    useEffect(() => {
+        const getInventory = async () => {
+            try {
+                const res = await axios.get('/viewInventory/getInventory');
+                setInventory(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        getInventory();
+    }, []);
+
+
+    // getting the order's inventory (aka what we bought with each order)
+    const ordersWithInventory = orders.reduce((acc, order) => {
+        const existingOrder = acc.find(item => item.Order_ID === order.Order_ID);
+        if (existingOrder) {
+            existingOrder.InventoryItems.push({
+                Product_code: order.Product_code,
+                Product_name: order.Product_name,
+            });
+        } else {
+            acc.push({
+                Order_ID: order.Order_ID,
+                Date: order.Date,
+                Time: order.Time,
+                SuID: order.SuID,
+                EID: order.EID,
+                InventoryItems: order.Product_code
+                    ? [{ Product_code: order.Product_code, Product_name: order.Product_name }]
+                    : [],
+            });
+        }
+        return acc;
+    }, []);
+
+
+
     // Handle date change in the date picker
     const handleDateChange = (date) => {
         setNewOrders((prev) => ({ ...prev, selectedDate: date }));
     };
 
-    // Orders
-    const[orders, setOrders] = useState([])
+
 
     // For deleting orders
     const handleDelete = async (Order_ID)=> {
@@ -74,21 +124,7 @@ const ViewOrders = () => {
         fetchOrders();
     }, []);
 
-    // Display Orders
-    const OrderRowInTable = orders.map((order) => (
-        <tr key={order.Order_ID}>
-            <td>
-                <Button className="order-trash-icon" variant="light" onClick={()=>handleDelete(order.Order_ID)}>
-                    <BsTrash3Fill/>
-                </Button>
-            </td>
-            <td>{order.Order_ID}</td>
-            <td>{order.Date ? order.Date.split('T')[0] : ''}</td>
-            <td>{order.Time}</td>
-            <td>{order.SuID} / {getSupplierName(order.SuID)}</td>
-            <td>{order.EID}</td>
-        </tr>
-    ));
+
 
     // For insertion into order table
     const [newOrders, setNewOrders] = useState({
@@ -118,14 +154,20 @@ const ViewOrders = () => {
 
         setError('');
         try {
-            // Add the new order
-            const res = await axios.post("/viewOrders/addOrder", newOrders);
+            // Add the new order with selected inventory
+            const res = await axios.post("/viewOrders/addOrder", {
+                ...newOrders,
+                selectedInventory: selectedInventory,
+            });
 
             // Update the local state with the new order
             setOrders((prevOrders) => [...prevOrders, res.data]);
 
             // Clear the selected supplier after successful submission
             setSelectedSupplier('');
+
+            // Clear the selected inventory check boxes
+            setSelectedInventory([]);
 
             // Clear the fields for next time
             setNewOrders({
@@ -147,6 +189,32 @@ const ViewOrders = () => {
     };
 
 
+    // Display Orders and all of its associated information to its corresponding OrderID to our table.
+    const OrderRowInTable = ordersWithInventory.map((order) => (
+        <tr key={order.Order_ID}>
+            <td>
+                <Button className="order-trash-icon" variant="light" onClick={() => handleDelete(order.Order_ID)}>
+                    <BsTrash3Fill />
+                </Button>
+            </td>
+            <td>{order.Order_ID}</td>
+            <td>{order.Date ? order.Date.split('T')[0] : ''}</td>
+            <td>{order.Time}</td>
+            <td>{order.SuID} / {getSupplierName(order.SuID)}</td>
+            <td>
+                {order.InventoryItems.length > 0 ? (
+                    <ul>
+                        {order.InventoryItems.map((item) => (
+                            <li key={item.Product_code}>{item.Product_name}</li>
+                        ))}
+                    </ul>
+                ) : 'No items ordered'}
+            </td>
+            <td>{order.EID}</td>
+        </tr>
+    ));
+
+
     // Deals with modal to add a service
     // Template from React bootstrap website
     // https://react-bootstrap.netlify.app/docs/components/modal/
@@ -155,15 +223,19 @@ const ViewOrders = () => {
         setShow(false);
         // Clear the selected supplier
         setSelectedSupplier("");
+        // Clear the selected inventory check boxes
+        setSelectedInventory([]);
         // clear the fields for next time
         newOrders.Order_ID = '';
         newOrders.SuID = '';
         newOrders.E_ID = '';
     }
-
+    // shows the table
     const handleShow = () =>
         setShow(true);
 
+
+    // Function for the page
     return(
         <Container className="view-Orders-page" fluid>
             <h1 className="mt-3">Orders</h1>
@@ -178,7 +250,7 @@ const ViewOrders = () => {
                 <Modal.Body>
                     <Form>
                         <Form.Group className="mb-3" controlId="supplier-dropdown">
-                            <Form.Label>Supplier:</Form.Label>
+                            <Form.Label style={{ fontWeight: 'bold' }}> Supplier:</Form.Label>
                             <Form.Control
                                 as="select"
                                 name="SuID"
@@ -197,9 +269,30 @@ const ViewOrders = () => {
                                 ))}
                             </Form.Control>
                         </Form.Group>
-
+                        <Form.Group className="mb-3" controlId="inventory-checkbox-list">
+                            <Form.Label style={{ fontWeight: 'bold' }}> Ordered Items:</Form.Label>
+                            <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                                {inventory.map((item) => (
+                                    <Form.Check
+                                        key={item.Product_code}
+                                        type="checkbox"
+                                        id={item.Product_code}
+                                        label={item.Product_name}
+                                        checked={selectedInventory.includes(item.Product_code)}
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                setSelectedInventory([...selectedInventory, item.Product_code]);
+                                            } else {
+                                                setSelectedInventory(selectedInventory.filter(code => code !== item.Product_code));
+                                            }
+                                        }}
+                                        style={{ marginBottom: '10px' }}
+                                    />
+                                ))}
+                            </div>
+                        </Form.Group>
                         <Form.Group className="mb-3" controlId="date-picker">
-                            <Form.Label>Select Order Date: </Form.Label>
+                            <Form.Label style={{ fontWeight: 'bold' }}>Select Order Date: </Form.Label>
                             <DatePicker
                                 selected={newOrders.selectedDate}
                                 onChange={handleDateChange}
@@ -211,8 +304,6 @@ const ViewOrders = () => {
                             />
                         </Form.Group>
                         {error && <Alert variant="danger">{error}</Alert>}
-
-                        {/* Credit for the down arrow */}
                         <p style={{ marginTop: '20px', fontSize: '8px', color: '#888', textAlign: 'center' }}>
                             <a href="https://www.flaticon.com/free-icons/down-arrow" title="down arrow icons">Down arrow icons created by Google - Flaticon</a>
                         </p>
@@ -227,8 +318,6 @@ const ViewOrders = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-
-            {/* The table to display information */}
             <Table className="orders-table" responsive="sm">
                 <thead>
                 <tr>
@@ -237,6 +326,7 @@ const ViewOrders = () => {
                     <th className="header">Date</th>
                     <th className="header">Time</th>
                     <th className="header">Supplier ID / Supplier Name</th>
+                    <th className="header">Ordered Items</th>
                     <th className="header">Employee ID</th>
                 </tr>
                 </thead>
