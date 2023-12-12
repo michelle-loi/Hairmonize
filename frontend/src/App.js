@@ -22,6 +22,7 @@ import AdminStylistHome from "./pages/adminstylist/adminStylistHome";
 import AddEmployeeAS from "./components/adminStylistHome/Employee/addEmployeeAS";
 import EditEmployeeAS from "./components/adminStylistHome/Employee/editEmployeeAS";
 import AddClientAS from "./components/adminStylistHome/Client/addClientAS";
+import AddAccountAS from "./components/adminStylistHome/Accounts/addAccountAS";
 
 function App() {
   return (
@@ -40,7 +41,7 @@ function App() {
             <Route path="/adminHome/editEmployee/:id" element={<EditEmployee/>}/>
             <Route path="/adminHome/addEmployee" element={<AddEmployee/>}/>
             <Route path="/adminHome/addClient" element={<AddClient/>}/>
-            <Route path="adminHome/addAccount" element={<AddAccount/>}/>
+            <Route path="/adminHome/addAccount" element={<AddAccount/>}/>
             <Route path="/adminHome/editInventory/:id" element={<EditInventory/>}/>
             <Route path="/adminHome/addInventory" element={<AddInventory/>}/>
 
@@ -51,7 +52,7 @@ function App() {
             <Route path="/adminStylistHome/editEmployee/:id" element={<EditEmployeeAS/>}/>
             <Route path="/adminStylistHome/addEmployee" element={<AddEmployeeAS/>}/>
             <Route path="/adminStylistHome/addClient" element={<AddClientAS/>}/>
-
+            <Route path="/adminStylistHome/addAccount" element={<AddAccountAS/>}/>
 
           </Routes>
         </BrowserRouter>

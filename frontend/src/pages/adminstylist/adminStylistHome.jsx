@@ -18,6 +18,7 @@ import Footer from "../../components/footer/Footer";
 
 import ViewEmployeeAS from "../../components/adminStylistHome/Employee/viewEmployeeAS";
 import ViewClientsAS from "../../components/adminStylistHome/Client/viewClientsAS";
+import ViewAccountsAS from "../../components/adminStylistHome/Accounts/viewAccountsAS";
 
 import "./adminStylistHome.css"
 
@@ -97,7 +98,7 @@ const adminStylistHome = () => {
 
                                 {/* Accounts page */}
                                 <Tab.Pane eventKey="as-accounts">
-                                    <ViewAccounts/>
+                                    <ViewAccountsAS/>
                                 </Tab.Pane>
 
                                 {/* Services page */}
