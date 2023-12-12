@@ -11,6 +11,7 @@ const Registration = () => {
     const [inputs, setInputs] = useState({
         Username: "",
         Password: "",
+        CID: ""
     })
 
     // for client table
@@ -103,9 +104,6 @@ const Registration = () => {
         // try catch so if there are any errors it will be caught and dealt with appropriately. Most of the time
         // errors will be users trying to register an already existing username
         try {
-            // for any submissions send the data to our auth register function
-            const response = await axios.post("/auth/register", inputs)
-
             // client table data
             const cData = {
                 FName: clientData.FName,
@@ -117,6 +115,9 @@ const Registration = () => {
 
             // get the CID for the new client
             const newCID = clientRes.data.cid;
+
+            // for any submissions send the data to our auth register function
+            const response = await axios.post("/auth/register", inputs)
 
             // insert their phone number and emails
             const clientEmailRes = await axios.post(`/viewClient/addEmail`, {
