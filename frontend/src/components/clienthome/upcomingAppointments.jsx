@@ -1,20 +1,20 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Container, Row} from "react-bootstrap";
+import {Button, Container, Row, Table} from "react-bootstrap";
 import axios from "axios";
 import {AuthContext} from "../../context/authContext";
+import {BsTrash3Fill} from "react-icons/bs";
 
 const UpcomingAppointments = () => {
     const {currentUser} = useContext(AuthContext);
     const CID = currentUser.CID;
 
     const [myAppts, setMyAppts] = useState([]);
-    const [availableServices, setAvailableServices] = useState([]);
 
 
     useEffect(() => {
         const fetchMyAppts = async () => {
             try {
-                const res = await axios.get(`/clientAppointment/getMyAppts/${CID}`);
+                const res = await axios.get(`/clientAppointment/getMyApptsServiceName/${CID}`);
                 setMyAppts(res.data);
             } catch (err) {
                 console.log(err);
@@ -22,45 +22,53 @@ const UpcomingAppointments = () => {
         };
         fetchMyAppts();
     }, [CID]);
-    console.log(myAppts);
+    //console.log(myAppts);
 
-    useEffect(() => {
-        const fetchAvailableServices = async () => {
-            try {
-                const res = await axios.get(`/clientAppointment/getAvailableServices`);
-                setAvailableServices(res.data);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        fetchAvailableServices ();
-    }, []);
-    console.log(availableServices);
-
-    // const createApptServicesNames = (myAppts, availableServices) => {
-    //     return myAppts.map((appt) => {
-    //         const serviceObject = availableServices.find((service) => service.SID === appt.Service_SID);
-    //         console.log(appt)
-    //         console.log(serviceObject)
-    //
-    //         // if (employeeObject) {
-    //         //     const { EID, FName, MName, LName } = employeeObject;
-    //         //     return { EID, FName, MName, LName };
-    //         // }
-    //
-    //         return null;
-    //     }).filter(Boolean);
-    // };
-    //
-    // const apptServicesNames = createApptServicesNames(myAppts, availableServices);
+    const currentDate = new Date();
+    const upcomingAppointments = myAppts.filter(appointment => new Date(appointment.Date) > currentDate);
 
 
-
+    const handleDelete = async (CID, Date, Time)=>{
+        try {
+            console.log(CID);
+            console.log(`${Date}`);
+            console.log(Time);
+            //const res = await axios.delete(`clientAppointment/deleteAppt/${CID}`);
+            //console.log(res.data);
+            //window.location.reload(); //THIS RELOADING THE WINDOW IS NEEDED, UNLESS THE SECOND DELETE THROWS A 500 ERROR
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
 
     return (
             <Container>
                 <h1 className="mt-3">Upcoming Appointments</h1>
+
+                <Table>
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Service</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {upcomingAppointments.map((appointment)=>{
+                        return (
+                            <tr>
+                                <td>{(appointment.Date || '').split('T')[0]}</td>
+                                <td>{appointment.Time}</td>
+                                <td>{appointment.SName}</td>
+                                <td><Button onClick={() => handleDelete(appointment.CID, (appointment.Date || '').split('T')[0], appointment.Time)} variant="danger">Cancel Appointment</Button>{''}</td>
+                            </tr>
+                        )})}
+                    </tbody>
+                </Table>
+
             </Container>
         )
 }

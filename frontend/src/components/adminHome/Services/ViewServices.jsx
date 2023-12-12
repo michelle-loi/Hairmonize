@@ -219,7 +219,6 @@ const ViewServices = () => {
                               autoFocus
                               name = 'SName'
                               onChange={handleChangeEdit}
-                              required
                           />
                       </Form.Group>
                       <Form.Group className="mb-3" controlId="service-price-textarea">
@@ -233,7 +232,6 @@ const ViewServices = () => {
                               defaultValue={serviceBeingEdited.SPrice}
                               name = 'SPrice'
                               onChange={handleChangeEdit}
-                              required
                           />
                       </Form.Group>
                       {errorEdit && <Alert variant="danger">{errorEdit}</Alert>}

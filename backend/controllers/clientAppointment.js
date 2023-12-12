@@ -57,14 +57,35 @@ export const addAppointment = (req, res) => {
     });
 };
 
+
 // UPCOMING APPOINTMENTS
-export const getMyAppts = (req, res) => {
+// export const getMyAppts = (req, res) => {
+//     const q =
+//         "SELECT * FROM APPOINTMENT WHERE CID = ?";
+//
+//     db.query(q, [res.params.id], (err, data) => {
+//         if (err) return res.status(500).json(err);
+//
+//         return res.status(200).json(data);
+//     });
+// };
+export const getMyApptsServiceName = (req, res) => {
     const q =
-        "SELECT * FROM APPOINTMENT WHERE CID = ?";
+        "SELECT CID, Date, Time, Service_SID, SName FROM APPOINTMENT JOIN SERVICE WHERE CID = ? AND SERVICE_SID = SID";
 
     db.query(q, [req.params.id], (err, data) => {
         if (err) return res.status(500).json(err);
 
         return res.status(200).json(data);
+    });
+};
+
+export const deleteAppt = (req, res) => {
+    const q = "DELETE FROM APPOINTMENT WHERE `CID` = ?";
+
+    db.query(q, [req.data.CID], (err, data) => {
+        if (err) return res.status(500).json("Error while deleting appointment. Appointment not deleted.");
+
+        return res.status(200).json("Appointment has been deleted.");
     });
 };

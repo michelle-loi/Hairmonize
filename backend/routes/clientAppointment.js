@@ -1,8 +1,7 @@
 import express from "express"
 import {
-    getMyStylist, getMyStylistName, getMyStylistAppts, getAvailableServices,
-    addAppointment,
-    getMyAppts
+    getMyStylist, getMyStylistName, getMyStylistAppts, getAvailableServices, addAppointment,
+    getMyApptsServiceName,deleteAppt
 } from "../controllers/clientAppointment.js";
 
 const router = express.Router()
@@ -15,6 +14,7 @@ router.get("/getAvailableServices", getAvailableServices)
 router.post("/addAppointment", addAppointment)
 
 //UPCOMING APPOINTMENTS
-router.get("/getMyAppts/:id", getMyAppts)
+router.get("/getMyApptsServiceName/:id", getMyApptsServiceName)
+router.delete("/deleteAppt/:id", deleteAppt)
 
 export default router;

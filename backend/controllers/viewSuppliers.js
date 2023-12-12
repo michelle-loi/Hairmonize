@@ -41,3 +41,14 @@ export const deleteSupplier = (req, res) => {
     });
 };
 
+export const updateSupplier = (req, res) => {
+    const q =
+        "UPDATE SUPPLIER SET `SName` = ?, `Email` = ?, `Address` = ?, `Phone` = ?, `Fax` = ? WHERE SuID = ?";
+    const SuID = req.params.id;
+
+    db.query(q, [req.body.SName, req.body.Email, req.body.Address, req.body.Phone, req.body.Fax, SuID], (err, data) => {
+        if (err) return res.status(500).json("Error while updating supplier. Supplier not updated.");
+
+        return res.status(200).json("Supplier has been updated.");
+    });
+};
