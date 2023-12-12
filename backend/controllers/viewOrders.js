@@ -1,5 +1,15 @@
 import {db} from "../database.js";
 
+/**
+ *Sources for learning ACID transactions, rollback, etc:
+ * https://www.geeksforgeeks.org/acid-properties-in-dbms/
+ * https://www.w3resource.com/mysql/mysql-transaction.php
+ * https://www.javatpoint.com/mysql-transaction
+ * https://dev.mysql.com/doc/dev/connector-net/latest/api/data_api/MySql.Data.MySqlClient.MySqlTransaction.html
+ * https://w3schools.com/asp/met_conn_begintrans.asp
+ * https://www.tutorialspoint.com/sql/sql-transactions.htm
+ */
+
 export const getOrders = (req, res)=>{
 
     // create query, this will get all the order info required for the table, includes a join to get HAS table data
