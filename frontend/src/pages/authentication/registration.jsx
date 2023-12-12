@@ -3,12 +3,29 @@ import "./registration.css"
 import {Link, useNavigate} from "react-router-dom";
 import { FaUser,  FaEnvelope, FaPhone, FaLock} from "react-icons/fa";
 import axios from "axios";
+import {Dropdown} from "react-bootstrap";
 
 const Registration = () => {
     // states to gather input
+    // for account table
     const [inputs, setInputs] = useState({
         Username:"",
         Password:"",
+    })
+
+    // for client table
+    const [clientData, setClientData] = useState({
+        FName:"",
+        MName:"",
+        LName:"",
+        EID:"",
+    })
+
+    // for phone number and email multivariables
+    const [clientEmailPhone, setClientEmailPhone] = useState({
+        CID: "",
+        Email:"",
+        Phone:"",
     })
 
     // error handling message function
@@ -24,37 +41,117 @@ const Registration = () => {
     const navigate = useNavigate()
 
     // function to get input
+
+    // for account table
     const change = e => {
         setInputs(prev=> ({...prev, [e.target.name]: e.target.value}))
     }
 
+    // for client table
+    const clientDataChange = e => {
+        setClientData(prev=> ({...prev, [e.target.name]: e.target.value}))
+    }
+
+    // for email and phone tables
+    const clientEmailPhoneChange = e => {
+        setClientEmailPhone(prev=> ({...prev, [e.target.name]: e.target.value}))
+    }
 
     // Store the countdown interval ID in a ref this allows for us to stop the count down when the user moves away from
     // the registration page manually
     const countdownIntervalRef = React.useRef();
+
+    // to get stylists from the database
+    const [stylists, setStylists] = useState([])
+
+    // to get who the user selects as their stylist
+    const [selectedEID, setSelectedEID] = useState(null)
+
+    // Get stylists for dropdown menu
+    useEffect(() => {
+        const fetchStylists = async ()=>{
+            try{
+                const res = await axios.get("/registration/getEmployeeNameID")
+                setStylists(res.data)
+            }catch (err){
+                console.log(err)
+            }
+        }
+        fetchStylists();
+    }, []);
+
+    // get the selected stylists eid
+    const selectStylist = (EID) => {
+        setSelectedEID(EID);
+    };
 
 
     // function to allow submission of the username and password
     const Submit = async e => {
         // this prevents the fields from resetting
         e.preventDefault()
+
         // try catch so if there are any errors it will be caught and dealt with appropriately. Most of the time
         // errors will be users trying to register an already existing username
         try{
             // for any submissions send the data to our auth register function
             const response = await axios.post("/auth/register", inputs)
 
+            // client table data
+            const cData = {
+                FName:clientData.FName,
+                MName:clientData.MName,
+                LName:clientData.LName,
+                EID: selectedEID,
+            }
+            const clientRes = await axios.post("/viewClient/addClient", cData)
+
+            // get the CID for the new client
+            const newCID = clientRes.data.cid;
+
+            // insert their phone number and emails
+            const clientEmailRes = await axios.post(`/viewClient/addEmail`, {cid: newCID, email: clientEmailPhone.Email})
+            const clientPhoneRes = await axios.post(`/viewClient/addPhone`, {cid: newCID, phone: clientEmailPhone.Phone})
 
             // Upon successful creation of a username set success message to be displayed - which is the server message
             // saying account is successfully created
             setSuccess(response.data);
 
+            // success occurs clear all inputs
+            setFormData({
+                username: '',
+                password: '',
+                firstName: '',
+                lastName: '',
+                email: '',
+                phoneNumber: '',
+            });
+
+
+           setInputs({
+                Username:"",
+                Password:"",
+            })
+
+            setClientData({
+                FName:"",
+                MName:"",
+                LName:"",
+                EID:"",
+            })
+
+            // for phone number and email multivariables
+            setClientEmailPhone({
+                CID: "",
+                Email:"",
+                Phone:"",
+            })
 
             /* below is the count down logic, where upon successful creation of an account it will count down before
             * automatically rerouting the user back to the login page.*/
 
-            // make countdown 5 seconds
-            let countdown = 5;
+           // make countdown 5 seconds
+           let countdown = 5;
 
             // set count down timer message
             setTime(`Redirecting to login page in ${countdown} seconds...`)
@@ -77,7 +174,7 @@ const Registration = () => {
             }, 1000); // Update every second
 
 
-        }catch (error){
+        } catch (error) {
             setError(error.response.data);
         }
     }
@@ -89,7 +186,6 @@ const Registration = () => {
             clearInterval(countdownIntervalRef.current);
         };
     }, []);
-
 
 
     return(
@@ -114,7 +210,14 @@ const Registration = () => {
                                 </div>
 
                                 {/*Field*/}
-                                <input required type="text"  placeholder="First name" className="form-control"/>
+                                <input
+                                    required type="text"
+                                    placeholder="First name"
+                                    className="form-control"
+                                    name="FName"
+                                    onChange={clientDataChange}
+
+                                />
 
                             </div>
 
@@ -129,7 +232,13 @@ const Registration = () => {
                                 </div>
 
                                 {/*Field*/}
-                                <input type="text" placeholder="Middle name (optional)" className="form-control"/>
+                                <input
+                                    type="text"
+                                    placeholder="Middle name (optional)"
+                                    className="form-control"
+                                    name="MName"
+                                    onChange={clientDataChange}
+                                />
 
                             </div>
 
@@ -144,7 +253,13 @@ const Registration = () => {
                                 </div>
 
                                 {/*Field*/}
-                                <input required type="text" placeholder="Last name" className="form-control"/>
+                                <input
+                                    required type="text"
+                                    placeholder="Last name"
+                                    className="form-control"
+                                    name="LName"
+                                    onChange={clientDataChange}
+                                />
 
                             </div>
 
@@ -159,7 +274,14 @@ const Registration = () => {
                                 </div>
 
                                 {/*Field*/}
-                                <input required type="email" placeholder="Email address" className="form-control"/>
+                                <input
+                                    required
+                                    type="email"
+                                    placeholder="Email address"
+                                    className="form-control"
+                                    name="Email"
+                                    onChange={clientEmailPhoneChange}
+                                />
 
                             </div>
 
@@ -174,10 +296,36 @@ const Registration = () => {
                                 </div>
 
                                 {/*Regex for telephone number (###) ###-####*/}
-                                <input type="tel" placeholder="Phone number (###) ###-####"  pattern="^\(\d{3}\) \d{3}-\d{4}$" className="form-control"/>
+                                <input
+                                    type="phone"
+                                    placeholder="Phone number"
+                                    className="form-control"
+                                    name="Phone"
+                                    onChange={clientEmailPhoneChange}
+                                />
 
                             </div>
                         </form>
+                    </div>
+
+                    <div className="col">
+                        <h1>Select Your Stylist</h1>
+                        <Dropdown>
+                            <Dropdown.Toggle className="stylist-dropdown-selector" variant="primary" id="stylist-dropdown">
+                                Stylists
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu className="stylist-dropdown-selections">
+                                {stylists.map(stylist => (
+                                    <Dropdown.Item
+                                        key={stylist.EID}
+                                        onClick={() => selectStylist(stylist.EID)}
+                                    >
+                                        {`${stylist.FName} ${stylist.LName}`}
+                                    </Dropdown.Item>
+                                ))}
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </div>
 
                     {/* Column for Account */}
