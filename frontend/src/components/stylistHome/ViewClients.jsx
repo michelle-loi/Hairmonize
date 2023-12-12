@@ -56,14 +56,14 @@ const ViewClients = () => {
         <Container>
             <h1 className="mt-3">Your Clients</h1>
 
-            <Table>
+            <Table responsive="sm">
                 <thead>
                 <tr>
-                    <th>CID</th>
-                    <th>Name</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th></th>
+                    <th className="header">CID</th>
+                    <th className="header">Name</th>
+                    <th className="header">Phone Number</th>
+                    <th className="header">Email</th>
+                    <th className="header"></th>
                 </tr>
                 </thead>
 

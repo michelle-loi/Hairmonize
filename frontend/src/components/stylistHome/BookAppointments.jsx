@@ -146,7 +146,7 @@ const BookAppointments = () => {
 
     return (
         <Container>
-            <h1 className="mt-3">Book an appointment for your client</h1>
+            <h1 className="mt-3">Book an Appointment for your Client</h1>
 
             <Form onSubmit={handleBook}>
 
