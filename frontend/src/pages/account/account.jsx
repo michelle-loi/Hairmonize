@@ -4,6 +4,8 @@ import {FaEnvelope, FaLock, FaPhone, FaUser} from "react-icons/fa";
 import {Button, Col, Container, Form, InputGroup, Row} from "react-bootstrap";
 import axios from "axios";
 import {AuthContext} from "../../context/authContext";
+import Footer from "../../components/footer/Footer";
+import "./account.css"
 
 // Documentation pages referenced:
 // https://react-bootstrap.netlify.app/docs/forms/overview/
@@ -194,113 +196,116 @@ const Account = () => {
     return(
         <div className="accountPage">
             <NavigationBar/>
-            <Container className="accountPageContainer">
-                {/* Change top and bottom margin */}
-                <Row className="mb-3 mt-4">
-                    <h1>Profile</h1>
-                </Row>
+            <div className="profile-page-content">
+                <Container className="accountPageContainer">
+                    {/* Change top and bottom margin */}
+                    <Row className="mb-3 mt-4">
+                        <h1>Profile</h1>
+                    </Row>
 
-                <Row className="justify-content-md-center">
-                    <Col md="auto">
-                        <h4>Personal Information</h4>
-                        <Form>
+                    <Row className="justify-content-md-center">
+                        <Col md="auto">
+                            <h4>Personal Information</h4>
+                            <Form>
 
-                            {/* First name */}
-                            <Form.Group className="mb-3" controlId="formFName">
+                                {/* First name */}
+                                <Form.Group className="mb-3" controlId="formFName">
+                                    <InputGroup>
+                                        <InputGroup.Text>
+                                            <FaUser />
+                                        </InputGroup.Text>
+                                        <InputGroup.Text> First Name:</InputGroup.Text>
+                                        <Form.Control type="text" placeholder="First name" value={firstName} />
+                                    </InputGroup>
+                                </Form.Group>
+
+                                {/* Middle Name */}
+                                <Form.Group className="mb-3" controlId="formMName">
+                                    <InputGroup>
+                                        <InputGroup.Text>
+                                            <FaUser />
+                                        </InputGroup.Text>
+                                        <InputGroup.Text> Middle Name:</InputGroup.Text>
+                                        <Form.Control type="text" placeholder="Middle name (optional)" value={middleName} />
+                                    </InputGroup>
+                                </Form.Group>
+
+                                {/* Last Name */}
+                                <Form.Group className="mb-3" controlId="formLName">
+                                    <InputGroup>
+                                        <InputGroup.Text>
+                                            <FaUser />
+                                        </InputGroup.Text>
+                                        <InputGroup.Text> Last Name:</InputGroup.Text>
+                                        <Form.Control type="text" placeholder="Last Name" value={lastName}/>
+                                    </InputGroup>
+                                </Form.Group>
+
+                                {/* Email */}
+                                <Form.Group className="mb-3" controlId="formEmail">
+                                    <InputGroup>
+                                        <InputGroup.Text>
+                                            <FaEnvelope />
+                                        </InputGroup.Text>
+                                        <InputGroup.Text> Email:</InputGroup.Text>
+                                        <Form.Control type="email" placeholder="Email" value={emailAddress}/>
+                                    </InputGroup>
+                                </Form.Group>
+
+                                {/* Phone */}
+                                <Form.Group className="mb-3" controlId="formTel">
+                                    <InputGroup>
+                                        <InputGroup.Text>
+                                            <FaPhone />
+                                        </InputGroup.Text>
+                                        <InputGroup.Text> Phone:</InputGroup.Text>
+                                        <Form.Control
+                                            type="tel"
+                                            placeholder="Phone number"
+                                            value={formatPhoneNumber(phoneNumber)}
+                                            pattern="^\(\d{3}\) \d{3}-\d{4}$"
+                                        />
+                                        <Form.Text id="telphoneInfo">
+                                            Your telephone number should be in the format (###) ###-####
+                                        </Form.Text>
+                                    </InputGroup>
+                                </Form.Group>
+                            </Form>
+                        </Col>
+
+                        <Col md="auto">
+                            <h4>Account Information</h4>
+                            <Form.Group className="mb-3" controlId="formUsername">
                                 <InputGroup>
                                     <InputGroup.Text>
                                         <FaUser />
                                     </InputGroup.Text>
-                                    <InputGroup.Text> First Name:</InputGroup.Text>
-                                    <Form.Control type="text" placeholder="First name" value={firstName} />
+                                    <InputGroup.Text>Username:</InputGroup.Text>
+                                    <Form.Control type="text" placeholder="Username" value={userName}/>
                                 </InputGroup>
                             </Form.Group>
 
-                            {/* Middle Name */}
-                            <Form.Group className="mb-3" controlId="formMName">
+
+                            <Form.Group className="mb-3" controlId="formAccountType">
                                 <InputGroup>
                                     <InputGroup.Text>
                                         <FaUser />
                                     </InputGroup.Text>
-                                    <InputGroup.Text> Middle Name:</InputGroup.Text>
-                                    <Form.Control type="text" placeholder="Middle name (optional)" value={middleName} />
+                                    <InputGroup.Text>Account:</InputGroup.Text>
+                                    <Form.Control type="text" placeholder="Account Type" value={accountType}/>
                                 </InputGroup>
                             </Form.Group>
+                        </Col>
+                    </Row>
 
-                            {/* Last Name */}
-                            <Form.Group className="mb-3" controlId="formLName">
-                                <InputGroup>
-                                    <InputGroup.Text>
-                                        <FaUser />
-                                    </InputGroup.Text>
-                                    <InputGroup.Text> Last Name:</InputGroup.Text>
-                                    <Form.Control type="text" placeholder="Last Name" value={lastName}/>
-                                </InputGroup>
-                            </Form.Group>
-
-                            {/* Email */}
-                            <Form.Group className="mb-3" controlId="formEmail">
-                                <InputGroup>
-                                    <InputGroup.Text>
-                                        <FaEnvelope />
-                                    </InputGroup.Text>
-                                    <InputGroup.Text> Email:</InputGroup.Text>
-                                    <Form.Control type="email" placeholder="Email" value={emailAddress}/>
-                                </InputGroup>
-                            </Form.Group>
-
-                            {/* Phone */}
-                            <Form.Group className="mb-3" controlId="formTel">
-                                <InputGroup>
-                                    <InputGroup.Text>
-                                        <FaPhone />
-                                    </InputGroup.Text>
-                                    <InputGroup.Text> Phone:</InputGroup.Text>
-                                    <Form.Control
-                                        type="tel"
-                                        placeholder="Phone number"
-                                        value={formatPhoneNumber(phoneNumber)}
-                                        pattern="^\(\d{3}\) \d{3}-\d{4}$"
-                                    />
-                                    <Form.Text id="telphoneInfo">
-                                        Your telephone number should be in the format (###) ###-####
-                                    </Form.Text>
-                                </InputGroup>
-                            </Form.Group>
-                        </Form>
-                    </Col>
-
-                    <Col md="auto">
-                        <h4>Account Information</h4>
-                        <Form.Group className="mb-3" controlId="formUsername">
-                            <InputGroup>
-                                <InputGroup.Text>
-                                    <FaUser />
-                                </InputGroup.Text>
-                                <InputGroup.Text>Username:</InputGroup.Text>
-                                <Form.Control type="text" placeholder="Username" value={userName}/>
-                            </InputGroup>
-                        </Form.Group>
-
-
-                        <Form.Group className="mb-3" controlId="formAccountType">
-                            <InputGroup>
-                                <InputGroup.Text>
-                                    <FaUser />
-                                </InputGroup.Text>
-                                <InputGroup.Text>Account:</InputGroup.Text>
-                                <Form.Control type="text" placeholder="Account Type" value={accountType}/>
-                            </InputGroup>
-                        </Form.Group>
-                    </Col>
-                </Row>
-
-                <Row className="justify-content-md-center mt-3">
-                    <Col md="auto">
-                        <Button href="/accountEdit" variant="success" style={{ width: '250px' }}>Edit account details</Button>
-                    </Col>
-                </Row>
-            </Container>
+                    <Row className="justify-content-md-center mt-3">
+                        <Col md="auto">
+                            <Button href="/accountEdit" variant="success" style={{ width: '250px' }}>Edit account details</Button>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
+            <Footer/>
         </div>
     )
 }

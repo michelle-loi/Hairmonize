@@ -1,20 +1,20 @@
-.stylistHomePage{
+.adminHomePage{
     min-height: 100vh;  /* stretch height of page to the max viewport */
     display: flex;
     flex-direction: column;
 }
 
-.stylist-homepage-content{
+.admin-homepage-content{
     min-height: 100vh;
 }
 
 /* Back ground color of active pill tab */
-.stylist-side-colors .nav-pills .nav-link.active {
-    background-color:#F64C72;
+.admin-pill-colors .nav-pills .nav-link.active {
+    background-color: #4056a1;
     color: #ffffff;
 }
 
 /* Background color of non-active pills */
-.stylist-side-colors .nav-pills .nav-link {
-    color: #000000;
+.admin-pill-colors .nav-pills .nav-link {
+    color: #4056a1;
 }

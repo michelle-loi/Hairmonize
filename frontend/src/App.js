@@ -18,6 +18,8 @@ import AddInventory from "./components/adminHome/Inventory/addInventory";
 import AddInventoryStylist from "./components/stylistHome/Inventory/addInventoryStylist";
 import EditInventoryStylist from "./components/stylistHome/Inventory/editInventoryStylist";
 
+import AdminStylistHome from "./pages/adminstylist/adminStylistHome";
+
 function App() {
   return (
       <div className="App">
@@ -41,6 +43,8 @@ function App() {
 
             <Route path="/stylistHome/editInventory/:id" element={<EditInventoryStylist/>}/>
             <Route path="/stylistHome/addInventory" element={<AddInventoryStylist/>}/>
+
+            <Route path="/adminStylistHome" element={<AdminStylistHome/>}/>
 
           </Routes>
         </BrowserRouter>
