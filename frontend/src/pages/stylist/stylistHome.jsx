@@ -4,6 +4,7 @@ import Footer from "../../components/footer/Footer";
 import {Col, Nav, Row, Tab} from "react-bootstrap";
 import StylistAppointment from "../../components/stylistHome/StylistAppointment";
 import BookAppointments from "../../components/stylistHome/BookAppointments";
+import ViewClients from '../../components/stylistHome/ViewClients'
 import "./StylistHome.css"
 const stylistHome = () => {
     return(
@@ -59,7 +60,7 @@ const stylistHome = () => {
 
                                 {/* clients page */}
                                 <Tab.Pane eventKey="stylist-clients">
-                                    clients
+                                    <ViewClients/>
                                 </Tab.Pane>
 
                                 {/* Accounts page */}
