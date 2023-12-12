@@ -25,6 +25,7 @@ const UpcomingAppointments = () => {
     //console.log(myAppts);
 
     const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() - 1) //This is needed to show today's appointments
     const upcomingAppointments = myAppts.filter(appointment => new Date(appointment.Date) > currentDate);
 
 
@@ -33,9 +34,9 @@ const UpcomingAppointments = () => {
             console.log(CID);
             console.log(`${Date}`);
             console.log(Time);
-            //const res = await axios.delete(`clientAppointment/deleteAppt/${CID}`);
+            const res = await axios.delete(`clientAppointment/deleteAppt/${CID}/${Time}/${Date}`);
             //console.log(res.data);
-            //window.location.reload(); //THIS RELOADING THE WINDOW IS NEEDED, UNLESS THE SECOND DELETE THROWS A 500 ERROR
+            window.location.reload(); //THIS RELOADING THE WINDOW IS NEEDED, UNLESS THE SECOND DELETE THROWS A 500 ERROR
         } catch (err) {
             console.log(err);
         }
