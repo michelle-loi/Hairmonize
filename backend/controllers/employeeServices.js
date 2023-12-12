@@ -46,3 +46,15 @@ export const deleteService = (req, res) => {
     });
 };
 
+export const updateService = (req, res) => {
+    const q =
+        "UPDATE SERVICE SET `SPrice` = ?, `SName` = ? WHERE SID = ?";
+    const SID = req.params.id;
+
+    db.query(q, [req.body.SPrice, req.body.SName, SID], (err, data) => {
+        if (err) return res.status(500).json("Error while updating service. Service not updated.");
+
+        return res.status(200).json("Service has been updated.");
+    });
+};
+

@@ -40,7 +40,7 @@ const ViewServices = () => {
                 <Button className="service-trash-icon" variant="light" onClick={()=>handleDelete(service.SID)}>
                     <BsTrash3Fill/>
                 </Button>
-                <Button className="service-edit-icon " variant="light">
+                <Button className="service-edit-icon " variant="light" onClick={() => handleShowEdit(service.SID, service.SName, service.SPrice)}>
                     <FaEdit />
                 </Button>
             </td>
@@ -96,9 +96,57 @@ const ViewServices = () => {
         // clear the fields for next time
         newServices.SName = '';
         newServices.SPrice = ''
+        setError('');
     }
 
     const handleShow = () => setShow(true);
+
+
+    //************************* Edit ************************************
+    // Modal for edit
+    // Template from React bootstrap website
+    // https://react-bootstrap.netlify.app/docs/components/modal/
+    const [showEdit, setShowEdit] = useState(false);
+    const [serviceBeingEdited, setServiceBeingEdited] = useState({});
+    const [editedService, setEditedService] = useState({});
+    const handleCloseEdit = () => {
+        setShowEdit(false);
+        setErrorEdit('');
+    }
+    const handleShowEdit = (SID, SName, SPrice) => {
+        setShowEdit(true);
+
+        setServiceBeingEdited({SID: SID, SName: SName, SPrice: SPrice});
+        setEditedService({SID: SID, SName: SName, SPrice: SPrice});
+    };
+
+    const handleChangeEdit = e =>{
+        setEditedService(prev=>({...prev, [e.target.name]: e.target.value}))
+    }
+
+    const [errorEdit, setErrorEdit] = useState('');
+
+
+    //  for submitting edited service
+    const handleSubmitEdit = async e =>{
+        if(editedService.SName === ''){
+            setErrorEdit('Please enter the service name');
+            return; // do not submit the information
+        } else if(editedService.SPrice === ''){
+            setErrorEdit('Please enter the service price');
+            return; // do not submit the information
+        }
+
+        setErrorEdit('');
+        try{
+            const res = await axios.put(`/employeeServices/updateService/${editedService.SID}`, {SPrice: editedService.SPrice, SName: editedService.SName})
+            setShowEdit(false); // on success close the submission page
+        }catch (err){
+            setErrorEdit('Service already in database and cannot be added again');
+        }
+    }
+
+    //****************************************************************
 
     return(
       <Container className="view-services-page" fluid>
@@ -144,6 +192,52 @@ const ViewServices = () => {
                   </Button>
                   <Button variant="primary" type="submit" onClick={handleSubmit}>
                       Submit
+                  </Button>
+              </Modal.Footer>
+          </Modal>
+
+          {/*Modal for edit*/}
+          <Modal show={showEdit} onHide={handleCloseEdit}>
+              <Modal.Header closeButton>
+                  <Modal.Title>Edit Service Form</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                  <Form>
+                      <Form.Group className="mb-3" controlId="service-name-textarea">
+                          <Form.Label>Service Name</Form.Label>
+                          <Form.Control
+                              type='text'
+                              placeholder={serviceBeingEdited.SName}
+                              defaultValue={serviceBeingEdited.SName}
+                              autoFocus
+                              name = 'SName'
+                              onChange={handleChangeEdit}
+                              required
+                          />
+                      </Form.Group>
+                      <Form.Group className="mb-3" controlId="service-price-textarea">
+                          <Form.Label>Service Price</Form.Label>
+                          <Form.Control
+                              type='number'
+                              step='0.01'
+                              min='0'
+                              max='1000'
+                              placeholder={serviceBeingEdited.SPrice}
+                              defaultValue={serviceBeingEdited.SPrice}
+                              name = 'SPrice'
+                              onChange={handleChangeEdit}
+                              required
+                          />
+                      </Form.Group>
+                      {errorEdit && <Alert variant="danger">{errorEdit}</Alert>}
+                  </Form>
+              </Modal.Body>
+              <Modal.Footer>
+                  <Button variant="secondary" onClick={handleCloseEdit}>
+                      Close
+                  </Button>
+                  <Button variant="primary" type="submit" onClick={handleSubmitEdit}>
+                      Edit
                   </Button>
               </Modal.Footer>
           </Modal>
