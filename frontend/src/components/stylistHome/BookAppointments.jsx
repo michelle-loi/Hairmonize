@@ -9,10 +9,7 @@ const BookAppointments = () => {
     // const navigate = useNavigate();
 
     const {currentUser} = useContext(AuthContext);
-    const CID = currentUser.CID;
-    const [stylistEID, setStylistEID] = useState(null);
-    const [stylistName, setStylistName] = useState([]);
-    const [stylistAppts, setStylistAppts] = useState([]);
+    const EID = currentUser.EID;
     const [availableServices, setAvailableServices] = useState([]);
 
     const [dateSelected, setDateSelected] = useState('');
@@ -21,45 +18,21 @@ const BookAppointments = () => {
     const [timeOptions, setTimeOptions] = useState([]);
     const [serviceSelected, setServiceSelected] = useState('');
 
+    const [myAppts, setMyAppts] = useState([]);
+
 
     useEffect(() => {
-        const fetchStylistEID = async () => {
+        const fetchMyAppts = async () => {
             try {
-                const res = await axios.get(`/clientAppointment/getMyStylist/${CID}`);
-                setStylistEID(res.data[0].EID);
+                const res = await axios.get(`/stylist/getMyAppts/${EID}`);
+                setMyAppts(res.data);
             } catch (err) {
                 console.log(err);
             }
         };
-        fetchStylistEID();
-    }, []);
-    //console.log(JSON.stringify(stylistEID));
-
-    useEffect(() => {
-        const fetchStylistName = async () => {
-            try {
-                const res = await axios.get(`/clientAppointment/getMyStylistName/${stylistEID}`);
-                setStylistName(res.data[0]);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        fetchStylistName();
-    }, [stylistEID]);
-    //console.log(JSON.stringify(stylistName));
-
-    useEffect(() => {
-        const fetchStylistAppts = async () => {
-            try {
-                const res = await axios.get(`/clientAppointment/getMyStylistAppts/${stylistEID}`);
-                setStylistAppts(res.data);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        fetchStylistAppts();
-    }, [stylistEID]);
-    console.log(stylistAppts);
+        fetchMyAppts();
+    }, [EID]);
+    //console.log(myAppts);
 
     useEffect(() => {
         const fetchAvailableServices = async () => {
@@ -73,6 +46,25 @@ const BookAppointments = () => {
         fetchAvailableServices ();
     }, []);
     //console.log(availableServices);
+
+    //*************************** MY CLIENTS *********************************
+    const [myClients, setMyClients] = useState([]);
+    const [clientSelected, setClientSelected] = useState(null);
+
+    useEffect(() => {
+        const fetchMyClients = async () => {
+            try {
+                const res = await axios.get(`/stylist/getMyClients/${EID}`);
+                setMyClients(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchMyClients();
+    }, []);
+    console.log(myClients);
+
+    //**********************************************************************
 
 
     //*************************** DATE/TIME *********************************
@@ -117,7 +109,7 @@ const BookAppointments = () => {
         }
 
 
-        const bookedTimes = stylistAppts
+        const bookedTimes = myAppts
             .filter((appointment) => (appointment.Date || '').split('T')[0]=== selectedDate)
             .map((appointment) => appointment.Time);
         //console.log(bookedTimes)
@@ -135,7 +127,7 @@ const BookAppointments = () => {
 
     const addAppointment = async () => {
         try{
-            await axios.post(`/clientAppointment/addAppointment`, {CID: CID, Date: dateSelected, Time: timeSelected, Stylist_EID: stylistEID, Service_SID: serviceSelected});
+            await axios.post(`/clientAppointment/addAppointment`, {CID: clientSelected, Date: dateSelected, Time: timeSelected, Stylist_EID: EID, Service_SID: serviceSelected});
             //console.log("hi");
         } catch (err) {
             console.log(err);
@@ -154,9 +146,27 @@ const BookAppointments = () => {
 
     return (
         <Container>
-            <h1 className="mt-3">Book an Appointment with your Stylist</h1>
+            <h1 className="mt-3">Book an Appointment for your Client</h1>
 
             <Form onSubmit={handleBook}>
+
+                <Form.Group className="mb-3">
+                    <Form.Label>Select client <span style={{ color: 'red'}}>*</span></Form.Label>
+                    <Form.Control
+                        as="select"
+                        value={clientSelected}
+                        onChange={(e) => setClientSelected(e.target.value)}
+                        required
+                    >
+                        <option value="">Select a client</option>
+                        {myClients.map((client) => (
+                            <option value={client.CID}>
+                                {client.FName} {client.MName} {client.LName} (CID: {client.CID})
+                            </option>
+                        ))}
+                    </Form.Control>
+                </Form.Group>
+
                 <Form.Group className="mb-3">
                     <Form.Label>Select date <span style={{ color: 'red'}}>*</span></Form.Label>
                     <Form.Control

@@ -3,6 +3,8 @@ import NavigationBar from "../../components/navbar/NavBar";
 import Footer from "../../components/footer/Footer";
 import {Col, Nav, Row, Tab} from "react-bootstrap";
 import StylistAppointment from "../../components/stylistHome/StylistAppointment";
+import BookAppointments from "../../components/stylistHome/BookAppointments";
+import ViewClients from '../../components/stylistHome/ViewClients'
 import "./StylistHome.css"
 const stylistHome = () => {
     return(
@@ -15,7 +17,10 @@ const stylistHome = () => {
                             <div className="stylist-side-colors">
                                 <Nav variant="pills" className="flex-column">
                                     <Nav.Item>
-                                        <Nav.Link eventKey="stylist-appointments">View Appointments</Nav.Link>
+                                        <Nav.Link eventKey="stylist-appointments">Upcoming Appointments</Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link eventKey="stylist-book">Book Appointment</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
                                         <Nav.Link eventKey="stylist-clients">View Clients</Nav.Link>
@@ -49,9 +54,13 @@ const stylistHome = () => {
                                     <StylistAppointment/>
                                 </Tab.Pane>
 
+                                <Tab.Pane eventKey="stylist-book">
+                                    <BookAppointments/>
+                                </Tab.Pane>
+
                                 {/* clients page */}
                                 <Tab.Pane eventKey="stylist-clients">
-                                    clients
+                                    <ViewClients/>
                                 </Tab.Pane>
 
                                 {/* Accounts page */}
