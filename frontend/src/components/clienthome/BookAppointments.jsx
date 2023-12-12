@@ -135,7 +135,7 @@ const BookAppointments = () => {
 
     const addAppointment = async () => {
         try{
-            await axios.post(`/clientAppointment/addAppointment`, {CID: 1, Date: dateSelected, Time: timeSelected, Stylist_EID: stylistEID, Service_SID: serviceSelected});
+            await axios.post(`/clientAppointment/addAppointment`, {CID: CID, Date: dateSelected, Time: timeSelected, Stylist_EID: stylistEID, Service_SID: serviceSelected});
             //console.log("hi");
         } catch (err) {
             console.log(err);
