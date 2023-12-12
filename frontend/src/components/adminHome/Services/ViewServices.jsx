@@ -10,28 +10,31 @@ import Alert from "react-bootstrap/Alert";
 const ViewServices = () => {
     const[services, setServices] = useState([])
 
+    // Fetch Services that will allow us to update our table after an insertion or deletion occurs
+    const fetchServices = async () => {
+        try {
+            const res = await axios.get("/employeeServices/getServices");
+            setServices(res.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    useEffect(() => {
+        fetchServices();
+    }, []);
+
+
     // For deleting services
     const handleDelete = async (SID)=> {
         try{
             console.log(`Deleting service with SID: ${SID}`);
             await axios.delete(`/employeeServices/deleteService/${SID}`);
+            // update the table
+            fetchServices();
         }catch (err){
             console.log(err);
         }
     }
-
-    // Get Services
-    useEffect(() => {
-        const fetchServices = async ()=>{
-            try{
-                const res = await axios.get("/employeeServices/getServices") // whatever it is called first in route / function name
-                setServices(res.data)
-            }catch (err){
-                console.log(err)
-            }
-        }
-        fetchServices();
-    }, []);
 
     // Display Services
     const serviceRowInTable = services.map((service) => (
@@ -76,16 +79,20 @@ const ViewServices = () => {
         }
 
         setError('');
-        try{
-            const res = await axios.post("/employeeServices/addService", newServices)
+        try {
+            const res = await axios.post("/employeeServices/addService", newServices);
+            // update services
+            fetchServices();
             // clear the fields for next time
             newServices.SName = '';
-            newServices.SPrice = ''
-            setShow(false); // on success close the submission page
-        }catch (err){
-            setError('Service already in database and cannot be added again');
+            newServices.SPrice = '';
+            // close the box
+            setShow(false);
+        } catch (err) {
+            setError('Service already in the database and cannot be added again');
         }
-    }
+    };
+
 
     // Deals with modal to add a service
     // Template from React bootstrap website
