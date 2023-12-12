@@ -48,6 +48,9 @@ const adminHome = () => {
                                 <Nav.Link eventKey="suppliers">Suppliers</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
+                                <Nav.Link eventKey="supplies">Supplies</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
                                 <Nav.Link eventKey="inventory">Inventory</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
@@ -93,6 +96,10 @@ const adminHome = () => {
                             {/* Suppliers page */}
                             <Tab.Pane eventKey="suppliers">
                                 <ViewSuppliers/>
+                            </Tab.Pane>
+
+                            <Tab.Pane eventKey="supplies">
+                                Test
                             </Tab.Pane>
 
                             {/* inventory page */}
