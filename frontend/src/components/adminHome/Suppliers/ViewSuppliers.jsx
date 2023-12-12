@@ -43,7 +43,7 @@ const ViewSuppliers = () => {
                 <Button className="supplier-trash-icon" variant="light" onClick={()=>handleDelete(supplier.SuID)}>
                     <BsTrash3Fill/>
                 </Button>
-                <Button className="service-edit-icon " variant="light">
+                <Button className="service-edit-icon " variant="light" onClick={() => handleShowEdit(supplier.SuID, supplier.SName, supplier.Email, supplier.Address, supplier.Phone, supplier.Fax)}>
                     <FaEdit />
                 </Button>
             </td>
@@ -123,6 +123,67 @@ const ViewSuppliers = () => {
 
     const handleShow = () => setShow(true); // to show modal
 
+
+    //************************* Edit ************************************
+    const [showEdit, setShowEdit] = useState(false);
+    const [supplierBeingEdited, setSupplierBeingEdited] = useState({});
+    const [editedSupplier, setEditedSupplier] = useState({});
+
+    // for showing errors
+    const [errorEdit, setErrorEdit] = useState('');
+
+    const handleShowEdit = (SuID, SName, Email, Address, Phone, Fax) => {
+        setShowEdit(true)
+
+        setSupplierBeingEdited({SuID: SuID, SName: SName, Email: Email, Address: Address, Phone: Phone, Fax: Fax});
+        setEditedSupplier({SuID: SuID, SName: SName, Email: Email, Address: Address, Phone: Phone, Fax: Fax});
+
+    };
+
+    // for input fields to read them
+    const handleChangeEdit = e =>{
+        setEditedSupplier(prev=>({...prev, [e.target.name]: e.target.value}))
+    }
+
+    //  for submitting new suppliers
+    const handleSubmitEdit = async (e) =>{
+        //Check if a valid option is selected
+        if(editedSupplier.SName === ''){
+            setErrorEdit('Please enter the supplier name');
+            return; // do not submit the information
+        } else if(editedSupplier.Email === ''){
+            setErrorEdit('Please enter the supplier email');
+            return; // do not submit the information
+        } else if(editedSupplier.Address === ''){
+            setErrorEdit('Please enter the supplier address');
+            return; // do not submit the information
+        } else if (editedSupplier.Phone === '') {
+            setErrorEdit('Please enter the suppliers phone number');
+            return; // do not submit the information
+        }
+        setErrorEdit('');
+
+        try{
+            const res = await axios.put(`/viewSuppliers/updateSupplier/${editedSupplier.SuID}`,
+                {SName: editedSupplier.SName,
+                    Email: editedSupplier.Email,
+                    Address: editedSupplier.Address,
+                    Phone: editedSupplier.Phone,
+                    Fax: editedSupplier.Fax})
+            setShowEdit(false); // on success close the submission page
+        }catch (err){
+            setErrorEdit('Supplier already in database and cannot be added again');
+        }
+    }
+
+    // Template from React bootstrap website
+    // https://react-bootstrap.netlify.app/docs/components/modal/
+    const handleCloseEdit = () => {
+        setShowEdit(false);
+        setErrorEdit(''); // close remove the error message
+    }
+    //****************************************************************
+
     return(
         <Container className="view-supplier-page" fluid>
             <h1 className="mt-3">Suppliers</h1>
@@ -190,6 +251,77 @@ const ViewSuppliers = () => {
                     </Button>
                     <Button variant="primary" type="submit" onClick={handleSubmit}>
                         Submit
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* to edit supplier*/}
+            <Modal show={showEdit} onHide={handleCloseEdit}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit Supplier Form</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group className="mb-3" controlId="supplier-name-textarea">
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder={supplierBeingEdited.SName}
+                                defaultValue={supplierBeingEdited.SName}
+                                autoFocus
+                                name = 'SName'
+                                onChange={handleChangeEdit}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="supplier-Email-textarea">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control
+                                type='email'
+                                placeholder={supplierBeingEdited.Email}
+                                defaultValue={supplierBeingEdited.Email}
+                                name = 'Email'
+                                onChange={handleChangeEdit}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="supplier-address-textarea">
+                            <Form.Label>Address</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder={supplierBeingEdited.Address}
+                                defaultValue={supplierBeingEdited.Address}
+                                name = 'Address'
+                                onChange={handleChangeEdit}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="supplier-phone-textarea">
+                            <Form.Label>Phone: (###) ###-####</Form.Label>
+                            <Form.Control
+                                name = 'Phone'
+                                type="text"
+                                placeholder={supplierBeingEdited.Phone}
+                                defaultValue={supplierBeingEdited.Phone}
+                                onChange={handleChangeEdit}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="supplier-fax-textarea">
+                            <Form.Label>Fax: (###) ###-####</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name = 'Fax'
+                                placeholder={supplierBeingEdited.Fax}
+                                defaultValue={supplierBeingEdited.Fax}
+                                onChange={handleChangeEdit}
+                            />
+                        </Form.Group>
+                        {errorEdit && <Alert variant="danger">{errorEdit}</Alert>}
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseEdit}>
+                        Close
+                    </Button>
+                    <Button variant="primary" type="submit" onClick={handleSubmitEdit}>
+                        Edit
                     </Button>
                 </Modal.Footer>
             </Modal>
