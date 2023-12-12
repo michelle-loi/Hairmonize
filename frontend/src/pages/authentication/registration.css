@@ -21,6 +21,14 @@
     font-size: 1.5rem !important;
 }
 
+.stylist-dropdown-selector{
+    min-width: 25rem !important;
+}
+
+.stylist-dropdown-selections{
+    min-width: 25rem !important;
+}
+
 .submitErrorMSG{
     color: red;
     margin-top: 10px;
@@ -39,4 +47,9 @@
     color: black;
     position: relative;
     display: inline-block;
+}
+
+.selected-stylist{
+    margin-top: 3rem;
+    color: #0b0bb7;
 }

@@ -14,6 +14,7 @@ import viewAccounts from "./routes/viewAccounts.js"
 import viewInventory from "./routes/viewInventory.js";
 import clientAppointment from "./routes/clientAppointment.js";
 import viewExpenses from "./routes/viewExpenses.js";
+import registration from "./routes/registration.js";
 
 import cookieParser from "cookie-parser"
 
@@ -40,6 +41,7 @@ app.use("/backend/viewAccounts", viewAccounts)
 app.use("/backend/viewInventory", viewInventory)
 app.use("/backend/clientAppointment", clientAppointment)
 app.use("/backend/viewExpenses", viewExpenses)
+app.use("/backend/registration", registration)
 
 // Connect to the database
 app.listen(8800, ()=>{

@@ -31,7 +31,8 @@ export const addService = (req, res) => {
 
         db.query(q, [values], (err, data) => {
             if (err) return res.status(500).json("Error occurred while adding a service.");
-            return res.status(200).json("Service added.");
+            // send updated databack
+            getServices(req, res);
         });
     })
 };
@@ -42,7 +43,8 @@ export const deleteService = (req, res) => {
 
     db.query(q, [SID], (err, data) => {
         if (err) return res.status(500).json("Error occurred while trying to delete a service.");
-        return res.status(200).json("Service has been deleted.");
+        // send updated databack
+        getServices(req, res);
     });
 };
 
@@ -57,4 +59,3 @@ export const updateService = (req, res) => {
         return res.status(200).json("Service has been updated.");
     });
 };
-
