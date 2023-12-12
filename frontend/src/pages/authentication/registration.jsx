@@ -118,16 +118,6 @@ const Registration = () => {
             setSuccess(response.data);
 
             // success occurs clear all inputs
-            setFormData({
-                username: '',
-                password: '',
-                firstName: '',
-                lastName: '',
-                email: '',
-                phoneNumber: '',
-            });
-
-
            setInputs({
                 Username:"",
                 Password:"",
