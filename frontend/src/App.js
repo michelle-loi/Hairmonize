@@ -23,6 +23,8 @@ import AddEmployeeAS from "./components/adminStylistHome/Employee/addEmployeeAS"
 import EditEmployeeAS from "./components/adminStylistHome/Employee/editEmployeeAS";
 import AddClientAS from "./components/adminStylistHome/Client/addClientAS";
 import AddAccountAS from "./components/adminStylistHome/Accounts/addAccountAS";
+import AddInventoryAS from "./components/adminStylistHome/Inventory/addInventoryAS";
+import EditInventoryAS from "./components/adminStylistHome/Inventory/editInventoryAS";
 
 function App() {
   return (
@@ -53,6 +55,8 @@ function App() {
             <Route path="/adminStylistHome/addEmployee" element={<AddEmployeeAS/>}/>
             <Route path="/adminStylistHome/addClient" element={<AddClientAS/>}/>
             <Route path="/adminStylistHome/addAccount" element={<AddAccountAS/>}/>
+            <Route path="/adminStylistHome/editInventory/:id" element={<EditInventoryAS/>}/>
+            <Route path="/adminStylistHome/addInventory" element={<AddInventoryAS/>}/>
 
           </Routes>
         </BrowserRouter>

@@ -19,6 +19,7 @@ import Footer from "../../components/footer/Footer";
 import ViewEmployeeAS from "../../components/adminStylistHome/Employee/viewEmployeeAS";
 import ViewClientsAS from "../../components/adminStylistHome/Client/viewClientsAS";
 import ViewAccountsAS from "../../components/adminStylistHome/Accounts/viewAccountsAS";
+import ViewInventoryAS from "../../components/adminStylistHome/Inventory/viewInventoryAS";
 
 import "./adminStylistHome.css"
 
@@ -129,7 +130,7 @@ const adminStylistHome = () => {
 
                                 {/* inventory page */}
                                 <Tab.Pane eventKey="as-inventory">
-                                    <ViewInventory/>
+                                    <ViewInventoryAS/>
 
                                 </Tab.Pane>
 
