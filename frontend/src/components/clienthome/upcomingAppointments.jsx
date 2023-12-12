@@ -30,9 +30,12 @@ const UpcomingAppointments = () => {
 
     const handleDelete = async (CID, Date, Time)=>{
         try {
-            const res = await axios.delete(`clientAppointment/deleteAppt`, {CID: CID, Date: Date, Time: Time});
+            console.log(CID);
+            console.log(`${Date}`);
+            console.log(Time);
+            //const res = await axios.delete(`clientAppointment/deleteAppt/${CID}`);
             //console.log(res.data);
-            window.location.reload(); //THIS RELOADING THE WINDOW IS NEEDED, UNLESS THE SECOND DELETE THROWS A 500 ERROR
+            //window.location.reload(); //THIS RELOADING THE WINDOW IS NEEDED, UNLESS THE SECOND DELETE THROWS A 500 ERROR
         } catch (err) {
             console.log(err);
         }
@@ -60,7 +63,7 @@ const UpcomingAppointments = () => {
                                 <td>{(appointment.Date || '').split('T')[0]}</td>
                                 <td>{appointment.Time}</td>
                                 <td>{appointment.SName}</td>
-                                <td><Button onClick={() => handleDelete(appointment.CID, appointment.Date, appointment.Time)} variant="danger">Cancel Appointment</Button>{''}</td>
+                                <td><Button onClick={() => handleDelete(appointment.CID, (appointment.Date || '').split('T')[0], appointment.Time)} variant="danger">Cancel Appointment</Button>{''}</td>
                             </tr>
                         )})}
                     </tbody>

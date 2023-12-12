@@ -59,7 +59,7 @@ const BookAppointments = () => {
         };
         fetchStylistAppts();
     }, [stylistEID]);
-    //console.log(stylistAppts);
+    console.log(stylistAppts);
 
     useEffect(() => {
         const fetchAvailableServices = async () => {
@@ -107,9 +107,9 @@ const BookAppointments = () => {
         setDateSelected(selectedDate);
         //console.log(selectedDate)
 
-        // Have to generate time options from 9 - 4 again in case the previous date selected resulted in some times being excluded
+        // Have to generate time options from 10 - 4 again in case the previous date selected resulted in some times being excluded
         const options = [];
-        const openingHour = 9;
+        const openingHour = 10;
         const closingHour = 16;
 
         for (let hour = openingHour; hour <= closingHour; hour++) {
@@ -123,6 +123,7 @@ const BookAppointments = () => {
         //console.log(bookedTimes)
 
         const availableTimes = options.filter((time) => !bookedTimes.includes(time));
+        //console.log(availableTimes)
         setTimeOptions(availableTimes);
         setTimeSelected('');
     };

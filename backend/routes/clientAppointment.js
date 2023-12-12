@@ -15,6 +15,6 @@ router.post("/addAppointment", addAppointment)
 
 //UPCOMING APPOINTMENTS
 router.get("/getMyApptsServiceName/:id", getMyApptsServiceName)
-router.delete("/deleteAppt", deleteAppt)
+router.delete("/deleteAppt/:id", deleteAppt)
 
 export default router;

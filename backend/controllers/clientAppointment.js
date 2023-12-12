@@ -81,9 +81,9 @@ export const getMyApptsServiceName = (req, res) => {
 };
 
 export const deleteAppt = (req, res) => {
-    const q = "DELETE FROM APPOINTMENT WHERE `CID` = ? AND `Date` = ? AND `Time` = ?";
+    const q = "DELETE FROM APPOINTMENT WHERE `CID` = ?";
 
-    db.query(q, [req.body.CID, req.body.Date, req.body.Time], (err, data) => {
+    db.query(q, [req.data.CID], (err, data) => {
         if (err) return res.status(500).json("Error while deleting appointment. Appointment not deleted.");
 
         return res.status(200).json("Appointment has been deleted.");
