@@ -1,5 +1,7 @@
 import {db} from "../database.js";
 
+
+// BOOK APPOINTMENTS
 export const getMyStylist = (req, res) => {
     const q =
         "SELECT EID FROM CLIENT WHERE CID = ?";
@@ -52,5 +54,17 @@ export const addAppointment = (req, res) => {
        if (err) return res.status(500).json("Error while adding appointment. Appointment not added.");
 
         return res.status(200).json("Appointment has been added.");
+    });
+};
+
+// UPCOMING APPOINTMENTS
+export const getMyAppts = (req, res) => {
+    const q =
+        "SELECT * FROM APPOINTMENT WHERE CID = ?";
+
+    db.query(q, [req.params.id], (err, data) => {
+        if (err) return res.status(500).json(err);
+
+        return res.status(200).json(data);
     });
 };
