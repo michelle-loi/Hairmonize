@@ -2,8 +2,14 @@ import {db} from "../database.js";
 
 export const getOrders = (req, res)=>{
 
-    // create query
-    const q = "SELECT * FROM `ORDER`";
+    // create query, this will get all the order info required for the table, includes a join to get HAS table data
+    // and another join to get Inventory table data. This will get us the what inventory is associated with what order
+    // and what the inventory item's name is.
+    const q =
+   `SELECT O.Order_ID, O.Date, O.Time, O.SuID, O.EID, H.Product_code, I.Product_name
+    FROM \`ORDER\` O
+    LEFT JOIN HAS H ON O.Order_ID = H.Order_ID
+    LEFT JOIN INVENTORY I ON H.Product_code = I.Product_code;`;
     db.query(q, (err, data) => {
 
         // return error
