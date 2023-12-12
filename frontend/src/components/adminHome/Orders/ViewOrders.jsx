@@ -154,14 +154,20 @@ const ViewOrders = () => {
 
         setError('');
         try {
-            // Add the new order
-            const res = await axios.post("/viewOrders/addOrder", newOrders);
+            // Add the new order with selected inventory
+            const res = await axios.post("/viewOrders/addOrder", {
+                ...newOrders,
+                selectedInventory: selectedInventory,
+            });
 
             // Update the local state with the new order
             setOrders((prevOrders) => [...prevOrders, res.data]);
 
             // Clear the selected supplier after successful submission
             setSelectedSupplier('');
+
+            // Clear the selected inventory check boxes
+            setSelectedInventory([]);
 
             // Clear the fields for next time
             setNewOrders({
@@ -217,6 +223,8 @@ const ViewOrders = () => {
         setShow(false);
         // Clear the selected supplier
         setSelectedSupplier("");
+        // Clear the selected inventory check boxes
+        setSelectedInventory([]);
         // clear the fields for next time
         newOrders.Order_ID = '';
         newOrders.SuID = '';

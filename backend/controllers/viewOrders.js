@@ -24,15 +24,51 @@ export const getOrders = (req, res)=>{
 
 export const deleteOrder = (req, res) => {
     const Order_ID = req.params.id;
-    const q = "DELETE FROM `ORDER` WHERE `Order_ID` = ?";
 
-    db.query(q, [Order_ID], (err, data) => {
-        if (err) return res.status(500).json("Error occurred while trying to delete an Order.");
-        return res.status(200).json("Order has been deleted.");
+    // we do a transaction this way so all deletes happen or no deletes happen. this prevents situations where some orders
+    // are deletred and some are not
+    db.beginTransaction((transactionErr) => {
+        if (transactionErr) {
+            return res.status(500).json("Error occurred while starting a transaction.");
+        }
+
+        // Delete from SUPPLIES table
+        const deleteSuppliesQuery = "DELETE FROM SUPPLIES WHERE `SuID` = (SELECT SuID FROM `ORDER` WHERE `Order_ID` = ?)";
+        db.query(deleteSuppliesQuery, [Order_ID], (deleteSuppliesErr) => {
+            if (deleteSuppliesErr) {
+                // Rollback the transaction on error
+                db.rollback(() => {
+                    console.log(deleteSuppliesErr);
+                    return res.status(500).json("Error occurred while deleting records from SUPPLIES.");
+                });
+            }
+
+            // Delete from ORDER table
+            const deleteOrderQuery = "DELETE FROM `ORDER` WHERE `Order_ID` = ?";
+            db.query(deleteOrderQuery, [Order_ID], (deleteOrderErr) => {
+                if (deleteOrderErr) {
+                    // Rollback the transaction on error
+                    db.rollback(() => {
+                        console.log(deleteOrderErr);
+                        return res.status(500).json("Error occurred while deleting an Order.");
+                    });
+                }
+
+                // Commit the transaction if all queries succeed
+                db.commit((commitErr) => {
+                    if (commitErr) {
+                        console.log(commitErr);
+                        return res.status(500).json("Error occurred while committing the transaction.");
+                    }
+                    return res.status(200).json("Order and related records deleted.");
+                });
+            });
+        });
     });
 };
 
 export const addOrder = (req, res) => {
+    // date that the user selected in the modal
     const selectedDate = new Date(req.body.selectedDate);
     // date components
     const year = selectedDate.getUTCFullYear();
@@ -42,24 +78,46 @@ export const addOrder = (req, res) => {
     const hours = selectedDate.getUTCHours();
     const minutes = selectedDate.getUTCMinutes();
     const seconds = selectedDate.getUTCSeconds();
-
-    // making mysql compatible date and times
+    // processing the date and time into a format that mysql can accept
     const formattedDate = `${year}-${month}-${day}`;
     const formattedTime = `${hours}:${minutes}:${seconds}`;
 
-    const q = "INSERT INTO `ORDER`(`Date`, `Time`, `SuID`, `EID`) VALUES (?,?,?,?)";
-    const values = [
+    const orderValues = [
         formattedDate,
         formattedTime,
         req.body.SuID,
         req.body.EID,
     ];
 
-    db.query(q, values, (err, data) => {
-        if (err) {
-            console.log(err);
+    // Insert order into the ORDER table
+    const orderQuery = "INSERT INTO `ORDER`(`Date`, `Time`, `SuID`, `EID`) VALUES (?,?,?,?)";
+
+    db.query(orderQuery, orderValues, async (orderErr, orderResult) => {
+        if (orderErr) {
+            console.log(orderErr);
             return res.status(500).json("Error occurred while adding an order.");
         }
-        return res.status(200).json("Order added.");
+
+        const orderID = orderResult.insertId;
+
+        // Insert selected inventory items into the HAS table
+        const hasQuery = "INSERT INTO HAS (`Order_ID`, `Product_code`) VALUES (?, ?)";
+        const suppliesQuery = "INSERT INTO SUPPLIES (`SuID`, `Product_code`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `SuID` = `SuID`";
+
+        try {
+            // Insert into HAS table
+            for (const productCode of req.body.selectedInventory) {
+                await db.query(hasQuery, [orderID, productCode]);
+            }
+
+            // Insert into SUPPLIES table, we will also ensure that no duplicates will be added to avoid breaking unique key contraints for the SUPPLIES table
+            for (const productCode of req.body.selectedInventory) {
+                await db.query(suppliesQuery, [req.body.SuID, productCode]);
+            }
+            return res.status(200).json("Order added.");
+        } catch (insertErr) {
+            console.log(insertErr);
+            return res.status(500).json("Error occurred while adding inventory items to the order.");
+        }
     });
 };
