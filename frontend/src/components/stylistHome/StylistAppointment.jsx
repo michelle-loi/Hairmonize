@@ -6,10 +6,12 @@ import {BsTrash3Fill} from "react-icons/bs";
 
 const StylistAppointment = () => {
     const {currentUser} = useContext(AuthContext);
-    const EID = currentUser.EID;
+
+    // create default to prevent logout error
+    // const EID = currentUser.EID;
+    const EID = currentUser?.EID || '';
 
     const [myAppts, setMyAppts] = useState([]);
-
 
     useEffect(() => {
         const fetchMyAppts = async () => {

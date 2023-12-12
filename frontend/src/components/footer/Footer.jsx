@@ -7,8 +7,11 @@ function Footer() {
 
     const {currentUser} = useContext(AuthContext);
 
+    // create default to prevent logout error
+    const user = currentUser || { AccountType: '' };
+
     const footerColor = () => {
-        switch (currentUser.AccountType){
+        switch (user.AccountType){
             case 0:
                 return 'stylist-footer';
             case 1:
