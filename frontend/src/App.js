@@ -19,6 +19,12 @@ import AddInventoryStylist from "./components/stylistHome/Inventory/addInventory
 import EditInventoryStylist from "./components/stylistHome/Inventory/editInventoryStylist";
 
 import AdminStylistHome from "./pages/adminstylist/adminStylistHome";
+import AddEmployeeAS from "./components/adminStylistHome/Employee/addEmployeeAS";
+import EditEmployeeAS from "./components/adminStylistHome/Employee/editEmployeeAS";
+import AddClientAS from "./components/adminStylistHome/Client/addClientAS";
+import AddAccountAS from "./components/adminStylistHome/Accounts/addAccountAS";
+import AddInventoryAS from "./components/adminStylistHome/Inventory/addInventoryAS";
+import EditInventoryAS from "./components/adminStylistHome/Inventory/editInventoryAS";
 
 function App() {
   return (
@@ -37,14 +43,20 @@ function App() {
             <Route path="/adminHome/editEmployee/:id" element={<EditEmployee/>}/>
             <Route path="/adminHome/addEmployee" element={<AddEmployee/>}/>
             <Route path="/adminHome/addClient" element={<AddClient/>}/>
-            <Route path="adminHome/addAccount" element={<AddAccount/>}/>
+            <Route path="/adminHome/addAccount" element={<AddAccount/>}/>
             <Route path="/adminHome/editInventory/:id" element={<EditInventory/>}/>
             <Route path="/adminHome/addInventory" element={<AddInventory/>}/>
 
             <Route path="/stylistHome/editInventory/:id" element={<EditInventoryStylist/>}/>
             <Route path="/stylistHome/addInventory" element={<AddInventoryStylist/>}/>
 
-            <Route path="/adminStylistHome" element={<AdminStylistHome/>}/>
+            <Route path="/adminStylistHome/*" element={<AdminStylistHome/>}/>
+            <Route path="/adminStylistHome/editEmployee/:id" element={<EditEmployeeAS/>}/>
+            <Route path="/adminStylistHome/addEmployee" element={<AddEmployeeAS/>}/>
+            <Route path="/adminStylistHome/addClient" element={<AddClientAS/>}/>
+            <Route path="/adminStylistHome/addAccount" element={<AddAccountAS/>}/>
+            <Route path="/adminStylistHome/editInventory/:id" element={<EditInventoryAS/>}/>
+            <Route path="/adminStylistHome/addInventory" element={<AddInventoryAS/>}/>
 
           </Routes>
         </BrowserRouter>
