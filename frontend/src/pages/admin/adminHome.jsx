@@ -10,6 +10,7 @@ import {BrowserRouter, Link, Route, Routes} from 'react-router-dom';
 import ViewServices from "../../components/adminHome/Services/ViewServices";
 import ViewTransactions from "../../components/adminHome/Transactions/ViewTransactions";
 import ViewSuppliers from "../../components/adminHome/Suppliers/ViewSuppliers";
+import ViewExpenses from "../../components/adminHome/Expenses/ViewExpenses";
 import ViewOrders from "../../components/adminHome/Orders/ViewOrders";
 import ViewInventory from "../../components/adminHome/Inventory/viewInventory"
 
@@ -47,6 +48,9 @@ const adminHome = () => {
                                 <Nav.Link eventKey="suppliers">Suppliers</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
+                                <Nav.Link eventKey="supplies">Supplies</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
                                 <Nav.Link eventKey="inventory">Inventory</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
@@ -79,7 +83,7 @@ const adminHome = () => {
 
                             {/* Expenses page */}
                             <Tab.Pane eventKey="expenses">
-                                E
+                                <ViewExpenses/>
 
                             </Tab.Pane>
 
@@ -92,6 +96,10 @@ const adminHome = () => {
                             {/* Suppliers page */}
                             <Tab.Pane eventKey="suppliers">
                                 <ViewSuppliers/>
+                            </Tab.Pane>
+
+                            <Tab.Pane eventKey="supplies">
+                                Test
                             </Tab.Pane>
 
                             {/* inventory page */}
