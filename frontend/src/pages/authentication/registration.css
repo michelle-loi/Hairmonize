@@ -48,3 +48,8 @@
     position: relative;
     display: inline-block;
 }
+
+.selected-stylist{
+    margin-top: 3rem;
+    color: #0b0bb7;
+}

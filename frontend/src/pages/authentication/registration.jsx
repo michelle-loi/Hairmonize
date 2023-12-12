@@ -67,6 +67,9 @@ const Registration = () => {
     // to get who the user selects as their stylist
     const [selectedEID, setSelectedEID] = useState(null)
 
+    // get the stylist name to display
+    const [selectedStylist, setSelectedStylist] = useState(null);
+
     // Get stylists for dropdown menu
     useEffect(() => {
         const fetchStylists = async () => {
@@ -82,6 +85,12 @@ const Registration = () => {
 
     // get the selected stylists eid
     const selectStylist = (EID) => {
+
+        // find the matching stylist name
+        const selectedStylist = stylists.find((stylist) => stylist.EID === EID);
+        setSelectedStylist(selectedStylist);
+
+        // set their eid
         setSelectedEID(EID);
     };
 
@@ -323,6 +332,12 @@ const Registration = () => {
                                 ))}
                             </Dropdown.Menu>
                         </Dropdown>
+
+                        {selectedStylist && (
+                            <div className="selected-stylist">
+                                <h2>My Stylist: {`${selectedStylist.FName} ${selectedStylist.LName}`}</h2>
+                            </div>
+                        )}
                     </div>
 
                     {/* Column for Account */}
