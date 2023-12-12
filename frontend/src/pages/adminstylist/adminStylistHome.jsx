@@ -16,50 +16,55 @@ import ViewInventory from "../../components/adminHome/Inventory/viewInventory"
 import ViewSupplies from "../../components/adminHome/Supplies/viewSupplies";
 import Footer from "../../components/footer/Footer";
 
-import "./adminHome.css"
-
+import "./adminStylistHome.css"
 
 // https://react-bootstrap.netlify.app/docs/components/tabs/
 
-const adminHome = () => {
+const adminStylistHome = () => {
     return(
-        <div className="adminHomePage">
+        <div className="admin-stylist-homepage">
             <NavigationBar/>
-            <div className="admin-homepage-content">
-                <Tab.Container id="sidebar" defaultActiveKey="employees">
+            <div className="admin-stylist-homepage-content">
+                <Tab.Container id="admin-stylist-sidebar" defaultActiveKey="as-upcoming">
                     <Row>
                         <Col sm={2}>
-                            <div className="admin-pill-colors">
+                            <div className="as-pill-colors">
                                 <Nav variant="pills" className="flex-column">
                                     <Nav.Item>
-                                        <Nav.Link eventKey="employees">Employees</Nav.Link>
+                                        <Nav.Link eventKey="as-upcoming">Upcoming Appointments</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="clients">Clients</Nav.Link>
+                                        <Nav.Link eventKey="as-book">Book Appointments</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="accounts">Accounts</Nav.Link>
+                                        <Nav.Link eventKey="as-employees">Employees</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="services">Services</Nav.Link>
+                                        <Nav.Link eventKey="as-clients">Clients</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="expenses">Expenses</Nav.Link>
+                                        <Nav.Link eventKey="as-accounts">Accounts</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="orders">Orders</Nav.Link>
+                                        <Nav.Link eventKey="as-services">Services</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="suppliers">Suppliers</Nav.Link>
+                                        <Nav.Link eventKey="as-expenses">Expenses</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="supplies">Supplies</Nav.Link>
+                                        <Nav.Link eventKey="as-orders">Orders</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="inventory">Inventory</Nav.Link>
+                                        <Nav.Link eventKey="as-suppliers">Suppliers</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="transactions">Transactions</Nav.Link>
+                                        <Nav.Link eventKey="as-supplies">Supplies</Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link eventKey="as-inventory">Inventory</Nav.Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Nav.Link eventKey="as-transactions">Transactions</Nav.Link>
                                     </Nav.Item>
                                 </Nav>
                             </div>
@@ -67,55 +72,65 @@ const adminHome = () => {
                         <Col sm={10}>
                             <Tab.Content>
 
+                                {/* Upcoming appointments page*/}
+                                <Tab.Pane eventKey="as-upcoming">
+                                    <UpcomingAppointments/>
+                                </Tab.Pane>
+
+                                {/* Book appointments page */}
+                                <Tab.Pane eventKey="as-book">
+                                    <BookAppointments/>
+                                </Tab.Pane>
+
                                 {/*Employees page*/}
-                                <Tab.Pane eventKey="employees">
+                                <Tab.Pane eventKey="as-employees">
                                     <ViewEmployee/>
                                 </Tab.Pane>
 
                                 {/* clients page */}
-                                <Tab.Pane eventKey="clients">
+                                <Tab.Pane eventKey="as-clients">
                                     <ViewClients/>
                                 </Tab.Pane>
 
                                 {/* Accounts page */}
-                                <Tab.Pane eventKey="accounts">
+                                <Tab.Pane eventKey="as-accounts">
                                     <ViewAccounts/>
                                 </Tab.Pane>
 
                                 {/* Services page */}
-                                <Tab.Pane eventKey="services">
+                                <Tab.Pane eventKey="as-services">
                                     <ViewServices/>
                                 </Tab.Pane>
 
                                 {/* Expenses page */}
-                                <Tab.Pane eventKey="expenses">
+                                <Tab.Pane eventKey="as-expenses">
                                     <ViewExpenses/>
 
                                 </Tab.Pane>
 
                                 {/* Orders page */}
-                                <Tab.Pane eventKey="orders">
+                                <Tab.Pane eventKey="as-orders">
                                     <ViewOrders/>
                                 </Tab.Pane>
 
 
                                 {/* Suppliers page */}
-                                <Tab.Pane eventKey="suppliers">
+                                <Tab.Pane eventKey="as-suppliers">
                                     <ViewSuppliers/>
                                 </Tab.Pane>
 
-                                <Tab.Pane eventKey="supplies">
+                                <Tab.Pane eventKey="as-supplies">
                                     <ViewSupplies/>
                                 </Tab.Pane>
 
                                 {/* inventory page */}
-                                <Tab.Pane eventKey="inventory">
+                                <Tab.Pane eventKey="as-inventory">
                                     <ViewInventory/>
 
                                 </Tab.Pane>
 
                                 {/* transaction page */}
-                                <Tab.Pane eventKey="transactions">
+                                <Tab.Pane eventKey="as-transactions">
                                     <ViewTransactions/>
                                 </Tab.Pane>
                             </Tab.Content>
@@ -128,4 +143,4 @@ const adminHome = () => {
     )
 }
 
-export default adminHome
+export default adminStylistHome

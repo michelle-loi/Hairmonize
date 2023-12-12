@@ -15,6 +15,8 @@ import AddAccount from "./components/adminHome/Accounts/addAccount"
 import EditInventory from "./components/adminHome/Inventory/editInventory"
 import AddInventory from "./components/adminHome/Inventory/addInventory";
 
+import AdminStylistHome from "./pages/adminstylist/adminStylistHome";
+
 function App() {
   return (
       <div className="App">
@@ -35,6 +37,8 @@ function App() {
             <Route path="adminHome/addAccount" element={<AddAccount/>}/>
             <Route path="/adminHome/editInventory/:id" element={<EditInventory/>}/>
             <Route path="/adminHome/addInventory" element={<AddInventory/>}/>
+
+            <Route path="/adminStylistHome" element={<AdminStylistHome/>}/>
 
           </Routes>
         </BrowserRouter>

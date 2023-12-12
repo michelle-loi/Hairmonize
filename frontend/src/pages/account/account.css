@@ -1,0 +1,9 @@
+.accountPage{
+    min-height: 100vh;  /* stretch height of page to the max viewport */
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-page-content{
+    min-height: 100vh;
+}
