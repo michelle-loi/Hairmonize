@@ -32,12 +32,12 @@ export const addTransaction = (req, res) => {
 };
 
 export const deleteTransaction = (req, res) => {
-    const SID = req.params.id;
+    const Transaction_ID = req.params.id;
     const q = "DELETE FROM TRANSACTION WHERE `Transaction_ID` = ?";
 
-    db.query(q, [SID], (err, data) => {
-        if (err) return res.status(500).json("Error occurred while trying to delete a service.");
-        return res.status(200).json("Service has been deleted.");
+    db.query(q, [Transaction_ID], (err, data) => {
+        if (err) return res.status(500).json("Error occurred while trying to delete a transaction.");
+        return res.status(200).json("Transaction has been deleted.");
     });
 };
 

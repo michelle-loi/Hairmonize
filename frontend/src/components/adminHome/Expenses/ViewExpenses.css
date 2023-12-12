@@ -1,0 +1,22 @@
+/* Services CSS */
+.expense-trash-icon svg{
+    color: #ff0000;
+}
+.expense-edit-icon svg{
+    color: rgba(11, 54, 220, 0.61);
+}
+
+.expenses-table td:nth-child(1) {
+    width:7rem;
+}
+
+.expenses-table td:nth-child(2) {
+    width:20rem;
+}
+
+.add-new-expense-b{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 2rem;
+    margin-bottom: 2rem;
+}
