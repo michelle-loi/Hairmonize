@@ -5,7 +5,10 @@ import {Col, Nav, Row, Tab} from "react-bootstrap";
 import StylistAppointment from "../../components/stylistHome/StylistAppointment";
 import BookAppointments from "../../components/stylistHome/BookAppointments";
 import ViewClients from '../../components/stylistHome/ViewClients'
-import "./StylistHome.css"
+import ViewPriceList from "../../components/clienthome/ViewPriceList";
+import ViewExpenses from "../../components/adminHome/Expenses/ViewExpenses";
+import ViewInventoryStylist from "../../components/stylistHome/Inventory/viewInventoryStylist";
+
 const stylistHome = () => {
     return(
         <div className="stylistHomePage">
@@ -32,16 +35,7 @@ const stylistHome = () => {
                                         <Nav.Link eventKey="stylist-expenses">Expenses</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="stylist-orders">Orders</Nav.Link>
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                        <Nav.Link eventKey="stylist-suppliers">Suppliers</Nav.Link>
-                                    </Nav.Item>
-                                    <Nav.Item>
                                         <Nav.Link eventKey="stylist-inventory">Inventory</Nav.Link>
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                        <Nav.Link eventKey="stylist-transactions">Transactions</Nav.Link>
                                     </Nav.Item>
                                 </Nav>
                             </div>
@@ -65,37 +59,17 @@ const stylistHome = () => {
 
                                 {/* Accounts page */}
                                 <Tab.Pane eventKey="stylist-services">
-                                    S
+                                    <ViewPriceList/>
                                 </Tab.Pane>
 
                                 {/* Services page */}
                                 <Tab.Pane eventKey="stylist-expenses">
-                                    S
-
-                                </Tab.Pane>
-
-                                {/* Expenses page */}
-                                <Tab.Pane eventKey="stylist-orders">
-                                    E
-
-                                </Tab.Pane>
-
-                                {/* Suppliers page */}
-                                <Tab.Pane eventKey="stylist-suppliers">
-                                    Sup
-
+                                    <ViewExpenses/>
                                 </Tab.Pane>
 
                                 {/* inventory page */}
                                 <Tab.Pane eventKey="stylist-inventory">
-                                    Client
-
-                                </Tab.Pane>
-
-                                {/* transaction page */}
-                                <Tab.Pane eventKey="stylist-transactions">
-                                    Trans
-
+                                    <ViewInventoryStylist/>
                                 </Tab.Pane>
                             </Tab.Content>
                         </Col>

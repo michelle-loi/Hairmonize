@@ -15,6 +15,9 @@ import AddAccount from "./components/adminHome/Accounts/addAccount"
 import EditInventory from "./components/adminHome/Inventory/editInventory"
 import AddInventory from "./components/adminHome/Inventory/addInventory";
 
+import AddInventoryStylist from "./components/stylistHome/Inventory/addInventoryStylist";
+import EditInventoryStylist from "./components/stylistHome/Inventory/editInventoryStylist";
+
 function App() {
   return (
       <div className="App">
@@ -26,7 +29,7 @@ function App() {
             <Route path="/clientHome" element={<ClientHome/>}/>
             <Route path="/account" element={<Account/>}/>
             <Route path="/adminHome/*" element={<AdminHome/>}/>
-            <Route path="/stylistHome" element={<StylistHome/>}/>
+            <Route path="/stylistHome/*" element={<StylistHome/>}/>
             <Route path="/accountEdit" element={<AccountEdit/>}/>
 
             <Route path="/adminHome/editEmployee/:id" element={<EditEmployee/>}/>
@@ -35,6 +38,9 @@ function App() {
             <Route path="adminHome/addAccount" element={<AddAccount/>}/>
             <Route path="/adminHome/editInventory/:id" element={<EditInventory/>}/>
             <Route path="/adminHome/addInventory" element={<AddInventory/>}/>
+
+            <Route path="/stylistHome/editInventory/:id" element={<EditInventoryStylist/>}/>
+            <Route path="/stylistHome/addInventory" element={<AddInventoryStylist/>}/>
 
           </Routes>
         </BrowserRouter>
