@@ -57,10 +57,21 @@ export const addAppointment = (req, res) => {
     });
 };
 
-// UPCOMING APPOINTMENTS
 export const getMyAppts = (req, res) => {
     const q =
         "SELECT * FROM APPOINTMENT WHERE CID = ?";
+
+    db.query(q, [res.params.id], (err, data) => {
+        if (err) return res.status(500).json(err);
+
+        return res.status(200).json(data);
+    });
+};
+
+// UPCOMING APPOINTMENTS
+export const getMyApptsServiceName = (req, res) => {
+    const q =
+        "SELECT CID, Date, Time, Service_SID, SName FROM APPOINTMENT JOIN SERVICE WHERE CID = ? AND SERVICE_SID = SID";
 
     db.query(q, [req.params.id], (err, data) => {
         if (err) return res.status(500).json(err);
