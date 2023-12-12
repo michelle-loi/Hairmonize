@@ -13,6 +13,8 @@ import ViewSuppliers from "../../components/adminHome/Suppliers/ViewSuppliers";
 import ViewExpenses from "../../components/adminHome/Expenses/ViewExpenses";
 import ViewOrders from "../../components/adminHome/Orders/ViewOrders";
 import ViewInventory from "../../components/adminHome/Inventory/viewInventory"
+import ViewSupplies from "../../components/adminHome/Supplies/viewSupplies";
+
 
 // https://react-bootstrap.netlify.app/docs/components/tabs/
 
@@ -99,7 +101,7 @@ const adminHome = () => {
                             </Tab.Pane>
 
                             <Tab.Pane eventKey="supplies">
-                                Test
+                                <ViewSupplies/>
                             </Tab.Pane>
 
                             {/* inventory page */}

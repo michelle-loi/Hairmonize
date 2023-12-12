@@ -17,6 +17,7 @@ import viewExpenses from "./routes/viewExpenses.js";
 import registration from "./routes/registration.js";
 import stylist from "./routes/stylist.js"
 import clientMerchandise from "./routes/clientMerchandise.js";
+import viewSupplies from "./routes/viewSupplies.js";
 
 import cookieParser from "cookie-parser"
 
@@ -46,6 +47,7 @@ app.use("/backend/viewExpenses", viewExpenses)
 app.use("/backend/registration", registration)
 app.use("/backend/stylist", stylist)
 app.use("/backend/clientMerchandise", clientMerchandise)
+app.use("/backend/viewSupplies", viewSupplies)
 
 // Connect to the database
 app.listen(8800, ()=>{

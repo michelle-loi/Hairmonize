@@ -4,8 +4,6 @@ import {
     getOneProduct, updateProduct,
     addProduct
 } from "../controllers/viewInventory.js";
-import {deleteAccount, getAccounts} from "../controllers/viewAccounts.js";
-import {getOneEmployee, updateEmployee} from "../controllers/viewEmployee.js";
 
 const router = express.Router()
 
