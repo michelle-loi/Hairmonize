@@ -19,6 +19,9 @@ import AddInventoryStylist from "./components/stylistHome/Inventory/addInventory
 import EditInventoryStylist from "./components/stylistHome/Inventory/editInventoryStylist";
 
 import AdminStylistHome from "./pages/adminstylist/adminStylistHome";
+import AddEmployeeAS from "./components/adminStylistHome/Employee/addEmployeeAS";
+import EditEmployeeAS from "./components/adminStylistHome/Employee/editEmployeeAS";
+import AddClientAS from "./components/adminStylistHome/Client/addClientAS";
 
 function App() {
   return (
@@ -44,7 +47,11 @@ function App() {
             <Route path="/stylistHome/editInventory/:id" element={<EditInventoryStylist/>}/>
             <Route path="/stylistHome/addInventory" element={<AddInventoryStylist/>}/>
 
-            <Route path="/adminStylistHome" element={<AdminStylistHome/>}/>
+            <Route path="/adminStylistHome/*" element={<AdminStylistHome/>}/>
+            <Route path="/adminStylistHome/editEmployee/:id" element={<EditEmployeeAS/>}/>
+            <Route path="/adminStylistHome/addEmployee" element={<AddEmployeeAS/>}/>
+            <Route path="/adminStylistHome/addClient" element={<AddClientAS/>}/>
+
 
           </Routes>
         </BrowserRouter>

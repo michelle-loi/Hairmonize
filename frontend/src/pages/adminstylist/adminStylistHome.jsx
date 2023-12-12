@@ -3,7 +3,7 @@ import {Col, Nav, Row, Tab} from "react-bootstrap";
 import UpcomingAppointments from "../../components/clienthome/upcomingAppointments";
 import BookAppointments from "../../components/clienthome/BookAppointments";
 import NavigationBar from "../../components/navbar/NavBar"
-import ViewEmployee from "../../components/adminHome/viewEmployee";
+//import ViewEmployee from "../../components/adminHome/viewEmployee";
 import ViewClients from "../../components/adminHome/viewClients";
 import ViewAccounts from "../../components/adminHome/Accounts/viewAccounts";
 import {BrowserRouter, Link, Route, Routes} from 'react-router-dom';
@@ -15,6 +15,9 @@ import ViewOrders from "../../components/adminHome/Orders/ViewOrders";
 import ViewInventory from "../../components/adminHome/Inventory/viewInventory"
 import ViewSupplies from "../../components/adminHome/Supplies/viewSupplies";
 import Footer from "../../components/footer/Footer";
+
+import ViewEmployeeAS from "../../components/adminStylistHome/Employee/viewEmployeeAS";
+import ViewClientsAS from "../../components/adminStylistHome/Client/viewClientsAS";
 
 import "./adminStylistHome.css"
 
@@ -84,12 +87,12 @@ const adminStylistHome = () => {
 
                                 {/*Employees page*/}
                                 <Tab.Pane eventKey="as-employees">
-                                    <ViewEmployee/>
+                                    <ViewEmployeeAS/>
                                 </Tab.Pane>
 
                                 {/* clients page */}
                                 <Tab.Pane eventKey="as-clients">
-                                    <ViewClients/>
+                                    <ViewClientsAS/>
                                 </Tab.Pane>
 
                                 {/* Accounts page */}
