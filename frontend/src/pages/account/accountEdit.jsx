@@ -164,8 +164,19 @@ const AccountEdit = () => {
             if (password.trim() !== "") {
                 updateEmployeePassword();
             }
+        }
 
+        // check if account type is 3 which signals admin stylist, if so update admin stylist data
+        if (currentUser && currentUser.AccountType === 3) {
+            updateEmployeeEmail();
+            updateEmployeePhone();
+            updateEmployee();
 
+            // update the password only if the field is not empty
+            // Check if the password field is not empty, and update the password
+            if (password.trim() !== "") {
+                updateEmployeePassword();
+            }
         }
     };
 
@@ -421,7 +432,7 @@ const AccountEdit = () => {
                                         required
                                     />
                                     <Form.Text id="telphoneInfo">
-                                        Updated Telephone numbers should be in the format ##########
+                                        Updated Telephone numbers should be 10 digits and in the format ##########
                                     </Form.Text>
                                 </InputGroup>
                             </Form.Group>
