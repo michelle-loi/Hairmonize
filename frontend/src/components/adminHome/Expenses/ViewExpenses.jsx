@@ -16,27 +16,35 @@ const ViewExpenses = () => {
     // To get expenses
     const[expenses, setExpenses] = useState([])
 
+    // Function to fetch expenses
+    const fetchExpenses = async () => {
+        try {
+            const res = await axios.get("/viewExpenses/getExpenses");
+            setExpenses(res.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    // Get Expenses
+    useEffect(() => {
+        fetchExpenses();
+    }, []);
+
+
+
     // For deleting expenses
     const handleDelete = async (ExID)=> {
         try{
             await axios.delete(`/viewExpenses/deleteExpense/${ExID}`);
+            // update table
+            fetchExpenses();
         }catch (err){
             console.log(err);
         }
     }
 
-    // Get Expenses
-    useEffect(() => {
-        const fetchExpenses = async ()=>{
-            try{
-                const res = await axios.get("/viewExpenses/getExpenses") // whatever it is called first in route / function name
-                setExpenses(res.data)
-            }catch (err){
-                console.log(err)
-            }
-        }
-        fetchExpenses();
-    }, []);
+
 
     // Function to display expenses by mapping through them
     const expenseRowInTable = expenses.map((expense) => (
@@ -88,6 +96,8 @@ const ViewExpenses = () => {
         try{
             newExpenses.EID = currentUser.EID;
             const res = await axios.post("/viewExpenses/addExpense", newExpenses)
+            // update table
+            fetchExpenses();
             // clear the fields for next time
             newExpenses.Date = '';
             newExpenses.Time = '';
@@ -98,6 +108,8 @@ const ViewExpenses = () => {
             setError('Error occurred while adding expense...');
         }
     }
+
+
 
     // Deals with modal to add an expense
     // Template from React bootstrap website
