@@ -4,6 +4,16 @@ import jwt from "jsonwebtoken";
 
 // controller for the register page
 export const register = (request, response) => {
+    // Get the current date and time
+    const currentDate = new Date();
+    // get the date components
+    const year = currentDate.getUTCFullYear();
+    const month = currentDate.getUTCMonth() + 1;
+    const day = currentDate.getUTCDate();
+
+    // Format the date and time into a format that mysql can accept
+    const formattedDate = `${year}-${month}-${day}`;
+
     // Make query of a user name
     const query = "SELECT * FROM  ACCOUNT WHERE Username = ?"
 
@@ -18,13 +28,14 @@ export const register = (request, response) => {
         const hash = bcrypt.hashSync(request.body.Password, salt);
 
         // insert the new user into the database (account table)
-        const newUser = "INSERT into ACCOUNT(Username, Password, AccountType, CID) VALUES(?)"
+        const newUser = "INSERT into ACCOUNT(Username, Password, AccountType, CID, CreationDate) VALUES(?)"
         const values =[
             request.body.Username,
             hash,
             // make account type = 1 for customer
             1,
-            request.body.CID
+            request.body.CID,
+            formattedDate
     ]
 
         db.query(newUser, [values], (err,data) => {
