@@ -45,9 +45,6 @@ const ViewExpenses = () => {
                 <Button className="expense-trash-icon" variant="light" onClick={()=>handleDelete(expense.ExID)}>
                     <BsTrash3Fill/>
                 </Button>
-                <Button className="expense-edit-icon " variant="light">
-                    <FaEdit />
-                </Button>
             </td>
             <td>{expense.ExID}</td>
             <td>{expense.Date.split('T')[0]}</td>
@@ -117,6 +114,26 @@ const ViewExpenses = () => {
     }
 
     const handleShow = () => setShow(true); // to show modal
+
+    // get the year, month, and totals for filtering
+    const [year, setYear] = useState('')
+    const [month, setMonth] = useState('')
+    const [totals, setTotal] = useState('')
+
+    // filter total expenses
+    const filterTotalExpenses = async () => {
+        try {
+            const iData = {
+                Month: month,
+                Year: year,
+            }
+
+            const res = await axios.post("/viewExpenses/filterAggregateExpenses", iData);
+            setTotal(res.data)
+        } catch (err) {
+            console.log(err)
+        }
+    };
 
     return(
         <Container className="view-expense-page" fluid>
@@ -198,6 +215,42 @@ const ViewExpenses = () => {
                 </thead>
                 <tbody>
                 {expenseRowInTable}
+                </tbody>
+            </Table>
+
+            {/* User selection of expenses */}
+            <Form className="mt-5">
+                <Form.Group className="mb-3" controlId="expense-get-year">
+                    <Form.Label>Year</Form.Label>
+                    <Form.Control
+                        type='number'
+                        autoFocus
+                        name = 'Year'
+                        onChange={(e) => setYear(e.target.value)}
+                    />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="expense-get-month">
+                    <Form.Label>Month</Form.Label>
+                    <Form.Control
+                        type='number'
+                        name = 'Month'
+                        onChange={(e) => setMonth(e.target.value)}
+                    />
+                </Form.Group>
+            </Form>
+             <Button variant="primary" onClick={filterTotalExpenses}> Filter </Button>
+
+            {/* Display total expenses based on selection */}
+            <Table className="aggregate-expenses" responsive="sm">
+                <thead>
+                <tr>
+                    <th className="header">Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{totals && totals[0] && totals[0].Total}</td>
+                </tr>
                 </tbody>
             </Table>
         </Container>
