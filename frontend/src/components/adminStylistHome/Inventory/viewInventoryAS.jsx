@@ -8,7 +8,7 @@ import { FaEdit } from "react-icons/fa";
 
 
 
-const ViewInventory=()=>{
+const ViewInventoryAS=()=>{
 
     const [inventoryTable, setInventoryTable] = useState([]);
 
@@ -39,6 +39,7 @@ const ViewInventory=()=>{
     }, []);
 
 
+
     const handleDelete = async (Product_code)=>{
         try {
             const res = await axios.delete(`/viewInventory/deleteInventory/${Product_code}`);
@@ -62,7 +63,7 @@ const ViewInventory=()=>{
             <div className="d-flex align-items-center mt-3 justify-content-start">
                 <h1 className="mt-3">Inventory</h1>
 
-                <Link className="link" to={`/adminhome/addInventory`}>
+                <Link className="link" to={`/adminStylistHome/addInventory`}>
                     <Button variant="success" style={{ marginTop: '20px' , marginLeft: '20px'}}>Add new product</Button>
                 </Link>
             </div>
@@ -104,7 +105,7 @@ const ViewInventory=()=>{
                             </td>
 
                             <td>
-                                <Link className="link" to={`/adminhome/editInventory/${item.Product_code}`}>
+                                <Link className="link" to={`/adminStylistHome/editInventory/${item.Product_code}`}>
                                     <Button variant="warning"><FaEdit /></Button>
                                 </Link>
                             </td>
@@ -117,8 +118,9 @@ const ViewInventory=()=>{
             </Table>
 
             <h3>Total value of all items in inventory: ${totalInventoryValue}</h3>
+
         </div>
     );
 }
 
-export default ViewInventory;
+export default ViewInventoryAS;

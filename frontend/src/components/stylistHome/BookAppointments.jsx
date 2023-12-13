@@ -9,7 +9,9 @@ const BookAppointments = () => {
     // const navigate = useNavigate();
 
     const {currentUser} = useContext(AuthContext);
-    const EID = currentUser.EID;
+   // const EID = currentUser.EID;
+    const EID = currentUser?.EID || '';
+
     const [availableServices, setAvailableServices] = useState([]);
 
     const [dateSelected, setDateSelected] = useState('');

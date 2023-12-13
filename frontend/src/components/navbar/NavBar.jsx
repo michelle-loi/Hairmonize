@@ -44,6 +44,14 @@ const NavBar = () => {
                     </Navbar.Brand>
                 )}
 
+                {currentUser?.AccountType === 3 && ( // admin stylist
+                    <Navbar.Brand href="/adminStylistHome">
+                        <div className="square">
+                            <LuScissorsSquare className="scissorIcon" />
+                        </div>
+                    </Navbar.Brand>
+                )}
+
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
 

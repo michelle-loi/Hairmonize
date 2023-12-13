@@ -48,6 +48,9 @@ const Login = () => {
 
             }else if (user && user.AccountType === 2) {
                 navigate("/adminHome");
+
+            } else if (user && user.AccountType === 3){
+                navigate("/adminStylistHome")
             }
 
         }catch (error){
@@ -55,9 +58,6 @@ const Login = () => {
         }
 
     }
-
-
-
 
     return(
         <div className="loginPage">

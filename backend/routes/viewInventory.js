@@ -2,7 +2,8 @@ import express from "express"
 import {
     getInventory, deleteInventory,
     getOneProduct, updateProduct,
-    addProduct
+    addProduct,
+    getTotalInventoryValue
 } from "../controllers/viewInventory.js";
 
 const router = express.Router()
@@ -15,5 +16,7 @@ router.delete("/deleteInventory/:id", deleteInventory)
 router.get("/getOneProduct/:id", getOneProduct)
 router.put("/updateProduct/:id", updateProduct)
 router.post("/addProduct", addProduct)
+
+router.get("/getTotalInventoryValue", getTotalInventoryValue)
 
 export default router;

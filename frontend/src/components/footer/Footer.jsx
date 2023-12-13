@@ -1,10 +1,32 @@
-import React from 'react';
-import {Container, Row, Col, ListGroup} from 'react-bootstrap';
+import React, {useContext} from 'react';
+import {Container, Row} from 'react-bootstrap';
 import "./Footer.css"
+import {AuthContext} from "../../context/authContext";
 
 function Footer() {
+
+    const {currentUser} = useContext(AuthContext);
+
+    // create default to prevent logout error
+    const user = currentUser || { AccountType: '' };
+
+    const footerColor = () => {
+        switch (user.AccountType){
+            case 0:
+                return 'stylist-footer';
+            case 1:
+                return 'client-footer';
+            case 2:
+                return 'admin-footer';
+            case 3:
+                return 'admin-stylist-footer'
+            default:
+                return '';
+        }
+    };
+
     return (
-        <footer className="footer">
+        <footer className={footerColor()}>
             <Container>
                 <Row>
                     <p className="hours">

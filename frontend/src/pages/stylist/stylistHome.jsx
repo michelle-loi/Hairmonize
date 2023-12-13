@@ -9,6 +9,8 @@ import ViewPriceList from "../../components/clienthome/ViewPriceList";
 import ViewExpenses from "../../components/adminHome/Expenses/ViewExpenses";
 import ViewInventoryStylist from "../../components/stylistHome/Inventory/viewInventoryStylist";
 
+import "./StylistHome.css"
+
 const stylistHome = () => {
     return(
         <div className="stylistHomePage">

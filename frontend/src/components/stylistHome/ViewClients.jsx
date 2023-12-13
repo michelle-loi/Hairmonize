@@ -6,7 +6,10 @@ import {BsTrash3Fill} from "react-icons/bs";
 
 const ViewClients = () => {
     const {currentUser} = useContext(AuthContext);
-    const EID = currentUser.EID;
+
+    // create default to prevent log out error
+    // const EID = currentUser.EID;
+    const EID = currentUser?.EID || '';
 
     const [myClients, setMyClients] = useState([]);
 
