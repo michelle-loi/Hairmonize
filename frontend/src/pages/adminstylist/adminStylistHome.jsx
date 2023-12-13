@@ -1,7 +1,7 @@
 import React from "react";
 import {Col, Nav, Row, Tab} from "react-bootstrap";
-import UpcomingAppointments from "../../components/clienthome/upcomingAppointments";
-import BookAppointments from "../../components/clienthome/BookAppointments";
+import StylistAppointment from "../../components/stylistHome/StylistAppointment";
+import BookAppointments from "../../components/stylistHome/BookAppointments";
 import NavigationBar from "../../components/navbar/NavBar"
 //import ViewEmployee from "../../components/adminHome/viewEmployee";
 import ViewClients from "../../components/adminHome/viewClients";
@@ -79,7 +79,7 @@ const adminStylistHome = () => {
 
                                 {/* Upcoming appointments page*/}
                                 <Tab.Pane eventKey="as-upcoming">
-                                    <UpcomingAppointments/>
+                                    <StylistAppointment/>
                                 </Tab.Pane>
 
                                 {/* Book appointments page */}
