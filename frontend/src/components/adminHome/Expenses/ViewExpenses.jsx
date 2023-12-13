@@ -233,7 +233,7 @@ const ViewExpenses = () => {
             {/* User selection of expenses */}
             <Form className="mt-5">
                 <Form.Group className="mb-3" controlId="expense-get-year">
-                    <Form.Label>Year</Form.Label>
+                    <Form.Label className="filter-name">Year</Form.Label>
                     <Form.Control
                         type='number'
                         autoFocus
@@ -242,7 +242,7 @@ const ViewExpenses = () => {
                     />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="expense-get-month">
-                    <Form.Label>Month</Form.Label>
+                    <Form.Label className="filter-name">Month</Form.Label>
                     <Form.Control
                         type='number'
                         name = 'Month'
@@ -250,10 +250,11 @@ const ViewExpenses = () => {
                     />
                 </Form.Group>
             </Form>
-             <Button variant="primary" onClick={filterTotalExpenses}> Filter </Button>
+            <h5 className="mt-3">Hit filter without any inputs to show total for all entries</h5>
+            <Button className="mt-3" variant="primary" onClick={filterTotalExpenses}> Filter </Button>
 
             {/* Display total expenses based on selection */}
-            <Table className="aggregate-expenses" responsive="sm">
+            <Table className="aggregate-expenses mt-3" responsive="sm">
                 <thead>
                 <tr>
                     <th className="header">Total</th>
@@ -261,7 +262,7 @@ const ViewExpenses = () => {
                 </thead>
                 <tbody>
                 <tr>
-                    <td>{totals && totals[0] && totals[0].Total}</td>
+                    <td>{totals && totals[0] && totals[0].Total !== null && totals[0].Total !== undefined ? totals[0].Total : 'No dates for the given filter to calculate total!'}</td>
                 </tr>
                 </tbody>
             </Table>
