@@ -48,3 +48,27 @@ export const deleteExpense = (req, res) => {
     });
 };
 
+export const filterAggregateExpenses = (req, res) => {
+    const year = req.body.Year;
+    const month = req.body.Month;
+
+    let q;
+
+    if (year && month) {
+        q = `SELECT SUM(Amount) AS Total FROM EXPENSE WHERE YEAR(Date) = ? AND MONTH(Date) = ?`;
+    } else if (year) {
+        q = `SELECT SUM(Amount) AS Total FROM EXPENSE WHERE YEAR(Date) = ?`;
+    } else {
+        q = `SELECT SUM(Amount) AS Total FROM EXPENSE`;
+    }
+
+    db.query(q, [year, month], (err, data) => {
+        if(err){
+            console.log(err);
+            return res.status(500).json(err);
+        }
+        // return data
+        console.log(data)
+        return res.status(200).json(data);
+    });
+}
