@@ -1,3 +1,10 @@
+/**
+ * The following code in this file is written with assistance from these YouTube videos:
+ * Lama Dev. (2022, September 18). React Node.js MySQL CRUD Tutorial for Beginners [Video]. YouTube. https://www.youtube.com/watch?v=fPuLnzSjPLE
+ * Lama Dev. (2022, September 26). React Node.js MySQL Full Stack Blog App Tutorial [Video]. YouTube. https://www.youtube.com/watch?v=0aPLk2e2Z3g&list=PLiNtaYczsCu3L-F8BrVsGNIt_7iQDxsLF&index=10
+ * Code With Yousaf. (2023, March 28). React + Node js + MySQL - CRUD Operations | CRUD Rest API with Node and Express [Video]. YouTube. https://www.youtube.com/watch?v=y5NvOade3sk&list=PLiNtaYczsCu3L-F8BrVsGNIt_7iQDxsLF&index=14&t=1125s
+ */
+
 import React, {useState, useContext, useEffect} from "react";
 import {Container, Dropdown, DropdownButton, Row, Col, Form, Button} from "react-bootstrap";
 import {AuthContext} from "../../context/authContext";
@@ -76,6 +83,11 @@ const BookAppointments = () => {
 
 
     //*************************** DATE/TIME *********************************
+
+    /**
+     * The following useEffect coded with reference from:
+     * Generate Array of months with moment - Reactjs. stack overflow. (2022, May 4). https://stackoverflow.com/questions/72111200/generate-array-of-months-with-moment-reactjs
+     */
     useEffect(() => {
         const tomorrow = new Date();
         const endDate = new Date(tomorrow);
@@ -102,6 +114,10 @@ const BookAppointments = () => {
     }, []);
 
 
+    /**
+     * The following useEffect coded with reference from:
+     * Filter Array of Objects based on Values from Another Array. CodeWithLinda. (2020, November 19). https://www.codewithlinda.com/blog/filter-array-of-objects/
+     */
     const handleDateChange = (e) => {
         const selectedDate = e.target.value;
         setDateSelected(selectedDate);
