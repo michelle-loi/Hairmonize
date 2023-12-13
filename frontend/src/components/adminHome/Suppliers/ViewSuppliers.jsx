@@ -21,27 +21,32 @@ const ViewSuppliers = () => {
     // To get suppliers
     const[suppliers, setSuppliers] = useState([])
 
-    // For deleting suppliers
-    const handleDelete = async (SuID)=> {
-        try{
-            await axios.delete(`/viewSuppliers/deleteSupplier/${SuID}`);
-        }catch (err){
-            console.log(err);
-        }
-    }
-
     // Get Suppliers
-    useEffect(() => {
-        const fetchSuppliers = async ()=>{
+        const fetchSuppliers = async () => {
+            try {
+                const res = await axios.get("/viewSuppliers/getSuppliers");
+                setSuppliers(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        useEffect(() => {
+            fetchSuppliers();
+        }, []);
+
+
+        // For deleting suppliers
+        const handleDelete = async (SuID)=> {
             try{
-                const res = await axios.get("/viewSuppliers/getSuppliers") // whatever it is called first in route / function name
-                setSuppliers(res.data)
+                await axios.delete(`/viewSuppliers/deleteSupplier/${SuID}`);
+                // refresh table
+                fetchSuppliers();
             }catch (err){
-                console.log(err)
+                console.log(err);
             }
         }
-        fetchSuppliers();
-    }, []);
+
 
     // Function to display suppliers by mapping through them
     const supplierRowInTable = suppliers.map((supplier) => (
@@ -101,6 +106,8 @@ const ViewSuppliers = () => {
 
         try{
             const res = await axios.post("/viewSuppliers/addSupplier", newSuppliers)
+            // refresh table
+            fetchSuppliers();
             // clear the fields for next time
             newSuppliers.SName = '';
             newSuppliers.Email = '';

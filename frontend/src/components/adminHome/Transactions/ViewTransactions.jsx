@@ -13,27 +13,34 @@ const ViewTransactions = () => {
     // To get transactions
     const[transactions, setTransaction] = useState([])
 
+
+
+    // Get Transactions
+    const fetchTransactions = async () => {
+        try {
+            const res = await axios.get("/employeeTransactions/getTransactions");
+            setTransaction(res.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    useEffect(() => {
+        fetchTransactions();
+    }, []);
+
+
     // For deleting transactions
     const handleDelete = async (Transaction_ID)=> {
         try{
             await axios.delete(`/employeeTransactions/deleteTransaction/${Transaction_ID}`);
+            // update the transactions table
+            fetchTransactions();
         }catch (err){
             console.log(err);
         }
     }
 
-    // Get Transactions
-    useEffect(() => {
-        const fetchTransactions = async ()=>{
-            try{
-                const res = await axios.get("/employeeTransactions/getTransactions") // whatever it is called first in route / function name
-                setTransaction(res.data)
-            }catch (err){
-                console.log(err)
-            }
-        }
-        fetchTransactions();
-    }, []);
 
     // Function to display transactions by mapping through them
     const transactionRowInTable = transactions.map((transaction) => (
@@ -92,6 +99,8 @@ const ViewTransactions = () => {
 
         try{
             const res = await axios.post("/employeeTransactions/addTransaction", newTransactions)
+            // update the transactions table
+            fetchTransactions();
             // clear the fields for next time
             newTransactions.Date = '';
             newTransactions.Time = '';
