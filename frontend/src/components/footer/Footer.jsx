@@ -30,21 +30,20 @@ function Footer() {
             <Container>
                 <Row>
                     <p className="hours">
-                        Store Hours
+                        <h4>Store Hours</h4>
+                        Monday: 10-4
                         <br/>
-                        Monday: 9-5
+                        Tuesday: 10-4
                         <br/>
-                        Tuesday: 9-5
+                        Wednesday: 10-4
                         <br/>
-                        Wednesday: 9-5
+                        Thursday: 10-4
                         <br/>
-                        Thursday: 9-5
+                        Friday: 10-4
                         <br/>
-                        Friday: 9-5
+                        Saturday: 10-4
                         <br/>
-                        Saturday: 9-5
-                        <br/>
-                        Sunday: Closed
+                        Sunday: 10-4
                     </p>
                     <p>Copyright 2023 There Isn't Really One</p>
                 </Row>

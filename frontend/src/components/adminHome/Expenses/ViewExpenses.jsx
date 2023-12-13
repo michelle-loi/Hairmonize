@@ -257,7 +257,7 @@ const ViewExpenses = () => {
             <Table className="aggregate-expenses mt-3" responsive="sm">
                 <thead>
                 <tr>
-                    <th className="header">Total</th>
+                    <th className="header">$Total</th>
                 </tr>
                 </thead>
                 <tbody>
