@@ -18,13 +18,14 @@ export const register = (request, response) => {
         const hash = bcrypt.hashSync(request.body.Password, salt);
 
         // insert the new user into the database (account table)
-        const newUser = "INSERT into ACCOUNT(Username, Password, AccountType) VALUES(?)"
+        const newUser = "INSERT into ACCOUNT(Username, Password, AccountType, CID) VALUES(?)"
         const values =[
             request.body.Username,
             hash,
             // make account type = 1 for customer
             1,
-        ]
+            request.body.CID
+    ]
 
         db.query(newUser, [values], (err,data) => {
             if(error) return response.json(error)
