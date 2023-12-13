@@ -11,6 +11,7 @@ const Registration = () => {
     const [inputs, setInputs] = useState({
         Username: "",
         Password: "",
+        CID: ""
     })
 
     // for client table
@@ -39,6 +40,9 @@ const Registration = () => {
 
     // create a navigate function from react dom
     const navigate = useNavigate()
+
+    // Add a state for newCID
+    const [newCID, setNewCID] = useState(null);
 
     // function to get input
 
@@ -96,61 +100,64 @@ const Registration = () => {
 
 
     // function to allow submission of the username and password
-    const Submit = async e => {
+    const Submit = async (e) => {
         // this prevents the fields from resetting
-        e.preventDefault()
+        e.preventDefault();
 
-        // try catch so if there are any errors it will be caught and dealt with appropriately. Most of the time
-        // errors will be users trying to register an already existing username
+        // try catch so if there are any errors, it will be caught and dealt with appropriately.
         try {
-            // for any submissions send the data to our auth register function
-            const response = await axios.post("/auth/register", inputs)
-
             // client table data
             const cData = {
                 FName: clientData.FName,
                 MName: clientData.MName,
                 LName: clientData.LName,
                 EID: selectedEID,
-            }
-            const clientRes = await axios.post("/viewClient/addClient", cData)
+            };
+
+            // Wait for the addClient request to complete
+            const clientRes = await axios.post("/viewClient/addClient", cData);
 
             // get the CID for the new client
             const newCID = clientRes.data.cid;
 
+            // for any submissions, send the data to our auth register function
+            const response = await axios.post("/auth/register", { ...inputs, CID: newCID });
+
+
             // insert their phone number and emails
             const clientEmailRes = await axios.post(`/viewClient/addEmail`, {
                 cid: newCID,
-                email: clientEmailPhone.Email
-            })
+                email: clientEmailPhone.Email,
+            });
             const clientPhoneRes = await axios.post(`/viewClient/addPhone`, {
                 cid: newCID,
-                phone: clientEmailPhone.Phone
-            })
+                phone: clientEmailPhone.Phone,
+            });
 
-            // Upon successful creation of a username set success message to be displayed - which is the server message
+            // Upon successful creation of a username, set success message to be displayed - which is the server message
             // saying account is successfully created
             setSuccess(response.data);
 
-            // success occurs clear all inputs
+            // success occurs, clear all inputs
             setInputs({
                 Username: "",
                 Password: "",
-            })
+                CID: "", // Make sure to reset CID as well
+            });
 
             setClientData({
                 FName: "",
                 MName: "",
                 LName: "",
                 EID: "",
-            })
+            });
 
             // for phone number and email multivariables
             setClientEmailPhone({
                 CID: "",
                 Email: "",
                 Phone: "",
-            })
+            });
 
             /* below is the count down logic, where upon successful creation of an account it will count down before
             * automatically rerouting the user back to the login page.*/
@@ -159,17 +166,16 @@ const Registration = () => {
             let countdown = 5;
 
             // set count down timer message
-            setTime(`Redirecting to login page in ${countdown} seconds...`)
+            setTime(`Redirecting to the login page in ${countdown} seconds...`);
 
             // start count down
             countdownIntervalRef.current = setInterval(() => {
                 countdown--;
 
                 // update count down timer
-                setTime(`Redirecting to login page in ${countdown} seconds...`)
+                setTime(`Redirecting to the login page in ${countdown} seconds...`);
 
-
-                // Check if the countdown has reached zero, if it has stop the count down
+                // Check if the countdown has reached zero, if it has, stop the count down
                 if (countdown <= 0) {
                     clearInterval(countdownIntervalRef.current);
 
@@ -177,12 +183,10 @@ const Registration = () => {
                     navigate("/");
                 }
             }, 1000); // Update every second
-
-
         } catch (error) {
             setError(error.response.data);
         }
-    }
+    };
 
     // Use useEffect to clean up the interval when the component is unmounted - allowing us to stop the countdown
     // if the user navigated away.

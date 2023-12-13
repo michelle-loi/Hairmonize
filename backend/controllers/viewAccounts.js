@@ -1,4 +1,5 @@
 import {db} from "../database.js";
+import bcrypt from "bcryptjs";
 
 export const getAccounts = (req, res) => {
     const q = "SELECT * FROM ACCOUNT";
@@ -45,10 +46,14 @@ export const getAccountCID = (req, res) => {
 };
 
 export const addAccount = (req, res) => {
+    // hash the password
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(req.body.Password, salt);
+
     const q =
         "INSERT INTO ACCOUNT (`Username`, `Password`, `CreationDate`, `CID`, `EID`, `AccountType`) VALUES (?, ?, ?, ?, ?, ?)";
 
-    db.query(q, [req.body.Username, req.body.Password, req.body.CreationDate, req.body.CID, req.body.EID, req.body.AccountType], (err, data) => {
+    db.query(q, [req.body.Username, hash, req.body.CreationDate, req.body.CID, req.body.EID, req.body.AccountType], (err, data) => {
         if (err) return res.status(500).json("Error while adding account. Account not added.");
 
         return res.status(200).json("Account has been added.");
