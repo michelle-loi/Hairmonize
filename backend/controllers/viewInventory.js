@@ -55,3 +55,14 @@ export const addProduct = (req, res) => {
         return res.status(200).json("Product has been added.");
     });
 };
+
+export const getTotalInventoryValue = (req, res) => {
+    const q =
+        "SELECT SUM(Price * Quantity) AS total FROM INVENTORY";
+
+    db.query(q, (err, data) => {
+        if (err) return res.status(500).json(err);
+
+        return res.status(200).json(data);
+    });
+};

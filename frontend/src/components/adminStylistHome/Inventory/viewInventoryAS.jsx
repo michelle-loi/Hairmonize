@@ -25,6 +25,19 @@ const ViewInventoryAS=()=>{
         fetchInventory();
     }, []);
 
+    const [totalInventoryValue, setTotalInventoryValue] = useState(null);
+    useEffect(() => {
+        const fetchTotalInventoryValue= async () => {
+            try {
+                const res = await axios.get('/viewInventory/getTotalInventoryValue');
+                setTotalInventoryValue(res.data[0].total);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchTotalInventoryValue();
+    }, []);
+
 
 
     const handleDelete = async (Product_code)=>{
@@ -103,6 +116,9 @@ const ViewInventoryAS=()=>{
                     )})}
                 </tbody>
             </Table>
+
+            <h3>Total value of all items in inventory: ${totalInventoryValue}</h3>
+
         </div>
     );
 }
