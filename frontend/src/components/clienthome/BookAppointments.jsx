@@ -76,6 +76,11 @@ const BookAppointments = () => {
 
 
     //*************************** DATE/TIME *********************************
+
+    /**
+     * The following useEffect coded with reference from:
+     * Generate Array of months with moment - Reactjs. stack overflow. (2022, May 4). https://stackoverflow.com/questions/72111200/generate-array-of-months-with-moment-reactjs
+     */
     useEffect(() => {
         const tomorrow = new Date();
         const endDate = new Date(tomorrow);
@@ -102,6 +107,10 @@ const BookAppointments = () => {
     }, []);
 
 
+    /**
+     * The following useEffect coded with reference from:
+     * Filter Array of Objects based on Values from Another Array. CodeWithLinda. (2020, November 19). https://www.codewithlinda.com/blog/filter-array-of-objects/
+     */
     const handleDateChange = (e) => {
         const selectedDate = e.target.value;
         setDateSelected(selectedDate);
