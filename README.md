@@ -181,18 +181,6 @@ npm start
 
 ## Acknowledgments
 
-The following resources were used in developing this project:
-
-- Lama Dev. (2022, September 18). React Node.js MySQL CRUD Tutorial for Beginners [Video]. YouTube. https://www.youtube.com/watch?v=fPuLnzSjPLE
-
-- Lama Dev. (2022, September 26). React Node.js MySQL Full Stack Blog App Tutorial [Video]. YouTube. https://www.youtube.com/watch?v=0aPLk2e2Z3g&list=PLiNtaYczsCu3L-F8BrVsGNIt_7iQDxsLF&index=10
-
-- Code With Yousaf. (2023, March 28). React + Node js + MySQL - CRUD Operations | CRUD Rest API with Node and Express [Video]. YouTube. https://www.youtube.com/watch?v=y5NvOade3sk&list=PLiNtaYczsCu3L-F8BrVsGNIt_7iQDxsLF&index=14&t=1125s
-
-- Filter Array of Objects based on Values from Another Array. CodeWithLinda. (2020, November 19). https://www.codewithlinda.com/blog/filter-array-of-objects/
-
-- Generate Array of months with moment - Reactjs. stack overflow. (2022, May 4). https://stackoverflow.com/questions/72111200/generate-array-of-months-with-moment-reactjs
-
 ### ReadMe Template
 
 - [Best-README-Template](https://github.com/othneildrew/Best-README-Template/blob/main/BLANK_README.md#about-the-project)
