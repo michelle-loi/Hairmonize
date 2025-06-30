@@ -1,7 +1,7 @@
 <a id="readme-top"></a>
 
 <div align="center">
-  <a href="https://github.com/">
+  <a href="https://github.com/michelle-loi/Hairmonize">
     <img src="docs/logo.png" alt="Logo" width="100" height="100">
   </a>
 
@@ -11,7 +11,7 @@
       <br/>
       <br/>
   </p>
-  <a href="https://github.com/"><strong>Explore the docs »</strong></a>
+  <a href="https://github.com/michelle-loi/Hairmonize"><strong>Explore the docs »</strong></a>
   <br/>
   <br/>
   <p>
@@ -89,6 +89,10 @@
 ### Installation
 
 Clone this project from git onto your computer
+
+```
+git clone https://github.com/michelle-loi/Hairmonize
+```
 
 ### MYSQL SERVER:
 
